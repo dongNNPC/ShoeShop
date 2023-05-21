@@ -107,66 +107,66 @@ a:hover {
 }
 
 .section-products #product-1 .part-1::before {
-  background: url("/assets/images/NikeAriMax.jpg") no-repeat center;
+  background: url("/images/NikeAriMax.jpg") no-repeat center;
   background-size: cover;
   transition: all 0.3s;
 
 }
 
 .section-products #product-2 .part-1::before {
-  background: url("/assets/images/nikeTheThoa.png") no-repeat center;
+  background: url("/images/nikeTheThoa.png") no-repeat center;
   background-size: cover;
   transition: all 0.3s;
   image-rendering: 50%;
 }
 
 .section-products #product-3 .part-1::before {
-  background: url("/assets/images/bitHunter.jpg") no-repeat center;
+  background: url("/images/bitHunter.jpg") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-4 .part-1::before {
-  background: url("/assets/images/bitHunter11.jpg") no-repeat center;
+  background: url("/images/bitHunter11.jpg") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-5 .part-1::before {
-  background: url("/assets/images/Biti’s\ Hunter\ X\ \ Liteknit.jpg") no-repeat center;
+  background: url("/images/Biti’s\ Hunter\ X\ \ Liteknit.jpg") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-6 .part-1::before {
-  background: url("/assets/images/bitHunterCord.jpg") no-repeat center;
+  background: url("/images/bitHunterCord.jpg") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-7 .part-1::before {
-  background: url("/assets/images/bitHunterNam.jpg") no-repeat center;
+  background: url("/images/bitHunterNam.jpg") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-8 .part-1::before {
-  background: url("/assets/images/bitHunterNu.jpg") no-repeat center;
+  background: url("/images/bitHunterNu.jpg") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-9 .part-1::before {
-  background: url("/assets/images/bitHunterX.jpg") no-repeat center;
+  background: url("/images/bitHunterX.jpg") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-10 .part-1::before {
-  background: url("/assets/images/bitHunterNu2k22.jpg") no-repeat center;
+  background: url("/images/bitHunterNu2k22.jpg") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-11 .part-1::before {
-  background: url("/assets/images/bitHunter11.jpg") no-repeat center;
+  background: url("/images/bitHunter11.jpg") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-12 .part-1::before {
-  background: url("/assets/images/bitHunter12.jpg") no-repeat center;
+  background: url("/images/bitHunter12.jpg") no-repeat center;
   background-size: cover;
 }
 
@@ -257,9 +257,9 @@ a:hover {
 
 /* thẻ nav */
 navbar a {
-  font-size: 16px;
-  font-weight: 300;
-  font-family: "Montserrat", sans-serif;
+  font-size: 25px;
+  font-weight: bolder;
+  font-family: "verdana";
   -webkit-transition: all 0.2s ease;
   -moz-transition: all 0.2s ease;
   -ms-transition: all 0.2s ease;
@@ -275,6 +275,7 @@ navbar a {
   user-select: none;
   cursor: pointer;
   margin: 4px;
+	
 }
 
 navbar a:hover,
@@ -568,6 +569,7 @@ nav {
 
 .dropdown {
   list-style: none;
+
 }
 
 .ul {
