@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Title</title>
+    <link rel="stylesheet" href="/assets/styles/giohang.css">
+</head>
+<body>
+    <h1>THANH TOÁN</h1>
+<div class="container">
+  <div class="row ">
+    <div class="col-lg-6" >
+        <div class="card-title">
+           <h2> Thông tin thanh toán</h2>
+            <h5>(thông tin bắt buộc nhập)</h5>
+        </div>
+        <hr>
+        <form class="row g-3">
+            <div class="col-md-6">
+              <label for="inputName" class="form-label">Họ và tên:</label>
+              <input type="text" class="form-control" id="inputName" placeholder="Nguyễn Văn A">
+            </div>
+            <div class="col-md-6">
+              <label for="inputNumber" class="form-label">Số điện thoại</label>
+              <input type="text" class="form-control" id="inputNumber" placeholder="0900000123">
+            </div>
+            <div class="col-md-6">
+              <label for="inputAddress" class="form-label">Địa chỉ</label>
+              <input type="text" class="form-control" id="inputAddress" placeholder="Ninh Kiều, Cần Thơ">
+            </div>
+            
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="inputEmail4" placeholder="Anguyenvan@gmail.com">
+              </div>
+            <div class="col-md-6">
+              <label for="inputquocgia" class="form-label">Quốc gia</label>
+             
+              <select for="inputquocgia" class="form-select form-select-sm " aria-label=".form-select-sm example">
+                <option selected>Việt Nam</option>
+                <option value="1">Mỹ</option>
+                <option value="2">Brazill</option>
+                <option value="4">Pháp</option>
+                <option value="5">Anh</option>
+                <option value="6">Thái Lan</option>
+                <option value="7">Đài Loan</option>
+                <option value="8">Ba Lan</option>
+                <option value="9">Ý</option>
+                <option value="10">Bồ Đào Nha</option>
+              </select>
+            </div>
+           
+            <div class="col-12">
+              <div class="form-checkk">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                 Ghi nhớ thông tin
+                </label>
+              </div>
+            </div>
+            <div class="col-12">
+              <button type="submit" style="background-color: #232946 ;color: #fffffe;" class="btn ">Xác nhận thông tin thanh toán</button>
+             <!-- <a href="./giohang.html"> </a> -->
+             <a href="giohang.html"><button style="background-color: #232946 ;color: #fffffe;" type="button" class="btn"> &#8592; Trở lại  </button></a>   
+            </div>
+          </form>
+    </div> 
+
+    <div class="col-lg-6">
+      <div class="row">
+
+        <h2>Hóa đơn</h2>
+        <div class="card" style="border:1px solid #232946;">
+          <br>
+         
+        
+            <div class="card-body">
+              <div class="card-title">
+                <h4>Đơn hàng: HD04438</h4>
+              </div>
+            <h5>Sản phẩm: Biti's Hunter Core - Midnight Black Inverted DSMH01203DEN – CTY BITI'S CAMBODIA</h5>
+           
+            <h5>Số lượng: 2</h5>
+            <h5>Đơn giá: 499000 <span>VND</span></h5>
+           
+            <hr>
+
+            <div class="row">
+
+              <div class="col-sm-5">
+
+
+                  <h5 class="card-title">Tạm tính:</h5> 
+                  <hr>
+                  <h5 class="card-title">Tổng:</h5>
+              </div>
+              <div class="col-sm-7">
+
+                  <p id="price">998000 VND</p>
+                  <hr>
+                  <p id="price">998000 VND</p>
+              </div>
+
+              <div></div>
+
+          </div class="col-lg-7">
+            <h4>Hình thức thanh toán</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="gridCheck">
+              <label class="form-check-label" for="gridCheck">
+                Chuyển khoản ngân hàng
+              </label>
+              <h6>Tài khoản: 7607205166136 | Ngân hàng: AGRIBANK | Tên: NGUYEN MINH KHOI </h6>
+              <h6>
+                Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong phần Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.
+              </h6>
+            </div>
+            <hr>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="gridCheck">
+              <label class="form-check-label" for="gridCheck">
+                Thanh toán trực tiếp tại quầy
+              </label>
+              <h6>Thanh toán trực tiệp tại quầy giao dịch và nhận hàng </h6>
+            </div>
+            <div class="d-grid gap-2">
+              <button class="btn" style="background-color: #232946 ;color: #fffffe;" type="button">Thanh toán</button>
+             
+            </div>
+
+             </div>
+      
+         
+        </div>
+      </div>
+    
+    </div>
+</div>
+
+</div>
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+</html>

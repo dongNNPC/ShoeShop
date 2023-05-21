@@ -1,0 +1,26 @@
+ .col-sm-7 p{
+
+    color: #232946;
+    font-weight: bold;
+  }
+  .form-check{
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+button{
+  background-color: #232946;
+}
+.fa-regular {
+  font-family: “Font Awesome 5 Free”;
+  font-weight: 400;
+  font-size: 50px;
+  content: “\f00d”;
+}
+
+.fa-regular:hover {
+  font-weight: 900;
+  content: “\f057”;
+}
+ 
+ 

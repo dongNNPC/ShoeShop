@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- Bootstrap CSS v5.2.1 -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+	crossorigin="anonymous" />
+<!-- font icons -->
+<link rel="stylesheet"
+	href="../assets/fonts/fontawesome-free-6.0.0-beta3-web/css/all.css" />
+
+
+<!-- css local link -->
+<link rel="stylesheet" href="../assets/styles/index-style.css">
+<link rel="stylesheet" href="../assets/styles/index-footer.css" />
+<link rel="stylesheet" href="../assets/styles/admin.css" />
+<title>Video manager</title>
+</head>
+
+<body>
+	<header>
+
+	</header>
+		<c:url var="url" value="/UserServlet" />
+	<!-- Demo header-->
+	<section class="py-5 header">
+		<div class="container" style="max-width: 1100px">
+			<div class="row">
+				<div class="col-lg-3 col-sm-12">
+					<div class="nav flex-column nav-pills nav-pills-custom"
+						id="v-pills-tab" role="tablist" aria-orientation="vertical">
+						<a class="nav-link mb-3 p-3 shadow active" id="v-plls-home-tab"
+							data-toggle="pill" href="#v-pills-home" role="tab"
+							aria-controls="v-pills-home" aria-selected="true">
+							<i class="fas fa-user mr-2"></i> <span
+							class="font-weight-bold small text-uppercase">User
+								Editor</span>
+						</a> <a class="nav-link mb-3 p-3 shadow" id="v-pills-profile-tab"
+							data-toggle="pill" href="#v-pills-profile" role="tab"
+							aria-controls="v-pills-profile" aria-selected="false">
+							<i class="far fa-calendar-plus mr-2"></i> <span
+							class="font-weight-bold small text-uppercase">User
+								List</span>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-9 col-sm-12">
+					<!-- Tabs content -->
+					<div class="tab-content" id="v-pills-tabContent">
+						<div class="tab-pane fade shadow rounded bg-white show active p-5"
+							id="v-pills-home" role="tabpanel"
+							aria-labelledby="v-pills-home-tab">
+							<form class="container" action="${url}" method="post">
+							<h4 class="font-italic mb-4">User Editor</h4>
+							<hr>
+							<div class="row">
+								<div class="mb-3 col-lg-6">
+									<label for="" class="form-label"><b>Username?</b></label> <input
+										type="text" class="form-control" name="id" id="" value=""
+										aria-describedby="helpId" placeholder="" />
+								</div>
+								<div class="mb-3 col-lg-6">
+									<label for="" class="form-label"><b>Password?</b> </label> <input
+										type="password" class="form-control" name="password" id=""
+										aria-describedby="helpId" placeholder=""  value=""/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="mb-3 col-lg-6">
+									<label for="" class="form-label"><b>Fullname?</b></label> <input
+										type="text" class="form-control" name="fullname" id=""
+										aria-describedby="helpId" placeholder=""  value="" />
+								</div>
+								<div class="mb-3 col-lg-6">
+									<label for="" class="form-label"><b>Email
+											Address</b></label> <input type="email" class="form-control" name="email"
+										id="" aria-describedby="helpId" value="" placeholder="" />
+								</div>
+							</div>
+
+							<div class="pull-right">
+								<button formaction="" class="btn btn-color">	Create</button>
+								<button formaction=""  class="btn btn-color">
+									Update</button>
+										<button formaction=""  class="btn btn-color">
+									Delete</button>
+								
+							</div>
+							</form>
+		
+						</div>
+				<div class="tab-pane fade shadow rounded bg-white p-5"
+							id="v-pills-profile" role="tabpanel"
+							aria-labelledby="v-pills-profile-tab">
+							<h4 class="font-italic mb-4">User List</h4>
+							<hr>
+							<div class="table-responsive">
+								<table
+									class="table table-hover Table-striped table-bordered table-condensed">
+									<thead>
+										<tr class="tr-color text-light">
+											<th>USERNAME</th>
+											<th>PASSWORD</th>
+											<th>FULLNAME</th>
+											<th>EMAIL</th>
+											<th>ROLE</th>
+											<th>OPTION</th>
+										</tr>
+									</thead>
+									<c:forEach var="item" items="${Users}">
+										<tbody>
+											<tr class="text-dark">
+												<td></td><td></td><td></td><td></td>
+												<td></td>
+												<td><a href="" class="btn btn-color">Edit</a></td>
+											</tr>
+										</tbody>
+									</c:forEach>
+								</table>
+							</div>
+							<div class="pull-right">
+								<button type="button" name="" id="" class="btn btn-color">
+									|<</button>
+								<button type="button" name="" id="" class="btn btn-color">
+									<<</button>
+								<button type="button" name="" id="" class="btn btn-color">
+									>></button>
+								<button type="button" name="" id="" class="btn btn-color">
+									>|</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<footer>
+
+	</footer>
+
+
+	<!-- Bootstrap JavaScript Libraries -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous">
+		
+	</script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+		crossorigin="anonymous">
+		
+	</script>
+
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+.main-details{
+    max-width: 1200px;
+}
+.title-detail{
+font-size: 22.4px;
+font-family: sans-serif;
+font-weight: bolder;
+}
+.img-left-details{
+    max-width: 80px;
+}
+.choose-img{
+    /* margin-left: -20px; */
+    margin-top: 10px;
+    margin-right: -20px;
+}
+hr.rounded {
+    border-top: 5px solid #000000;
+    /* border-radius: 5px; */
+    max-width: 30px;
+  }
+  hr.solid {
+    border-top: 1px solid #020000;
+  }
+.price-amount-details{
+    color: #FF2A2D;
+    font-size: 24px;
+    font-family: sans-serif;
+    font-weight: bolder;
+}
+.masp-details{
+    font-size: 12.8px;
+    font-family: sans-serif;
+}hr.solid {
+    border-top: 3px solid #020000;
+  }
+
+.share-details{
+    border: 0.1em solid silver;
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+}
+.share-details:hover{
+    background-color: blue;
+    color: white;
+}
+.icon:hover{
+    color: white;
+}
+.icon{
+    color: silver;
+    margin-top: 7px;
+    margin-left: 7px;
+}
+.share-details-gmail{
+    border: 0.1em solid silver;
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+}
+.share-details-gmail:hover{
+    background-color: rgb(3, 3, 19);
+    color: white;
+}
+.icon-gmail:hover{
+    color: rgb(240, 240, 240);
+}
+.icon-gmail{
+    color: silver;
+    margin-top: 7px;
+    margin-left: 6px;
+}
+
+.share-details-inta{
+    border: 0.1em solid silver;
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+}
+.share-details-inta:hover{
+    background-color: rgb(200, 38, 38);
+    color: white;
+}
+.icon-inta:hover{
+    color: rgb(249, 248, 248);
+}
+.icon-inta{
+    color: silver;
+    margin-top: 7px;
+    margin-left: 7px;
+}
+
+  /* section */
+  .nav-pills-custom .nav-link {
+    color: #aaa;
+    background: #fff;
+    position: relative;
+}
+
+.nav-pills-custom .nav-link.active {
+    color: #ff2a2d;
+    background: #fff;
+}
+
+@media (min-width: 992px) {
+    .nav-pills-custom .nav-link::before {
+        content: '';
+        display: block;
+        border-top: 8px solid transparent;
+        border-left: 10px solid #fff;
+        border-bottom: 8px solid transparent;
+        position: absolute;
+        top: 50%;
+        right: -10px;
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+}
+
+.nav-pills-custom .nav-link.active::before {
+    opacity: 1;
+
+}
+
+.exampleFormControlTextarea1{
+    font-size: 12.4px;
+    font-family: sans-serif;
+}
+.comment-details{
+    padding:40px;
+    border: 3px #FF2A2D solid;
+}
