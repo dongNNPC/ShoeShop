@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+	crossorigin="anonymous" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" th:href="@{https://fonts.gstatic.com}">
+	<link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
+
+	<link rel="canonical" th:href="@{https://demo-basic.adminkit.io/}" />
+
+	<title>UI - User</title>
+	<link th:href="@{/admin/css/admin.css}" rel="stylesheet" type="text/css" media="all">
+	<link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css" media="all">
+	<link th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}" rel="stylesheet" type="text/css" media="all">
+</head>
+
+<body>
+	<div class="wrapper">
+		<div th:replace="./admin/layout/sidebar ::  #sidebar"></div>
+		<div class="main">
+			<div th:replace="./admin/layout/nav ::  #nav-admin"></div>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<div class="mb-3">
+						<!-- <h1 class="h3 d-inline align-middle">Form Thông Tin</h1> -->
+						<a class="badge bg-dark text-white ms-2" href="upgrade-to-pro.html">
+      Thêm thông tin cho user
+  </a>
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">Main Image</h5>
+									<h6 class="card-subtitle text-muted">Hình ảnh chính của sản phẩm.</h6>
+								</div>
+								<div class="container bg ms-5">
+
+							<img th:src="@{/admin/img/photos/unsplash-1.jpg}"  style="max-width: 400px;" alt="">
+				<div class="mb-3 mt-4" style="max-width: 400px;">
+					<label for="formFile" class="form-label">Chọn file hình ảnh</label>
+					<input class="form-control" type="file" id="formFile">
+				  </div>			
+								</div>
+							</div>
+
+						
+						</div>
+
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">Form Thông Tin</h5>
+									<h6 class="card-subtitle text-muted">Form thông tin để nhập thông tin cho User.</h6>
+								</div>
+								<div class="card-body">
+									<form class="container" action="${url}" method="post">
+					
+										<hr>
+										<div class="row">
+											<div class="mb-3 col-lg-6">
+												<label for="" class="form-label"><b>Username?</b></label> <input
+													type="text" class="form-control" name="id" id="" value=""
+													aria-describedby="helpId" placeholder="" />
+											</div>
+											<div class="mb-3 col-lg-6">
+												<label for="" class="form-label"><b>Password?</b> </label> <input
+													type="password" class="form-control" name="password" id=""
+													aria-describedby="helpId" placeholder=""  value=""/>
+											</div>
+										</div>
+										<div class="row">
+											<div class="mb-3 col-lg-6">
+												<label for="" class="form-label"><b>Fullname?</b></label> <input
+													type="text" class="form-control" name="fullname" id=""
+													aria-describedby="helpId" placeholder=""  value="" />
+											</div>
+											<div class="mb-3 col-lg-6">
+												<label for="" class="form-label"><b>Email
+														Address</b></label> <input type="email" class="form-control" name="email"
+													id="" aria-describedby="helpId" value="" placeholder="" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="mb-3 col-lg-6">
+												<label for="" class="form-label"><b>Address?</b></label> <input
+													type="text" class="form-control" name="fullname" id=""
+													aria-describedby="helpId" placeholder=""  value="" />
+											</div>
+											<div class="mb-3 col-lg-6">
+												<label for="" class="form-label"><b>Phone Number?</b></label> <input type="email" class="form-control" name="email"
+													id="" aria-describedby="helpId" value="" placeholder="" />
+											</div>
+										</div>
+			
+										<div class="pull-right">
+											<button formaction="" class="btn btn-primary">	Create</button>
+											<button formaction=""  class="btn btn-primary">
+												Update</button>
+								
+											
+										</div>
+										</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+
+		
+			<div th:replace="./admin/layout/footer ::  #footer-admin"></div>
+		</div>
+	</div>
+
+	<script src="/admin/js/app.js"></script>
+
+</body>
+
+</html>
