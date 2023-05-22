@@ -42,7 +42,9 @@
   width: 30px;
 
 }
-
+.IMGIndex{
+	margin-top: -100px;border-radius: 20px; margin-bottom: 30px;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
@@ -107,66 +109,66 @@ a:hover {
 }
 
 .section-products #product-1 .part-1::before {
-  background: url("/images/NikeAriMax.jpg") no-repeat center;
+ 
   background-size: cover;
   transition: all 0.3s;
 
 }
 
 .section-products #product-2 .part-1::before {
-  background: url("/images/nikeTheThoa.png") no-repeat center;
+  background: url("../images/nikeTheThoa.png") no-repeat center;
   background-size: cover;
   transition: all 0.3s;
   image-rendering: 50%;
 }
 
 .section-products #product-3 .part-1::before {
-  background: url("/images/bitHunter.jpg") no-repeat center;
+  background: url("/images/bitHunter.png") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-4 .part-1::before {
-  background: url("/images/bitHunter11.jpg") no-repeat center;
+  background: url("/images/bitHunter11.png") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-5 .part-1::before {
-  background: url("/images/Biti’s\ Hunter\ X\ \ Liteknit.jpg") no-repeat center;
+  background: url("/images/Biti_s_Hunter_X.png") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-6 .part-1::before {
-  background: url("/images/bitHunterCord.jpg") no-repeat center;
+  background: url("/images/bitHunterCord.png") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-7 .part-1::before {
-  background: url("/images/bitHunterNam.jpg") no-repeat center;
+  background: url("/images/bitHunterNam.png") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-8 .part-1::before {
-  background: url("/images/bitHunterNu.jpg") no-repeat center;
+  background: url("/images/bitHunterNu.png") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-9 .part-1::before {
-  background: url("/images/bitHunterX.jpg") no-repeat center;
+  background: url("/images/bitHunterX.png") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-10 .part-1::before {
-  background: url("/images/bitHunterNu2k22.jpg") no-repeat center;
+  background: url("/images/bitHunterNu2k22.png") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-11 .part-1::before {
-  background: url("/images/bitHunter11.jpg") no-repeat center;
+  background: url("/images/bitHunter11.png") no-repeat center;
   background-size: cover;
 }
 
 .section-products #product-12 .part-1::before {
-  background: url("/images/bitHunter12.jpg") no-repeat center;
+  background: url("/images/bitHunter12.png") no-repeat center;
   background-size: cover;
 }
 

@@ -13,4 +13,21 @@ public class Index {
 		
 		return "/index";
 	}
+	@RequestMapping("/details")
+	public String details () {
+		
+		return "/views/details";
+	}
+	
+	@RequestMapping("/giohang")
+	public String giohang () {
+		
+		return "/views/giohang";
+	}
+	
+	@RequestMapping("/thanhtoan")
+	public String thanhtoan() {
+		
+		return "/views/thanhtoan";
+	}
 }
