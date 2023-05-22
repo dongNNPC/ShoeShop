@@ -22,10 +22,10 @@
 <body>
   <header>
     <!-- place navbar here -->
-    <div th:replace="layout/nav ::  nav"></div>
+    <div th:replace="/layout/nav ::  #nav"></div>
 
     <!-- Hộp thoại giỏ hàng --> 
-     	<div   th:replace="~{layout/modalCart :: modalCart}" ></div>
+     	
 	  
 	
 
@@ -341,22 +341,7 @@
         </div>
         <div class="row">
           <!-- Single Product -->
-          <div class="col-md-6 col-lg-4 col-xl-3">
-            <div id="product-1" class="single-product">
-              <div class="part-1">
-                <ul>
-                  <li><a href="#"> <i class="fa-solid fa-basket-shopping"></i></a></li>
-                  <li><a href="#"><i class="fa-solid fa-heart"></i></a></li>
-                  <li><a href="#"><i class="fa-solid fa-expand"></i></a></li>
-                </ul>
-              </div>
-              <div class="part-2">
-                <h3 class="product-title">Here Product Title</h3>
-                <h4 class="product-old-price">$79.99</h4>
-                <h4 class="product-price">$49.99</h4>
-              </div>
-            </div>
-          </div>
+          <div th:replace="./layout/item ::  #item"></div>
           <!-- Single Product -->
           <div class="col-md-6 col-lg-4 col-xl-3">
             <div id="product-2" class="single-product">
