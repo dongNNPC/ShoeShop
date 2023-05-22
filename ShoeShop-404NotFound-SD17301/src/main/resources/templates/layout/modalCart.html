@@ -1,4 +1,9 @@
-<div class="offcanvas offcanvas-end" id="GioHang" >
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="modal(id)"  th:id="${id}" class="offcanvas offcanvas-end" id="GioHang" >
       <div class="offcanvas-header ">
         <h4 style="margin-left: 120px;">Giỏ hàng <i class="fa-solid fa-basket-shopping fa-xs"></i></h4>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
@@ -40,3 +45,5 @@
         </div>
       </div>
   </div>
+  </body>
+</html>
