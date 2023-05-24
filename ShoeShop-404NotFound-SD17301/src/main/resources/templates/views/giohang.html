@@ -25,9 +25,10 @@
   	
 
 <body>
+   <div th:replace="./layout/nav ::  #nav"></div>
 
     <div class="container" style="min-width: 1200px; padding:10px;">
-      <div th:replace="./layout/nav ::  #nav"></div>
+   
         
         <div class="row giohangmain">
 <h3>GIỎ HÀNG</h3>
@@ -45,8 +46,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                  <!--   src="/assets/images/bitHunter.jpg" -->
                         <tr>
-                            <td style="max-width: 100px;"><img src="/assets/images/bitHunter.jpg" height="90px" alt=""></td>
+                            <td style="max-width: 100px;"><img th:src = "@{/images/bitHunterCord.png}"   height="90px" alt=""></td>
                             <td style="max-width: 50px;">Giày thể thao nam đẹp nhất năm 2023</td>
                             <td name="price">499000 </td>
                             <td>
