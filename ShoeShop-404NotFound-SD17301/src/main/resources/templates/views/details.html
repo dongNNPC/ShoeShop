@@ -206,7 +206,7 @@
                 <!-- <label class="form-label" for="typeNumber">Number input</label> -->
               </div>
 
-              <div class="btn col-sm-6" style="max-width: 100px;background-color: #232946 ;color: #fffffe;">Mua hàng</div>
+              <div class="btn col-sm-6" style="max-width: 100px;background-color: #232946 ;color: #fffffe;"><a  th:href="@{/shoeshop/giohang}">Mua hàng</a></div>
             </div>
 
             <hr class="dotted mt-5  " />
@@ -295,7 +295,7 @@
         </div>
     
     </section>
-       <div th:replace="./layout/item ::  #item"></div>
+     <div th:replace="layout/itemBanChayNhat.html"></div>
     </main>
   <div th:replace="./layout/footer ::  footer"></div>
     <!-- Bootstrap JavaScript Libraries -->

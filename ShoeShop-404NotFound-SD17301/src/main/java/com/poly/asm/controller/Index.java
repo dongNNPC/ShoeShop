@@ -30,4 +30,6 @@ public class Index {
 		
 		return "/views/thanhtoan";
 	}
+	
+	 
 }
