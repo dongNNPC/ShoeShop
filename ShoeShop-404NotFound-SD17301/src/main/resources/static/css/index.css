@@ -42,7 +42,9 @@
   width: 30px;
 
 }
-
+.IMGIndex{
+	margin-top: -100px;border-radius: 20px; margin-bottom: 30px;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
@@ -107,7 +109,7 @@ a:hover {
 }
 
 .section-products #product-1 .part-1::before {
-  background: url("/images/NikeAriMax.png") no-repeat center;
+ 
   background-size: cover;
   transition: all 0.3s;
 
@@ -131,7 +133,7 @@ a:hover {
 }
 
 .section-products #product-5 .part-1::before {
-  background: url("/images/Biti’s\ Hunter\ X\ \ Liteknit.png") no-repeat center;
+  background: url("/images/Biti_s_Hunter_X.png") no-repeat center;
   background-size: cover;
 }
 
