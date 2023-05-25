@@ -31,6 +31,7 @@
 		<!-- place navbar here -->
 		<div th:replace="layout/nav ::  nav"></div>
 
+
 		<!-- Hộp thoại giỏ hàng -->
 		<!-- 	<div   th:replace="_modals :: modal('modalCart')" ></div> -->
 		<div th:replace="modal/modalCart.html :: #GioHang"></div>
@@ -73,7 +74,8 @@
 	<div th:replace="layout/footer ::  footer"></div>
 	<!-- Footer -->
 
-	<script>
+  <script>
+
 
 
     const navLinks = document.querySelectorAll('.nav-link');
@@ -100,4 +102,8 @@
 		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
 		crossorigin="anonymous">
     </script>
+
 </body>
+
+</html>
+
