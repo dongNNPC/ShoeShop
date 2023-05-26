@@ -18,24 +18,22 @@
     <!-- place navbar here -->
   </header>
   <main class="container ">
-    <div class="card mt-5 bg-white col-md-7 mx-auto" style="height: 500px;">
+    <div class="card mt-5 bg-white col-md-7 mx-auto" style="height: 520px;">
         <div class="card-body ">
-            <form id="myForm" th:object="${myObject}" th:action="@{/submit}" method="post">
+            <form th:action="@{/shoeshop/login}" th:object="${user}" method="post">
   				 <img th:src = "@{/icons/logo.jpg}" width="70px" height="70px" class="mx-auto d-block"> 
-                 <!--  <img src = "logo.jpg" alt="logo" >  -->
-                 
                 <h1 class="text-center">Đăng nhập</h1>
                 <h6 class="text-secondary text-center">Vui lòng điền thông tin của bạn vào</h6>
-                <div class="mb-3 col-md-9 mx-auto">
-                  <label for="name" class="form-label">Name :</label>
-                  <input type="text" class="form-control" id="name" >
-                  <div class="invalid-feedback" ></div>
+                <div class="mb-4 col-md-9 mx-auto">
+                  <label for="name" class="form-label">Email :</label>
+                  <input type="text" class="form-control" id="email" th:field="*{email}" >
+                  <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" ></span>
                 </div>
                 
-                <div class="mb-3 col-md-9 mx-auto">
+                <div class="mb-4 col-md-9 mx-auto">
                     <label for="name" class="form-label">Password :</label>
-                    <input type="password" class="form-control" id="name" >
-                    <div class="invalid-feedback" ></div>
+                    <input type="password" class="form-control" id="password"  th:field="*{password}">
+                    <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></span>
                 </div>
                 <!-- Các trường khác -->
                 <div class="mb-3 form-check col-md-9 mx-auto">
@@ -49,7 +47,7 @@
 
                
                <div class="d-grid gap-2 col-md-9 mx-auto mb-3">
-                 <button type="button" name="" id="" class="btn " style="background-color: #232946 ;color: #fffffe;">Đăng nhập</button>
+                 <button type="submit"  class="btn " style="background-color: #232946 ;color: #fffffe;">Đăng nhập</button>
                </div>
                <div class="text-center col-md-9 mx-auto">
                 <a class="text-dark"   th:href="@{/shoeshop/signUp}" style="cursor: pointer ; text-decoration: none;" >Bạn chưa có tài khoản / đăng kí ? </a>

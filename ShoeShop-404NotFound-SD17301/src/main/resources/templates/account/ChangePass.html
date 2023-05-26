@@ -21,9 +21,9 @@
     <!-- place navbar here -->
   </header>
   <main class="container ">
-    <div class="card mt-5 bg-white col-md-7 mx-auto" style="height: 260px;">
+    <div class="card mt-5 bg-white col-md-7 mx-auto" style="height: 280px;">
         <div class="card-body ">
-            <form id="myForm" th:object="${myObject}" th:action="@{/submit}" method="post">
+           <form th:action="@{/shoeshop/ChangePass}" th:object="${user}" method="post">
                 <!-- <img th:src = "@{/icons/logo.jpg}" alt="logo" width="80px" height="80px" class="col-md-9 mx-auto"> -->
 				<a th:href="@{/shoeshop/index}" > <i class="fa-solid fa-angles-left text-dark"  style="cursor: pointer;"  ></i></a>
                 <h1 class="text-center ">Đổi mật khẩu</h1>
@@ -31,12 +31,12 @@
                 
                 <div class="mb-3 col-md-9 mx-auto">
                     <label for="name" class="form-label">Current password <i class="text-danger">*</i> : </label>
-                    <input type="password" class="form-control" id="name" >
-                    <div class="invalid-feedback" ></div>
+                    <input type="password" class="form-control" id="password"  th:field="*{password}" >
+                     <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></span>
                 </div>
                
                <div class="d-grid gap-2 col-md-3   ms-auto mb-3" style="margin-right: 80px;">
-                 <a type="submit"  th:href="@{/shoeshop/ChangeRePass}" class="btn " style="background-color: #232946 ;color: #fffffe;">Kiểm tra thông tin</a>
+                 <button type="submit"  class="btn " style="background-color: #232946 ;color: #fffffe;">Kiểm tra thông tin</button>
                </div>
               
               </form>
