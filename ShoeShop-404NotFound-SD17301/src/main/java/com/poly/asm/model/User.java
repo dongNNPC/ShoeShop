@@ -30,7 +30,7 @@ public class User {
     private String fullName;
 
     @NotEmpty(message = "{NotEmpty.User.password}")
-    @Size(min = 8, message = "{Size.User.password}")
+    @Size(max = 10, message = "{Size.User.password}")
     private String password;
 
     @NotEmpty(message = "{NotEmpty.User.phoneNumber}")
