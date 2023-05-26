@@ -42,14 +42,13 @@
             <li class="nav-item dropdown" style="cursor: pointer ;"><a class="nav-link "  data-bs-toggle="dropdown" href="#">
           <i class="fa-solid fa-user"></i></a>
               <ul class="dropdown-menu fade-up bg-light" style=" list-style: none;">
-                <li><a class="dropdown-item" style="color: #686868" data-bs-toggle="modal" data-bs-target="#modalLogin">
+                <li><a class="dropdown-item" style="color: #686868" th:href="@{/shoeshop/login}">
                     Đăng nhập</a></li>
-                <li><a class="dropdown-item" style="color: #686868" data-bs-toggle="modal"
-                    data-bs-target="#modalSignUp"> Đăng kí </a>
+                <li><a class="dropdown-item" style="color: #686868" th:href="@{/shoeshop/signUp}"> Đăng kí </a>
                 </li>
-                <li><a class="dropdown-item" style="color: #686868" href="" data-bs-toggle="modal" data-bs-target="#modalChangePass" > Đổi mật khẩu </a>
+                <li><a class="dropdown-item" style="color: #686868" href="" th:href="@{/shoeshop/ChangePass}" > Đổi mật khẩu </a>
                 </li>
-                <li><a class="dropdown-item" style="color: #686868" href="" data-bs-toggle="modal" data-bs-target="#modalForget" > quên mật khẩu </a></li>
+                <li><a class="dropdown-item" style="color: #686868" href="" th:href="@{/shoeshop/Forget}" > quên mật khẩu </a></li>
                 <li><a class="dropdown-item" style="color: #686868" href=""> tài khoản </a></li>
                 <li><a class="dropdown-item" style="color: #686868" href=""> Đăng xuất </a></li>
               </ul>
