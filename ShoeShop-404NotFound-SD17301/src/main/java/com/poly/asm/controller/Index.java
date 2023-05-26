@@ -30,6 +30,15 @@ public class Index {
 		
 		return "/views/thanhtoan";
 	}
+	@RequestMapping("/profile")
+	public String profile() {
+		
+		return "/views/profile";
+	}
 	
+//	   @RequestMapping("/login")
+//	    public String login() {
+//	        return "/modal/modalLogin";
+//	    }
 	 
 }
