@@ -1,63 +1,77 @@
 package com.poly.asm.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.poly.asm.model.User;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/shoeshop/admin")
 public class IndexAdminController {
-    @RequestMapping("/index")
-    public String indexAdmin() {
+	@RequestMapping("/index")
+	public String indexAdmin() {
 
-        return "/admin/index";
-    }
+		return "/admin/index";
+	}
 
-    @RequestMapping("/ui-user")
-    public String listUIUserAdmin() {
+	@RequestMapping("/ui-user")
+	public String listUIUserAdmin(@ModelAttribute("user") User user) {
+		
+		return "/admin/views/ui-user";
+	}
+	@PostMapping("/ui-user")
+	public String PostUIUserAdmin(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
+		
+		return "/admin/views/ui-user";
+	}
 
-        return "/admin/views/ui-user";
-    }
 
-    @RequestMapping("/ui-brand")
-    public String listUIBrandAdmin() {
+	@RequestMapping("/ui-brand")
+	public String listUIBrandAdmin() {
 
-        return "/admin/views/ui-brand";
-    }
+		return "/admin/views/ui-brand";
+	}
 
-    @RequestMapping("/ui-category")
-    public String listUICategoryAdmin() {
+	@RequestMapping("/ui-category")
+	public String listUICategoryAdmin() {
 
-        return "/admin/views/ui-category";
-    }
+		return "/admin/views/ui-category";
+	}
 
-    @RequestMapping("/ui-product")
-    public String listUIProductAdmin() {
+	@RequestMapping("/ui-product")
+	public String listUIProductAdmin() {
 
-        return "/admin/views/ui-product";
-    }
+		return "/admin/views/ui-product";
+	}
 
-    @RequestMapping("/list-brand")
-    public String listBardAdmin() {
+	@RequestMapping("/list-brand")
+	public String listBardAdmin() {
 
-        return "/admin/views/list-brand";
-    }
+		return "/admin/views/list-brand";
+	}
 
-    @RequestMapping("/list-category")
-    public String listCategoryAdmin() {
+	@RequestMapping("/list-category")
+	public String listCategoryAdmin() {
 
-        return "/admin/views/list-category";
-    }
+		return "/admin/views/list-category";
+	}
 
-    @RequestMapping("/list-product")
-    public String listProductAdmin() {
+	@RequestMapping("/list-product")
+	public String listProductAdmin() {
 
-        return "/admin/views/list-product";
-    }
+		return "/admin/views/list-product";
+	}
 
-    @RequestMapping("/list-user")
-    public String listUserAdmin() {
+	@RequestMapping("/list-user")
+	public String listUserAdmin() {
 
-        return "/admin/views/list-user";
-    }
+		return "/admin/views/list-user";
+	}
 
 }

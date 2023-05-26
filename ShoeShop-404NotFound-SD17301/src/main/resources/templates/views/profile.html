@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" th:href="@{https://fonts.gstatic.com}">
+	<link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
+
+	<link rel="canonical" th:href="@{https://demo-basic.adminkit.io/}" />
+
+	<title>List - Brands</title>
+	<link th:href="@{/admin/css/admin.css}" rel="stylesheet" type="text/css" media="all">
+	<link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css" media="all">
+	<link th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}" rel="stylesheet" type="text/css" media="all">
+</head>
+
+<body>
+	<div class="wrapper">
+		<!-- <div th:replace="./admin/layout/sidebar ::  #sidebar"></div> -->
+		<div class="main">
+			<!-- <div th:replace="./admin/layout/nav ::  #nav-admin"></div> -->
+
+            <main class="content">
+				<div class="container-fluid p-0">
+
+					<div class="mb-3">
+						<h1 class="h3 d-inline align-middle">Profile</h1>
+						<a class="badge bg-dark text-white ms-2" href="upgrade-to-pro.html">
+      Get more page examples
+  </a>
+					</div>
+					<div class="row">
+						<div class="col-md-4 col-xl-3">
+							<div class="card mb-3">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Profile Details</h5>
+								</div>
+								<div class="card-body text-center">
+									<img th:src="@{/images/Cat.jpg}" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="128" height="128" />
+									<h5 class="card-title mb-0">Christina Mason</h5>
+									<div class="text-muted mb-2">User</div>
+
+									<div>
+										<a class="btn btn-primary btn-sm" href="#">Đổi mật khẩu</a>
+										<!-- <a class="btn btn-primary btn-sm" href="#"><span data-feather="message-square"></span> Message</a> -->
+									</div>
+								</div>
+								<hr class="my-0" />
+						
+							
+							</div>
+						</div>
+
+						<div class="col-md-8 col-xl-9">
+							<form class="container" action="${url}" method="post">
+					
+								<hr>
+								<div class="row">
+									<div class="mb-3 col-lg-6">
+										<label for="" class="form-label"><b>Username?</b></label> <input
+											type="text" class="form-control" name="id" id="" value=""
+											aria-describedby="helpId" placeholder="" />
+									</div>
+									<div class="mb-3 col-lg-6">
+										<label for="" class="form-label"><b>Password?</b> </label> <input
+											type="password" class="form-control" name="password" id=""
+											aria-describedby="helpId" placeholder=""  value=""/>
+									</div>
+								</div>
+								<div class="row">
+									<div class="mb-3 col-lg-6">
+										<label for="" class="form-label"><b>Fullname?</b></label> <input
+											type="text" class="form-control" name="fullname" id=""
+											aria-describedby="helpId" placeholder=""  value="" />
+									</div>
+									<div class="mb-3 col-lg-6">
+										<label for="" class="form-label"><b>Email
+												Address</b></label> <input type="email" class="form-control" name="email"
+											id="" aria-describedby="helpId" value="" placeholder="" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="mb-3 col-lg-6">
+										<label for="" class="form-label"><b>Address?</b></label> <input
+											type="text" class="form-control" name="fullname" id=""
+											aria-describedby="helpId" placeholder=""  value="" />
+									</div>
+									<div class="mb-3 col-lg-6">
+										<label for="" class="form-label"><b>Phone Number?</b></label> <input type="email" class="form-control" name="email"
+											id="" aria-describedby="helpId" value="" placeholder="" />
+									</div>
+								</div>
+	
+								<div class="pull-right">
+									<button formaction="" class="btn btn-primary">Đổi Thông Tin</button>
+									<button formaction=""  class="btn btn-primary">
+										Update</button>
+						
+									
+								</div>
+								</form>
+						</div>
+					</div>
+
+				</div>
+			</main>
+
+		
+			<div th:replace="./admin/layout/footer ::  #footer-admin"></div>
+		</div>
+	</div>
+
+	<script th:src="@{/admin/js/app.js}"></script>
+
+</body>
+
+</html>
