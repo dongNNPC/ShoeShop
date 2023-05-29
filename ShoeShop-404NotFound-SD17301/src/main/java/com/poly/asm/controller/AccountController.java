@@ -17,7 +17,7 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/shoeshop")
-public class accountController {
+public class AccountController {
 
 	// trang đăng nhập
 	@RequestMapping("/login")

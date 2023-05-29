@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
-	<meta name="author" content="AdminKit">
-	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description"
+	content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+<meta name="author" content="AdminKit">
+<meta name="keywords"
+	content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-	<link rel="preconnect" href="https://fonts.gstatic.com" th:href="@{https://fonts.gstatic.com}">
-	<link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
+<link rel="preconnect" href="https://fonts.gstatic.com"
+	th:href="@{https://fonts.gstatic.com}">
+<link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
 
-	<link rel="canonical" th:href="@{https://demo-basic.adminkit.io/}" />
+<link rel="canonical" th:href="@{https://demo-basic.adminkit.io/}" />
 
-	<title>List - Products</title>
-	<link th:href="@{/admin/css/admin.css}" rel="stylesheet" type="text/css" media="all">
-	<link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css" media="all">
-	<link th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}" rel="stylesheet" type="text/css" media="all">
+<title>List - Product</title>
+<link th:href="@{/admin/css/admin.css}" rel="stylesheet" type="text/css"
+	media="all">
+<link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css"
+	media="all">
+<link
+	th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}"
+	rel="stylesheet" type="text/css" media="all">
 </head>
-
 <body>
 	<div class="wrapper">
 		
@@ -49,7 +56,6 @@
 								
 								</div>
 								<hr class="my-0" />
-							
 								<hr class="my-0" />
 								<div class="card-body">
 									<h5 class="h6 card-title">About</h5>
@@ -89,16 +95,25 @@
 													<th>OPTION</th>
 												</tr>
 											</thead>
-											<c:forEach var="item" items="${Users}">
+											
 												<tbody>
-													<tr class="text-dark">
-														<td></td><td></td><td></td><td></td>
-														<td></td><td></td><td></td>
-														<td></td>
+													<tr  th:each="item ,index : ${products}" class="text-dark">
+														<td th:text="*{index.index +1}"></td>
+														<td th:text="*{item.getName()}"></td>
+														<td th:text="*{item.getPrice()}"></td>
+														<td th:text="*{item.getQuantity()}"></td>
+														<td th:text="*{item.status ? 'Đang bán' : 'Ngừng kinh doanh'}"></td>
+														<td th:text="${item.detailedImages[0].mainImage}"></td>
+														<td th:text="*{item.brand.name}"></td>
+														
+														
+														<td th:text="*{item.category.name}"></td>
+													
+													
 														<td><a href="" class="btn btn-color">Edit</a></td>
 													</tr>
 												</tbody>
-											</c:forEach>
+											
 										</table>
 									</div>
 								</div>
@@ -109,12 +124,11 @@
 				</div>
 			</main>
 
-		
-			<div th:replace="./admin/layout/footer ::  #footer-admin"></div>
+				<div th:replace="/admin/layout/footer ::  #footer-admin"></div>
 		</div>
 	</div>
 
-	<script th:src="@{/admin/js/app.js}"></script>
+		<script th:src="@{/admin/js/app.js}"></script>
 
 </body>
 
