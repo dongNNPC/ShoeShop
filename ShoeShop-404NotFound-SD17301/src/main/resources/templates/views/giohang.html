@@ -11,7 +11,7 @@
 </head>
 <link th:href="@{/css/giohang.css}" href="/css/giohang.css" rel="stylesheet" type="text/css" media="all">
 
-<script src="../assets/js/giohang.js"></script>
+<script th:src="@{/js/giohang.js}"></script>
 
 <script th:src="@{/js/giohang.js}" src="../assets/js/giohang.js" type="text/js"></script>
 
@@ -51,7 +51,7 @@
                             <td style="max-width: 100px;"><img th:src = "@{/images/bitHunterCord.png}"   height="90px" alt=""></td>
                             <td style="max-width: 50px;">Giày thể thao nam đẹp nhất năm 2023</td>
                             <td name="price">499000 </td>
-                            <td>
+                            <td style="cursor: pointer;">
                                
                                  <!-- Nút để giảm giá trị của biến quantity -->
                                  <span onclick="decrementQuantity()" style="color: #232946; font-size: 23px;">-</span>
