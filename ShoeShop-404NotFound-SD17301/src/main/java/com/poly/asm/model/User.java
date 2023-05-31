@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Users")
 public class User {
 	@NotEmpty(message = "{NotEmpty.User.iD}")
-	@Size(min = 20, message = "{Size.User.iD}")
+	@Size(min = 3, message = "{Size.User.iD}")
 	@Id
 	private String iD;
 

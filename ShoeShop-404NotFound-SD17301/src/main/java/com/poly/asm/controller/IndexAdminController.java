@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.poly.asm.dao.BrandRepository;
@@ -20,8 +18,6 @@ import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.Product;
 import com.poly.asm.model.User;
-
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/shoeshop/admin")
@@ -54,11 +50,12 @@ public class IndexAdminController {
 		return "/admin/views/ui-user";
 	}
 
-	@PostMapping("/ui-user")
-	public String PostUIUsetAdmin(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
-		model.addAttribute("ui_user", "active");
-		return "/admin/views/ui-user";
-	}
+//	@PostMapping("/ui-user")
+//	public String PostUIUsetAdmin(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
+//
+//		model.addAttribute("ui_user", "active");
+//		return "/admin/views/ui-user";
+//	}
 
 	@RequestMapping("/ui-brand")
 	public String listUIBrandAdmin(Model model) {

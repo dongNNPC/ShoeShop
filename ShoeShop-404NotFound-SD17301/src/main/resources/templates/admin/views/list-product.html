@@ -77,15 +77,10 @@
 														<td th:text="*{item.status ? 'Đang bán' : 'Ngừng kinh doanh'}"></td>
 														<td th:text="${item.detailedImages[0].mainImage}"></td>
 														<td th:text="*{item.brand.name}"></td>
-														
-														
-														<td th:text="*{item.category.name}"></td>
-													
-													
+														<td th:text="*{item.category.name}"></td>		
 														<td><a href="" class="btn btn-color">Edit</a></td>
 													</tr>
 												</tbody>
-											
 										</table>
 										<div class="float-end">
 											<button type="button" class="btn btn-primary ">

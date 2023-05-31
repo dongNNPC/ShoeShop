@@ -46,21 +46,21 @@
 
 					<div class="mb-3">
 						<!-- <h1 class="h3 d-inline align-middle">Form Thông Tin</h1> -->
-						<h3 class="fw-bold">  THÔNG TIN CHO USERS </h3>
+						<h3 class="fw-bold">THÔNG TIN CHO USERS</h3>
 					</div>
 					<div class="row">
-						<div class="col-12 col-lg-6" >
+						<div class="col-12 col-lg-6">
 							<div class="card" style="height: 410px">
 								<div class="card-header">
 									<h5 class="card-title">Hình ảnh của user :</h5>
-									
+
 								</div>
 								<div class="container bg ms-7 mt-5">
 									<div class="square" id="imageSquare">
-									 <label >Click vào để thêm ảnh </label>
-										<img th:if="${selectedImage != null}"
-											th:src="${selectedImage}" class="selected-image" /> 
-											<input type="file" id="imageInput" style="display: none;" />
+										<label>Click vào để thêm ảnh </label> <img
+											th:if="${selectedImage != null}" th:src="${selectedImage}"
+											class="selected-image" /> <input type="file" id="imageInput"
+											style="display: none;" />
 									</div>
 									<br>
 								</div>
@@ -98,9 +98,9 @@
 										<div class="row">
 											<div class="mb-3 col-lg-6">
 												<label for="Name" class="form-label"><b>Name?</b></label> <input
-													type="text" class="form-control" th:field="*{Name}"
-													id="Name" placeholder="" /> <span class="text-danger"
-													th:if="${#fields.hasErrors('Name')}" th:errors="*{Name}"></span>
+													type="text" class="form-control" th:field="*{name}"
+													id="name" placeholder="" /> <span class="text-danger"
+													th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 											</div>
 											<div class="mb-3 col-lg-6">
 												<label for="email" class="form-label"><b>Email
@@ -119,24 +119,31 @@
 													th:errors="*{address}"></span>
 											</div>
 											<div class="mb-3 col-lg-6">
-												<label for="phoneNumber" class="form-label"><b>Phone
+												<label for="phone" class="form-label"><b>phone
 														Number?</b></label> <input type="text" class="form-control"
-													th:field="*{Phone}" id="phoneNumber" placeholder="" /> <span
-													class="text-danger" th:if="${#fields.hasErrors('Phone')}"
-													th:errors="*{Phone}"></span>
+													th:field="*{phone}" id="phone" placeholder="" /> <span
+													class="text-danger" th:if="${#fields.hasErrors('phone')}"
+													th:errors="*{phone}"></span>
 											</div>
 										</div>
 
+
 										<div class="pull-right">
-											<button type="submit" class="btn btn-primary">Create 
-											<i class="fa-solid fa-plus"></i>
+											<button type="submit"
+												formaction="/shoeshop/admin/list-user/create"
+												class="btn btn-primary">
+												Create <i class="fa-solid fa-plus"></i>
 											</button>
-											<button type="submit" class="btn btn-info">Update
-											<i class="fa-solid fa-pen"></i>
+											<button type="submit"
+												formaction="/shoeshop/admin/list-user/update"
+												class="btn btn-info">
+												Update <i class="fa-solid fa-pen"></i>
 											</button>
 										</div>
+
+
 									</form>
-								
+
 								</div>
 							</div>
 						</div>
@@ -144,7 +151,18 @@
 
 				</div>
 			</main>
-
+			<div th:if="${successMessage}" id="successDialog"
+				class="dialog-overlay">
+				<div class="dialog-content">
+					<p th:text="${successMessage}"></p>
+				</div>
+			</div>
+			<div th:if="${failed}" id="successDialog"
+				class="dialog-overlay">
+				<div class="dialog-content-failed">
+					<p th:text="${failed}"></p>
+				</div>
+			</div>
 
 			<div th:replace="./admin/layout/footer ::  #footer-admin"></div>
 		</div>
@@ -152,57 +170,64 @@
 
 	<script th:src="@{/admin/js/app.js}"></script>
 	<script th:inline="javascript">
-  /*<![CDATA[*/
-  const square = document.getElementById('imageSquare');
-  const imageInput = document.getElementById('imageInput');
+		/*<![CDATA[*/
+		const square = document.getElementById('imageSquare');
+		const imageInput = document.getElementById('imageInput');
 
-  square.addEventListener('click', function() {
-    // Trigger the file selection dialog
-    imageInput.click();
-  });
+		square.addEventListener('click', function() {
+			// Trigger the file selection dialog
+			imageInput.click();
+		});
 
-  imageInput.addEventListener('change', function(event) {
-    const file = event.target.files[0];
+		imageInput.addEventListener('change', function(event) {
+			const file = event.target.files[0];
 
-    // Check if a file was selected
-    if (file) {
-      const reader = new FileReader();
+			// Check if a file was selected
+			if (file) {
+				const reader = new FileReader();
 
-      // Read the contents of the file
-      reader.onload = function() {
-        const imageUrl = reader.result;
+				// Read the contents of the file
+				reader.onload = function() {
+					const imageUrl = reader.result;
 
-        // Create an image element and set the source
-        const image = document.createElement('img');
-        image.src = imageUrl;
-        image.classList.add('selected-image');
+					// Create an image element and set the source
+					const image = document.createElement('img');
+					image.src = imageUrl;
+					image.classList.add('selected-image');
 
-        // Clear the square and append the image
-        square.innerHTML = '';
-        square.appendChild(image);
+					// Clear the square and append the image
+					square.innerHTML = '';
+					square.appendChild(image);
 
-        // Send the image to the server via AJAX
-        const formData = new FormData();
-        formData.append('file', file);
+					// Send the image to the server via AJAX
+					const formData = new FormData();
+					formData.append('file', file);
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/upload', true);
-        xhr.onload = function() {
-          if (xhr.status === 200) {
-            console.log('Image uploaded successfully');
-          } else {
-            console.error('Error uploading image');
-          }
-        };
-        xhr.send(formData);
-      };
+					const xhr = new XMLHttpRequest();
+					xhr.open('POST', '/upload', true);
+					xhr.onload = function() {
+						if (xhr.status === 200) {
+							console.log('Image uploaded successfully');
+						} else {
+							console.error('Error uploading image');
+						}
+					};
+					xhr.send(formData);
+				};
 
-      // Read the file as data URL
-      reader.readAsDataURL(file);
-    }
-  });
-  /*]]>*/
-</script>
+				// Read the file as data URL
+				reader.readAsDataURL(file);
+			}
+		});
+		/*]]>*/
+	</script>
+	<script th:inline="javascript">
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 1000); // 5000 milliseconds = 5 seconds
+	</script>
+
+
 </body>
 
 </html>

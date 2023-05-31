@@ -73,7 +73,7 @@
 													<td th:text="*{item.getEmail()}"></td>
 													<td th:text="*{item.getImage()}"></td>
 													<td th:text="*{item.admin ? 'Admin' : 'User'}"></td>
-													<td><a href="#" class="btn btn-color">Edit</a></td>
+													<td><a th:href="@{/shoeshop/admin/list-user/edit/{id}(id=*{item.getID()})}" class="btn btn-primary">Edit</a></td>
 												</tr>
 											</tbody>
 										</table>
