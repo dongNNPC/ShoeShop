@@ -1,4 +1,4 @@
-package com.poly.asm.controller.usercontroller;
+package com.poly.asm.controller.admin.controller;
 
 import java.util.List;
 
