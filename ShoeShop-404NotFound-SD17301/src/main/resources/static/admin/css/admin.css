@@ -1,52 +1,94 @@
 @charset "UTF-8";
+
 .nav-pills-custom .nav-link {
-    color: #aaa;
-    background: #fff;
-    position: relative;
+	color: #aaa;
+	background: #fff;
+	position: relative;
 }
 
 .nav-pills-custom .nav-link.active {
-    color: #45b649;
-    background: #fff;
+	color: #45b649;
+	background: #fff;
 }
 
-@media (min-width: 992px) {
-    .nav-pills-custom .nav-link::before {
-        content: '';
-        display: block;
-        border-top: 8px solid transparent;
-        border-left: 10px solid #fff;
-        border-bottom: 8px solid transparent;
-        position: absolute;
-        top: 50%;
-        right: -10px;
-        transform: translateY(-50%);
-        opacity: 0;
-    }
+@media ( min-width : 992px) {
+	.nav-pills-custom .nav-link::before {
+		content: '';
+		display: block;
+		border-top: 8px solid transparent;
+		border-left: 10px solid #fff;
+		border-bottom: 8px solid transparent;
+		position: absolute;
+		top: 50%;
+		right: -10px;
+		transform: translateY(-50%);
+		opacity: 0;
+	}
 }
 
 .nav-pills-custom .nav-link.active::before {
-    opacity: 1;
+	opacity: 1;
+}
 
+.btn-color {
+	background-color: #232946;
+	color: #fffffe;
 }
-.btn-color{
-    background-color: #232946 ;color: #fffffe;
+
+.tr-color {
+	background-color: #232946;
 }
-.tr-color{
-    background-color: #232946 ;
-}
+
 .square {
-    width: 200px;
-    height: 200px;
-    border: 2px solid #ccc;
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
+	width: 200px;
+	height: 200px;
+	border: 2px solid #ccc;
+	background-color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
 
-  .selected-image {
-    max-width: 100%;
-    max-height: 100%;
-  }
+.selected-image {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+/* Bắt lỗi*/
+.dialog-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	z-index: 9999;
+}
+
+.dialog-content {
+	border-radius: 10px;
+	font-weight:bolder;
+	 color : white;
+	background-color: #429A43;
+	margin: 20px;
+	padding: 10px;
+	padding-top:25px;
+	max-width: 600px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+.dialog-content-failed {
+	border-radius: 10px;
+	font-weight:bolder;
+	 color : white;
+	background-color:#FF0000;
+	margin: 20px;
+	padding: 10px;
+	padding-top:25px;
+	max-width: 600px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
