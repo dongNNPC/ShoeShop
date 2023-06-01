@@ -33,10 +33,9 @@ public class UserController {
 
 	@RequestMapping("/edit/{id}")
 	public String edit(Model model, @PathVariable("id") String id) {
-		String successMessage = "Update successful";
-		model.addAttribute("successMessage", successMessage);
 		User user = dao.findById(id).get();
 		model.addAttribute("user", user);
+		model.addAttribute("img", user.getImage());
 		List<User> users = dao.findAll();
 		model.addAttribute("users", users);
 		return "/admin/views/ui-user";
@@ -66,6 +65,20 @@ public class UserController {
 
 		dao.save(user);
 		return "redirect:/shoeshop/admin/list-user/edit/" + user.getID();
+	}
+
+	@RequestMapping("/edit-update/{id}")
+	public String editUpdate(Model model, @PathVariable("id") String id) {
+
+		String successMessage = "Update successful";
+		model.addAttribute("successMessage", successMessage);
+		User user = dao.findById(id).get();
+		model.addAttribute("user", user);
+		model.addAttribute("img", user.getImage());
+		List<User> users = dao.findAll();
+		model.addAttribute("users", users);
+		return "/admin/views/ui-user";
+
 	}
 
 	@RequestMapping("/delete/{id}")
