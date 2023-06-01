@@ -3,103 +3,115 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description"
+	content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 <meta name="author" content="AdminKit">
-<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}" href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" type="text/css" media="all" />
-<link rel="preconnect" href="https://fonts.gstatic.com" th:href="@{https://fonts.gstatic.com}">
+<meta name="keywords"
+	content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}"
+	href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet"
+	type="text/css" media="all" />
+<link rel="preconnect" href="https://fonts.gstatic.com"
+	th:href="@{https://fonts.gstatic.com}">
 <link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
 
 <link rel="canonical" th:href="@{https://demo-basic.adminkit.io/}" />
 
 <title>List - Product</title>
-<link th:href="@{/admin/css/admin.css}" rel="stylesheet" type="text/css" media="all">
-<link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css" media="all">
-<link th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}" rel="stylesheet" type="text/css" media="all">
+<link th:href="@{/admin/css/admin.css}" rel="stylesheet" type="text/css"
+	media="all">
+<link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css"
+	media="all">
+<link
+	th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}"
+	rel="stylesheet" type="text/css" media="all">
 </head>
 <body>
-<div class="wrapper">
+	<div class="wrapper">
 
-    <div th:replace="./admin/layout/sidebar ::  #sidebar"></div>
-    <div class="main">
-        <div th:replace="./admin/layout/nav ::  #nav-admin"></div>
+		<div th:replace="./admin/layout/sidebar ::  #sidebar"></div>
+		<div class="main">
+			<div th:replace="./admin/layout/nav ::  #nav-admin"></div>
 
-        <main class="content">
-            <div class="container-fluid p-0">
+			<main class="content">
+				<div class="container-fluid p-0">
 
-                <div class="mb-3">
-                    <h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO PRODUCT</h3>
-                </div>
-                <div class="row">
+					<div class="mb-3">
+						<h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO PRODUCT</h3>
+					</div>
+					<div class="row">
 
-                    <div class="col-md-12 col-xl-12">
-                        <div class="card">
+						<div class="col-md-12 col-xl-12">
+							<div class="card">
 
-                            <div class="card-body h-100">
-                                <div class="table-responsive">
-                                    <table class="table table-hover Table-striped table-bordered table-condensed">
-                                        <thead>
-                                            <tr class="tr-color text-light">
-                                                <th>TT</th>
-                                                <th>NAME</th>
-                                                <th>PRICE</th>
-                                                <th>QUANTITY</th>
-                                                <th>STATUS</th>
-                                                <th>IMAGE</th>
-                                                <th>BRAND</th>
-                                                <th>CATEGORY</th>
-                                                <th>OPTION</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="item, index : ${products}" class="text-dark">
-                                                <td th:text="*{index.index + 1}"></td>
-                                                <td th:text="*{item.getName()}"></td>
-                                                <td th:text="*{item.getPrice()}"></td>
-                                                <td th:text="*{item.getQuantity()}"></td>
-                                                <td th:text="*{item.status ? 'Đang bán' : 'Ngừng kinh doanh'}"></td>
-<td>
-  <img th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}" alt="Image" style="max-width: 200px">
-</td>
+								<div class="card-body h-100">
+									<div class="table-responsive">
+										<table
+											class="table table-hover Table-striped table-bordered table-condensed">
+											<thead>
+												<tr class="tr-color text-light">
+													<th>TT</th>
+													<th>NAME</th>
+													<th>PRICE</th>
+													<th>QUANTITY</th>
+													<th>STATUS</th>
+													<th>IMAGE</th>
+													<th>BRAND</th>
+													<th>CATEGORY</th>
+													<th>OPTION</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="item, index : ${products}" class="text-dark">
+													<td th:text="*{index.index + 1}"></td>
+													<td th:text="*{item.getName()}"></td>
+													<td th:text="*{item.getPrice()}"></td>
+													<td th:text="*{item.getQuantity()}"></td>
+													<td
+														th:text="*{item.status ? 'Đang bán' : 'Ngừng kinh doanh'}"></td>
+													<td><img
+														th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}"
+														alt="Image" style="max-width: 200px"></td>
 
 
-                                                <td th:text="*{item.brand.name}"></td>
-                                                <td th:text="*{item.category.name}"></td>
-                                                <td>
-                                                    <a th:href="@{/shoeshop/admin/list-product/edit/{id}(id=*{item.getId()})}" class="btn btn-primary">Edit</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="float-end">
-                                        <button type="button" class="btn btn-primary">
-                                            <i class="fa-solid fa-backward-fast"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-primary">
-                                            <i class="fa-solid fa-backward"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-primary">
-                                            <i class="fa-solid fa-forward"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-primary">
-                                            <i class="fa-solid fa-forward-fast"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+													<td th:text="*{item.brand.name}"></td>
+													<td th:text="*{item.category.name}"></td>
+													<td><a
+														th:href="@{/shoeshop/admin/list-product/edit/{id}(id=*{item.getId()})}"
+														class="btn btn-primary">Edit</a></td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="float-end">
+											<button type="button" class="btn btn-primary">
+												<i class="fa-solid fa-backward-fast"></i>
+											</button>
+											<button type="button" class="btn btn-primary">
+												<i class="fa-solid fa-backward"></i>
+											</button>
+											<button type="button" class="btn btn-primary">
+												<i class="fa-solid fa-forward"></i>
+											</button>
+											<button type="button" class="btn btn-primary">
+												<i class="fa-solid fa-forward-fast"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 
-            </div>
-        </main>
+				</div>
+			</main>
 
-        <div th:replace="/admin/layout/footer ::  #footer-admin"></div>
-    </div>
-</div>
+			<div th:replace="/admin/layout/footer ::  #footer-admin"></div>
+		</div>
+	</div>
 
-<script th:src="@{/admin/js/app.js}"></script>
+	<script th:src="@{/admin/js/app.js}"></script>
 
 </body>
 </html>

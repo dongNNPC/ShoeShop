@@ -6,11 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 @Configuration
-public class ResourceConfig {
+public class ResourceConfigProduct {
 	@Bean("messageSource")
 	public MessageSource getMessageSource() {
 		ReloadableResourceBundleMessageSource ms = new ReloadableResourceBundleMessageSource();
-		ms.setBasenames("classpath:messages/user");
+		ms.setBasenames("classpath:messages/product");
 		ms.setDefaultEncoding("utf-8");
 		return ms;
 	}

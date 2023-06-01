@@ -66,6 +66,9 @@ public class IndexAdminController {
 	@RequestMapping("/ui-category")
 	public String listUICategoryAdmin(Model model) {
 		model.addAttribute("ui_category", "active");
+		Category item = new Category();
+		model.addAttribute("category", item);
+
 		return "/admin/views/ui-category";
 	}
 

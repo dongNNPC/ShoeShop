@@ -96,11 +96,7 @@ public class ProductController {
 			model.addAttribute("failed", successMessage);
 			return "/admin/views/ui-product";
 		}
-
 		dao.save(product);
-
-		daoDetailedImage.save(detailedImage);
-
 		String successMessage = "Create successful";
 		model.addAttribute("successMessage", successMessage);
 		return "redirect:/shoeshop/admin/list-product/edit-update/" + product.getId();
@@ -108,7 +104,7 @@ public class ProductController {
 
 	@RequestMapping("/update")
 	public String update(Model model, @Valid @ModelAttribute("product") Product product, BindingResult rs,
-			@ModelAttribute("detailedImage") DetailedImage detailedImage) {
+			@Valid @ModelAttribute("detailedImage") DetailedImage detailedImage) {
 //		Danh mục
 		Category itemCategory = new Category();
 		model.addAttribute("category", itemCategory);
@@ -119,11 +115,11 @@ public class ProductController {
 		model.addAttribute("brand", itemBrand);
 		List<Brand> itemsBrand = daoBrandRepository.findAll();
 		model.addAttribute("brands", itemsBrand);
-//		if (rs.hasErrors()) {
-//			String successMessage = "Update failed";
-//			model.addAttribute("Updatefailed", successMessage);
-//			return "/admin/views/ui-product";
-//		}
+		if (rs.hasErrors()) {
+			String successMessage = "Update failed";
+			model.addAttribute("Updatefailed", successMessage);
+			return "/admin/views/ui-product";
+		}
 
 		dao.save(product);
 		return "redirect:/shoeshop/admin/list-product/edit-update/" + product.getId();
@@ -131,7 +127,8 @@ public class ProductController {
 
 	@RequestMapping("/edit-update/{id}")
 	public String editUpdate(Model model, @PathVariable("id") String id) {
-
+		String successMessage = "Successful";
+		model.addAttribute("successMessage", successMessage);
 		// product
 		Product product = dao.findById(id).get();
 		model.addAttribute("product", product);

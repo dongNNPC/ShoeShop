@@ -2,29 +2,37 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
-	<meta name="author" content="AdminKit">
-	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-	<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}"
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description"
+	content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+<meta name="author" content="AdminKit">
+<meta name="keywords"
+	content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}"
 	href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet"
 	type="text/css" media="all" />
-	<link
+<link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
 	crossorigin="anonymous" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" th:href="@{https://fonts.gstatic.com}">
-	<link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
+<link rel="preconnect" href="https://fonts.gstatic.com"
+	th:href="@{https://fonts.gstatic.com}">
+<link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
 
-	<link rel="canonical" th:href="@{https://demo-basic.adminkit.io/}" />
+<link rel="canonical" th:href="@{https://demo-basic.adminkit.io/}" />
 
-	<title>UI - Category</title>
-	<link th:href="@{/admin/css/admin.css}" rel="stylesheet" type="text/css" media="all">
-	<link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css" media="all">
-	<link th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}" rel="stylesheet" type="text/css" media="all">
+<title>UI - Category</title>
+<link th:href="@{/admin/css/admin.css}" rel="stylesheet" type="text/css"
+	media="all">
+<link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css"
+	media="all">
+<link
+	th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}"
+	rel="stylesheet" type="text/css" media="all">
 </head>
 
 <body>
@@ -38,58 +46,88 @@
 
 					<div class="mb-3">
 						<!-- <h1 class="h3 d-inline align-middle">Form Thông Tin</h1> -->
-						<h3 class="fw-bold ml-1">  THÔNG TIN CHO CATEGORY </h3>
+						<h3 class="fw-bold ml-1">THÔNG TIN CHO CATEGORY</h3>
 					</div>
 					<div class="row container">
-			
+
 						<div class="col-12 col-lg-12">
 							<div class="card">
 								<div class="card-header">
 									<h5 class="card-title">Form Thông Tin</h5>
-									<h6 class="card-subtitle text-muted">Form thông tin để nhập thông tin cho CATEGORY.</h6>
+									<h6 class="card-subtitle text-muted">Form thông tin để
+										nhập thông tin cho CATEGORY.</h6>
 								</div>
 								<div class="card-body">
-									<form class="container" action="${url}" method="post">
-					
+									<form class="container" th:action="${url}" method="post"
+										th:object="${category}">
 										<hr>
 										<div class="row">
 											<div class="mb-3 col-lg-6">
-												<label for="" class="form-label"><b>Name?</b></label> <input
-													type="text" class="form-control" name="id" id="" value=""
-													aria-describedby="helpId" placeholder="" />
+												<label for="id" class="form-label"><b>ID?</b></label> <input
+													type="text" class="form-control" th:field="*{id}" id="id"
+													aria-describedby="helpId" placeholder="" /> <span
+													class="text-danger" th:if="${#fields.hasErrors('id')}"
+													th:errors="*{id}"></span>
 											</div>
 											<div class="mb-3 col-lg-6">
-												<label for="" class="form-label"><b>Address?</b> </label> <input
-													type="text" class="form-control" name="password" id=""
-													aria-describedby="helpId" placeholder=""  value=""/>
+												<label for="name" class="form-label"><b>Name?</b></label> <input
+													type="text" class="form-control" th:field="*{name}"
+													id="name" aria-describedby="helpId" placeholder="" /> <span
+													class="text-danger" th:if="${#fields.hasErrors('name')}"
+													th:errors="*{name}"></span>
+											</div>
+											<div class="mb-3 col-lg-6">
+												<label for="description" class="form-label"><b>Description?</b></label>
+												<input type="text" class="form-control"
+													th:field="*{description}" id="description"
+													aria-describedby="helpId" placeholder="" /> <span
+													class="text-danger"
+													th:if="${#fields.hasErrors('description')}"
+													th:errors="*{description}"></span>
 											</div>
 										</div>
-									
-			
-										<div class=" me-auto">
-											<button type="submit" class="btn btn-primary">Create 
-											<i class="fa-solid fa-plus"></i>
+										<div class="me-auto mt-5">
+											<button type="submit"
+												formaction="/shoeshop/admin/list-category/create"
+												class="btn btn-primary ms-auto">
+												Create <i class="fa-solid fa-plus"></i>
 											</button>
-											<button type="submit" class="btn btn-info">Update
-											<i class="fa-solid fa-pen"></i>
+											<button type="submit"
+												formaction="/shoeshop/admin/list-category/update"
+												class="btn btn-info ms-auto">
+												Update <i class="fa-solid fa-pen"></i>
 											</button>
-											
 										</div>
-										</form>
+									</form>
+
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</main>
+			<div th:if="${successMessage}" id="successDialog"
+				class="dialog-overlay">
+				<div class="dialog-content">
+					<p th:text="${successMessage}"></p>
+				</div>
+			</div>
+			<div th:if="${failed}" id="successDialog" class="dialog-overlay">
+				<div class="dialog-content-failed">
+					<p th:text="${failed}"></p>
+				</div>
+			</div>
 
-			
 			<div th:replace="./admin/layout/footer ::  #footer-admin"></div>
 		</div>
 	</div>
 
 	<script th:src="@{/admin/js/app.js}"></script>
+	<script th:inline="javascript">
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 2000); // 5000 milliseconds = 5 seconds
+	</script>
 
 </body>
 
