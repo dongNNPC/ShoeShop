@@ -28,7 +28,7 @@
 .card img {
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
-   
+  height: 200px
 
 }
 .card img :hover{
@@ -43,6 +43,7 @@
     -o-transition: all .2s ease-out;
     transition: all .2s ease-out;
     filter: drop-shadow(2px -9px 4px rgba(0, 69, 134, 0.2));
+   
 }
 
 .card:hover svg {
@@ -53,4 +54,5 @@
 .IMGItem :hover{
     background-color: rgb(150, 158, 158);
     border-radius: 20px;
+   
 }
