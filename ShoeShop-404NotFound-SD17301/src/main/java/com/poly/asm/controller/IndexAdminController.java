@@ -70,8 +70,18 @@ public class IndexAdminController {
 	}
 
 	@RequestMapping("/ui-product")
-	public String listUIProductAdmin(Model model) {
+	public String listUIProductAdmin(@ModelAttribute("product") Product product, Model model) {
 		model.addAttribute("ui_product", "active");
+//		Danh mục
+		Category itemCategory = new Category();
+		model.addAttribute("category", itemCategory);
+		List<Category> itemsCategories = daoCategory.findAll();
+		model.addAttribute("categories", itemsCategories);
+// Nhãn hàng
+		Brand itemBrand = new Brand();
+		model.addAttribute("brand", itemBrand);
+		List<Brand> itemsBrand = daoBrandRepository.findAll();
+		model.addAttribute("brands", itemsBrand);
 		return "/admin/views/ui-product";
 	}
 
@@ -101,12 +111,16 @@ public class IndexAdminController {
 	@RequestMapping("/list-product")
 	public String listProductAdmin(Model model) {
 		model.addAttribute("list_product", "active");
-		model.addAttribute("active", "active");
 		Product item = new Product();
 		model.addAttribute("product", item);
 		List<Product> items = daoProduct.findAll();
-		List<DetailedImage> detailedImages = daoDetailedImage.findAll();
 		model.addAttribute("products", items);
+
+//		detailed Image
+		DetailedImage detailedImage = new DetailedImage();
+		model.addAttribute("detailedImage", detailedImage);
+		List<DetailedImage> listDetailedImages = daoDetailedImage.findAll();
+		model.addAttribute("DetailedImages", listDetailedImages);
 		return "/admin/views/list-product";
 	}
 

@@ -1,5 +1,7 @@
 package com.poly.asm.model;
 
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,16 +12,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
+@Data
 @Entity
 @Table(name = "Detailedimages")
 public class DetailedImage {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id_image;
 	@ManyToOne
 	private Product product;
 	private String mainImage;

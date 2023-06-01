@@ -47,29 +47,36 @@
 
 					<div class="mb-3">
 						<!-- <h1 class="h3 d-inline align-middle">Form Thông Tin</h1> -->
-					<h3 class="fw-bold">  THÔNG TIN CHO PRODUCT</h3>
+						<h3 class="fw-bold">THÔNG TIN CHO PRODUCT</h3>
 					</div>
 					<div class="row">
+
 						<div class="col-12 col-lg-6">
-							<div class="card" >
+
+							<div class="card">
 								<div class="card-header">
 									<h5 class="card-title">Main Image</h5>
 									<h6 class="card-subtitle text-muted">Hình ảnh chính của
 										sản phẩm.</h6>
 								</div>
-								<div class="container bg ms-7">
-
-									<div class="square" id="imageSquare">
-										<label>Click vào để thêm ảnh </label> <img
-											th:if="${selectedImage != null}" th:src="${selectedImage}"
-											class="selected-image" /> <input type="file" id="imageInput"
-											style="display: none;" />
-									</div>
+								<div class="container" style="text-align: center;">
+									<form class="card" method="post" th:object="${detailedImage}"
+										th:action="@{/shoeshop/admin/ui-product}">
+										<div class="square" id="imageSquare"
+											style="border: 1px solid white; display: inline-block; margin: 0 auto;">
+											<img th:if="${selectedImage != null}"
+												th:src="${selectedImage}" class="selected-image" /> <img
+												th:src="@{/images/product-images/__${mainImage}__}"
+												alt="Image" style="max-width: 300px">
+										</div>
+									</form>
+									<br>
 								</div>
 								<br>
 							</div>
 
-							<div class="card">
+							<form class="card" method="post" th:object="${detailedImage}"
+								th:action="@{/shoeshop/admin/list-product/updateImage}">
 								<div class="card-header">
 									<h5 class="card-title">Secondary Image</h5>
 									<h6 class="card-subtitle text-muted">Hình ảnh để khách
@@ -78,99 +85,139 @@
 								<!-- 3 ảnh chi tiết -->
 								<div class="card-body">
 									<div class="mb-3">
-										<label for="formFile" class="form-label">Chọn hình chi tiết 1 ảnh</label> 
-										<input class="form-control" type="file" id="formFile">
+										<label for="detailedOne" class="form-label">Chọn hình
+											chi tiết 1</label> <input class="form-control" type="file"
+											id="detailedOne" th:field="*{detailedOne}" />
+									</div>
+									 <input
+												type="file" id="imageInput" th:field="*{mainImage}"
+												style="display: none" />
+									<div class="mb-3">
+										<label for="detailedTwo" class="form-label">Chọn hình
+											chi tiết 2</label> <input class="form-control" type="file"
+											id="detailedTwo" th:field="*{detailedTwo}" />
 									</div>
 									<div class="mb-3">
-										<label for="formFile" class="form-label">Chọn hình chi tiết 2 ảnh</label> 
-										<input class="form-control" type="file" id="formFile">
+										<label for="detailedThree" class="form-label">Chọn
+											hình chi tiết 3</label> <input class="form-control" type="file"
+											id="detailedThree" th:field="*{detailedThree}" />
 									</div>
-									<div class="mb-3">
-										<label for="formFile" class="form-label">Chọn hình chi tiết 3 ảnh</label> 
-										<input class="form-control" type="file" id="formFile">
-									</div>
+									<button type="submit" class="btn btn-primary">Submit</button>
 								</div>
-							</div>
+							</form>
+
 						</div>
 						<div class="col-12 col-lg-6">
-							<div class="card" style="height: 660px">
+							<div class="card">
 								<div class="card-header">
 									<h5 class="card-title">Form Thông Tin</h5>
 									<h6 class="card-subtitle text-muted">Form thông tin để
 										nhập thông tin cho Sản phẩm.</h6>
 								</div>
 								<div class="card-body">
-									<form class="container" action="${url}" method="post">
-
+									<form class="container" method="post"
+										th:action="@{/shoeshop/admin/ui-product}"
+										th:object="${product}">
 										<hr>
 										<div class="row">
 											<div class="mb-3 col-lg-12">
+												<label for="" class="form-label"><b>ID?</b></label> <input
+													type="text" class="form-control" th:field="*{id}"
+													th:id="${id}" aria-describedby="helpId" placeholder="" />
+											</div>
+
+											<div class="mb-3 col-lg-12">
 												<label for="" class="form-label"><b>Name?</b></label> <input
-													type="text" class="form-control" name="id" id="" value=""
+													type="text" class="form-control" th:field="*{name}" id=""
 													aria-describedby="helpId" placeholder="" />
 											</div>
+
 											<div class="mb-3 col-lg-12">
-												<label for="" class="form-label"><b>Price?</b> </label> <input
-													type="text" class="form-control" name="password" id=""
-													aria-describedby="helpId" placeholder="" value="" />
+												<label for="" class="form-label"><b>Price?</b></label> <input
+													type="text" class="form-control" th:field="*{price}" id=""
+													aria-describedby="helpId" placeholder="" />
 											</div>
 										</div>
 										<div class="row">
 											<div class="mb-3 col-lg-12">
-												<label for="" class="form-label"><b>Quality?</b></label> <input
-													type="number" class="form-control" name="fullname" id=""
-													aria-describedby="helpId" placeholder="" value="" />
+												<label for="" class="form-label"><b>Quantity?</b></label> <input
+													type="number" class="form-control" th:field="*{quantity}"
+													id="" aria-describedby="helpId" placeholder="" />
 											</div>
-
 										</div>
 										<div class="row">
 											<label for="" class="form-label"><b>Description?</b></label>
 											<div class="form-floating">
 												<textarea class="form-control"
 													placeholder="Nhập nội dung..."
-													id="exampleFormControlTextarea1" rows="10"></textarea>
+													id="exampleFormControlTextarea1" rows="10"
+													th:field="*{description}"></textarea>
 												<label for="exampleFormControlTextarea1">info...</label>
 											</div>
 										</div>
+										<div class="row">
+											<div class="col-lg-12">
+												<label for="" class="form-label"><b>Trạng thái:</b></label>
+												<div class="form-check">
+													<input class="form-check-input" type="radio" name="status"
+														id="statusActive" th:value="true"
+														th:checked="${product.status ? 'checked' : null}">
+													<label class="form-check-label" for="statusActive">Đang
+														bán</label>
+												</div>
+												<div class="form-check">
+													<input class="form-check-input" type="radio"
+														th:field="*{status}" name="status" id="statusInactive"
+														th:value="false"
+														th:checked="${!product.status ? 'checked' : null}">
+													<label class="form-check-label" for="statusInactive">Ngừng
+														kinh doanh</label>
+												</div>
+											</div>
 
 
+										</div>
 										<div class="row mt-5 mb-3">
 											<div class="form-floating col-lg-6">
 												<select class="form-select" id="exampleFormControlSelect1"
-													aria-label="Chọn một lựa chọn">
-													<option selected disabled>Chọn một lựa chọn</option>
-													<option value="1">Lựa chọn thứ nhất</option>
-													<option value="2">Lựa chọn thứ hai</option>
-													<option value="3">Lựa chọn thứ ba</option>
-												</select> <label for="exampleFormControlSelect1">Brands</label>
+													aria-label="Chọn một lựa chọn" th:field="*{brand.id}">
+
+													<option th:each="brand : ${brands}" th:value="${brand.id}"
+														th:selected="${brand.id == product.brand.id}"
+														th:text="${brand.name}"></option>
+
+												</select><label for="exampleFormControlSelect1">Brand</label>
 											</div>
 											<div class="form-floating col-lg-6">
 												<select class="form-select" id="exampleFormControlSelect1"
-													aria-label="Chọn một lựa chọn">
-													<option selected disabled>Chọn một lựa chọn</option>
-													<option value="1">Lựa chọn thứ nhất</option>
-													<option value="2">Lựa chọn thứ hai</option>
-													<option value="3">Lựa chọn thứ ba</option>
+													aria-label="Chọn một lựa chọn" th:field="*{category.id}">
+
+													<option th:each="category : ${categories}"
+														th:selected="${category.id == product.category.id}"
+														th:value="${category.id}" th:text="${category.name}"></option>
+
 												</select> <label for="exampleFormControlSelect1">Categories</label>
 											</div>
 
-
 										</div>
-
 										<div class="me-auto mt-5">
-											<button type="submit" class="btn btn-primary ms-auto" >Create 
-											<i class="fa-solid fa-plus"></i>
+											<button type="submit"
+												formaction="/shoeshop/admin/list-product/create"
+												class="btn btn-primary ms-auto">
+												Create <i class="fa-solid fa-plus"></i>
 											</button>
-											<button type="submit" class="btn btn-info ms-auto">Update
-											<i class="fa-solid fa-pen"></i>
+											<button type="submit"
+												formaction="/shoeshop/admin/list-product/update"
+												class="btn btn-info ms-auto">
+												Update <i class="fa-solid fa-pen"></i>
 											</button>
-
-
 										</div>
+
 									</form>
 								</div>
 							</div>
 						</div>
+
 					</div>
 
 				</div>
