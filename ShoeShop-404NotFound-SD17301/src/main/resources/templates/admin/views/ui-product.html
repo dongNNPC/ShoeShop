@@ -84,7 +84,10 @@
 								</div>
 								<!-- 3 ảnh chi tiết -->
 								<div class="card-body">
+								
+								<input class="form-control" type="text" th:id="*{id_image}" th:field="*{id_image}"  id="ee" th:value= "${idImage}" />
 									<div class="mb-3">
+								
 										<label for="detailedOne" class="form-label">Chọn hình
 											chi tiết 1</label> <input class="form-control" type="file"
 											id="detailedOne" th:field="*{detailedOne}" />
@@ -102,7 +105,9 @@
 											hình chi tiết 3</label> <input class="form-control" type="file"
 											id="detailedThree" th:field="*{detailedThree}" />
 									</div>
-									<button type="submit" class="btn btn-primary">Submit</button>
+					<input class="form-control" type="text" th:field="*{product.id}" id="details" th:value="${idProduct}" />
+		
+									<button type="submit" class="btn btn-primary">Lưu Hình</button>
 								</div>
 							</form>
 
@@ -159,8 +164,7 @@
 											<div class="col-lg-12">
 												<label for="" class="form-label"><b>Trạng thái:</b></label>
 												<div class="form-check">
-													<input class="form-check-input" type="radio" name="status"
-														id="statusActive" th:value="true"
+													<input class="form-check-input" type="radio" name="status" th:field="*{status}" id="statusActive" th:value="true"
 														th:checked="${product.status ? 'checked' : null}">
 													<label class="form-check-label" for="statusActive">Đang
 														bán</label>

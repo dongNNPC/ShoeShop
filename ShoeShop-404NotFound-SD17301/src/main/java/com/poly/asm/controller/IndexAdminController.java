@@ -72,6 +72,8 @@ public class IndexAdminController {
 	@RequestMapping("/ui-product")
 	public String listUIProductAdmin(@ModelAttribute("product") Product product, Model model) {
 		model.addAttribute("ui_product", "active");
+		DetailedImage detailedImage = new DetailedImage();
+		model.addAttribute("detailedImage", detailedImage);
 //		Danh mục
 		Category itemCategory = new Category();
 		model.addAttribute("category", itemCategory);
@@ -82,6 +84,7 @@ public class IndexAdminController {
 		model.addAttribute("brand", itemBrand);
 		List<Brand> itemsBrand = daoBrandRepository.findAll();
 		model.addAttribute("brands", itemsBrand);
+
 		return "/admin/views/ui-product";
 	}
 

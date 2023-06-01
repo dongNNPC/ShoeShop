@@ -59,9 +59,11 @@
                                                 <td th:text="*{item.getPrice()}"></td>
                                                 <td th:text="*{item.getQuantity()}"></td>
                                                 <td th:text="*{item.status ? 'Đang bán' : 'Ngừng kinh doanh'}"></td>
-                                                <td>
-                                                    <img th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}" alt="Image" style="max-width: 200px">
-                                                </td>
+<td>
+  <img th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}" alt="Image" style="max-width: 200px">
+</td>
+
+
                                                 <td th:text="*{item.brand.name}"></td>
                                                 <td th:text="*{item.category.name}"></td>
                                                 <td>

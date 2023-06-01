@@ -1,6 +1,5 @@
 package com.poly.asm.controller.admin.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +65,13 @@ public class ProductController {
 		for (DetailedImage d : listDetailedImages) {
 			if (d.getProduct() != null && d.getProduct().getId().equalsIgnoreCase(product.getId())) {
 				model.addAttribute("mainImage", d.getMainImage());
-				model.addAttribute("image1", d.getDetailedOne());
-				model.addAttribute("image2", d.getDetailedTwo());
-				model.addAttribute("image3", d.getDetailedThree());
+//				model.addAttribute("image1", d.getDetailedOne());
+//				model.addAttribute("image2", d.getDetailedTwo());
+//				model.addAttribute("image3", d.getDetailedThree());
+//				model.addAttribute("idProduct", d.getProduct().getId());
+//				model.addAttribute("idImage", d.getId_image());
+				model.addAttribute("detailedImage", d);
 			}
-
 		}
 
 		return "/admin/views/ui-product";
@@ -80,6 +81,16 @@ public class ProductController {
 	@RequestMapping("/create")
 	public String create(Model model, @Valid @ModelAttribute("product") Product product, BindingResult rs,
 			@ModelAttribute("detailedImage") @Valid DetailedImage detailedImage) {
+//		Danh mục
+		Category itemCategory = new Category();
+		model.addAttribute("category", itemCategory);
+		List<Category> itemsCategories = daoCategory.findAll();
+		model.addAttribute("categories", itemsCategories);
+// Nhãn hàng
+		Brand itemBrand = new Brand();
+		model.addAttribute("brand", itemBrand);
+		List<Brand> itemsBrand = daoBrandRepository.findAll();
+		model.addAttribute("brands", itemsBrand);
 		if (rs.hasErrors()) {
 			String successMessage = "Create failed";
 			model.addAttribute("failed", successMessage);
@@ -87,30 +98,27 @@ public class ProductController {
 		}
 
 		dao.save(product);
+
 		daoDetailedImage.save(detailedImage);
 
 		String successMessage = "Create successful";
 		model.addAttribute("successMessage", successMessage);
-		return "/admin/views/ui-product";
-	}
-
-	@RequestMapping("/updateImage")
-	public String updateImage(Model model, @Valid @ModelAttribute("detailedImage") DetailedImage detailedImage,
-			@Valid @ModelAttribute("product") Product product, BindingResult rs) {
-
-		List<DetailedImage> list = new ArrayList<>();
-		for (DetailedImage d : list) {
-			if (d.getProduct() != null && d.getProduct().getId().equalsIgnoreCase(product.getId())) {
-				daoDetailedImage.save(detailedImage);
-			}
-		}
-		daoDetailedImage.save(detailedImage);
-		return "redirect:/shoeshop/admin/list-product/edit/" + detailedImage.getId_image();
+		return "redirect:/shoeshop/admin/list-product/edit-update/" + product.getId();
 	}
 
 	@RequestMapping("/update")
 	public String update(Model model, @Valid @ModelAttribute("product") Product product, BindingResult rs,
 			@ModelAttribute("detailedImage") DetailedImage detailedImage) {
+//		Danh mục
+		Category itemCategory = new Category();
+		model.addAttribute("category", itemCategory);
+		List<Category> itemsCategories = daoCategory.findAll();
+		model.addAttribute("categories", itemsCategories);
+// Nhãn hàng
+		Brand itemBrand = new Brand();
+		model.addAttribute("brand", itemBrand);
+		List<Brand> itemsBrand = daoBrandRepository.findAll();
+		model.addAttribute("brands", itemsBrand);
 //		if (rs.hasErrors()) {
 //			String successMessage = "Update failed";
 //			model.addAttribute("Updatefailed", successMessage);
@@ -118,8 +126,7 @@ public class ProductController {
 //		}
 
 		dao.save(product);
-		daoDetailedImage.save(detailedImage);
-		return "redirect:/shoeshop/admin/list-product/edit/" + product.getId();
+		return "redirect:/shoeshop/admin/list-product/edit-update/" + product.getId();
 	}
 
 	@RequestMapping("/edit-update/{id}")
@@ -148,16 +155,19 @@ public class ProductController {
 		List<DetailedImage> listDetailedImages = daoDetailedImage.findAll();
 		model.addAttribute("DetailedImages", listDetailedImages);
 		for (DetailedImage d : listDetailedImages) {
-			if (d.getProduct().getId().equalsIgnoreCase(product.getId())) {
+			if (d.getProduct() != null && d.getProduct().getId().equalsIgnoreCase(product.getId())) {
 				model.addAttribute("mainImage", d.getMainImage());
-				model.addAttribute("image1", d.getDetailedOne());
-				model.addAttribute("image2", d.getDetailedTwo());
-				model.addAttribute("image3", d.getDetailedThree());
+//				model.addAttribute("image1", d.getDetailedOne());
+//				model.addAttribute("image2", d.getDetailedTwo());
+//				model.addAttribute("image3", d.getDetailedThree());
+//				model.addAttribute("idProduct", d.getProduct().getId());
+//				model.addAttribute("idImage", d.getId_image());
+				model.addAttribute("detailedImage", d);
 			}
-
 		}
 
 		return "/admin/views/ui-product";
+
 	}
 
 	@RequestMapping("/delete/{id}")
