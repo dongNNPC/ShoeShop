@@ -76,7 +76,7 @@
 	margin: 20px;
 	padding: 10px;
 	padding-top:25px;
-	width: 1000px;
+	max-width: 1000px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 	color: white;
 }

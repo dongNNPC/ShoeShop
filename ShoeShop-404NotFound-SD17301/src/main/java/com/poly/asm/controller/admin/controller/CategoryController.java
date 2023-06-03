@@ -48,6 +48,14 @@ public class CategoryController {
 			model.addAttribute("failed", successMessage);
 			return "/admin/views/ui-category";
 		}
+		List<Category> categories = dao.findAll();
+		for (Category b : categories) {
+			if (b.getId().equalsIgnoreCase(category.getId())) {
+				String successMessage = "ID đã tồn tại !";
+				model.addAttribute("failed", successMessage);
+				return "/admin/views/ui-category";
+			}
+		}
 		dao.save(category);
 		String successMessage = "Create successful";
 		model.addAttribute("successMessage", successMessage);
@@ -61,8 +69,18 @@ public class CategoryController {
 			model.addAttribute("failed", successMessage);
 			return "/admin/views/ui-category";
 		}
-		dao.save(category);
-		return "redirect:/shoeshop/admin/list-category/edit-update/" + category.getId();
+		List<Category> categories = dao.findAll();
+		for (Category b : categories) {
+			if (b.getId().equalsIgnoreCase(category.getId())) {
+				dao.save(category);
+				return "redirect:/shoeshop/admin/list-category/edit-update/" + category.getId();
+			}
+		}
+		String successMessage = "ID không tồn tại!";
+		model.addAttribute("failed", successMessage);
+
+		return "/admin/views/ui-category";
+
 	}
 
 	@RequestMapping("/edit-update/{id}")

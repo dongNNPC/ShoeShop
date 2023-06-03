@@ -3,6 +3,7 @@ package com.poly.asm.controller.admin.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +15,8 @@ import com.poly.asm.model.Brand;
 
 import jakarta.validation.Valid;
 
+@Controller
+@RequestMapping("/shoeshop/admin/list-brand")
 public class BrandController {
 
 	@Autowired
@@ -46,6 +49,15 @@ public class BrandController {
 			model.addAttribute("failed", successMessage);
 			return "/admin/views/ui-brand";
 		}
+		List<Brand> brands = dao.findAll();
+		for (Brand b : brands) {
+			if (b.getId().equalsIgnoreCase(brand.getId())) {
+				String successMessage = "ID đã tồn tại !";
+				model.addAttribute("failed", successMessage);
+				return "/admin/views/ui-brand";
+			}
+		}
+
 		dao.save(brand);
 		String successMessage = "Create successful";
 		model.addAttribute("successMessage", successMessage);
@@ -59,14 +71,21 @@ public class BrandController {
 			model.addAttribute("Updatefailed", successMessage);
 			return "/admin/views/ui-brand";
 		}
+		List<Brand> brands = dao.findAll();
+		for (Brand b : brands) {
+			if (b.getId().equalsIgnoreCase(brand.getId())) {
+				dao.save(brand);
+				return "redirect:/shoeshop/admin/list-brand/edit-update/" + brand.getId();
+			}
+		}
+		String successMessage = "ID không tồn tại!";
+		model.addAttribute("failed", successMessage);
+		return "/admin/views/ui-brand";
 
-		dao.save(brand);
-		return "redirect:/shoeshop/admin/list-brand/edit/" + brand.getId();
 	}
 
 	@RequestMapping("/edit-update/{id}")
 	public String editUpdate(Model model, @PathVariable("id") String id) {
-
 		String successMessage = "Update successful";
 		model.addAttribute("successMessage", successMessage);
 		Brand brand = dao.findById(id).get();
@@ -75,7 +94,6 @@ public class BrandController {
 		List<Brand> brands = dao.findAll();
 		model.addAttribute("brands", brands);
 		return "/admin/views/ui-brand";
-
 	}
 
 	@RequestMapping("/delete/{id}")

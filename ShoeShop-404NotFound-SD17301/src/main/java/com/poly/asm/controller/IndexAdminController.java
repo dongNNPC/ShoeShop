@@ -60,6 +60,8 @@ public class IndexAdminController {
 	@RequestMapping("/ui-brand")
 	public String listUIBrandAdmin(Model model) {
 		model.addAttribute("ui_brand", "active");
+		Brand item = new Brand();
+		model.addAttribute("brand", item);
 		return "/admin/views/ui-brand";
 	}
 
