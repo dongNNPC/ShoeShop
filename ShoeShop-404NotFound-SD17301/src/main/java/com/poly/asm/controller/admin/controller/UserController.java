@@ -49,6 +49,22 @@ public class UserController {
 			model.addAttribute("failed", successMessage);
 			return "/admin/views/ui-user";
 		}
+		List<User> users = dao.findAll();
+		for (User b : users) {
+			if (b.getID().equalsIgnoreCase(user.getID())) {
+				String successMessage = "ID đã tồn tại !";
+				model.addAttribute("failed", successMessage);
+				return "/admin/views/ui-user";
+			}
+		}
+		for (User b : users) {
+			if (b.getEmail().equalsIgnoreCase(user.getEmail())) {
+				String successMessage = "gmail đã tồn tại !";
+				model.addAttribute("failed", successMessage);
+				return "/admin/views/ui-user";
+			}
+		}
+
 		dao.save(user);
 		String successMessage = "Create successful";
 		model.addAttribute("successMessage", successMessage);
@@ -62,9 +78,19 @@ public class UserController {
 			model.addAttribute("Updatefailed", successMessage);
 			return "/admin/views/ui-user";
 		}
+		List<User> users = dao.findAll();
 
-		dao.save(user);
-		return "redirect:/shoeshop/admin/list-user/edit/" + user.getID();
+		for (User b : users) {
+			if (b.getID().equalsIgnoreCase(user.getID())) {
+				dao.save(user);
+				return "redirect:/shoeshop/admin/list-user/edit-update/" + user.getID();
+			}
+		}
+
+		String successMessage = "ID Không tồn tại !";
+		model.addAttribute("failed", successMessage);
+
+		return "/admin/views/ui-user";
 	}
 
 	@RequestMapping("/edit-update/{id}")

@@ -76,7 +76,7 @@
 	margin: 20px;
 	padding: 10px;
 	padding-top:25px;
-	max-width: 600px;
+	max-width: 1000px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 	color: white;
 }
@@ -87,8 +87,10 @@
 	background-color:#FF0000;
 	margin: 20px;
 	padding: 10px;
+	padding-left:100px;
+	padding-right:100px;
 	padding-top:25px;
-	max-width: 600px;
+	max-width: 1000px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 	color: white;
 }

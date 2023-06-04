@@ -37,9 +37,9 @@
 
 <body>
 	<div class="wrapper">
-		<div th:replace="./admin/layout/sidebar ::  #sidebar"></div>
+		<div th:replace="~{./admin/layout/sidebar ::  #sidebar}"></div>
 		<div class="main">
-			<div th:replace="./admin/layout/nav ::  #nav-admin"></div>
+			<div th:replace="~{./admin/layout/nav ::  #nav-admin}"></div>
 
 			<main class="content">
 				<div class="container-fluid p-0">
@@ -167,7 +167,7 @@
 				</div>
 			</div>
 
-			<div th:replace="./admin/layout/footer ::  #footer-admin"></div>
+			<div th:replace="~{./admin/layout/footer ::  #footer-admin}"></div>
 		</div>
 	</div>
 

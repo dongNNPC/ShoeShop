@@ -41,38 +41,41 @@
 				<div class="container-fluid p-0">
 
 					<div class="mb-3">
-						
-							<h3 class="fw-bold"> DANH SÁCH THÔNG TIN CHO PRODUCT</h3>
+
+						<h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO PRODUCT</h3>
 					</div>
 					<div class="row">
-					
+
 
 						<div class="col-md-12 col-xl-12">
 							<div class="card">
-								
+
 								<div class="card-body h-100">
 
 									<div class="table-responsive">
 										<table
-											class="table table-hover Table-striped table-bordered table-condensed">
+											class="table table-hover table-striped table-bordered table-condensed">
 											<thead>
 												<tr class="tr-color text-light">
 													<th>TT</th>
+													<th>ID</th>
 													<th>NAME</th>
+													<th>Desciption</th>
 													<th>OPTION</th>
 												</tr>
 											</thead>
-
 											<tbody>
-												<tr class="text-dark" th:each="item : ${categories}">
-													<td>1</td>
-													<td th:text="${item.name}"></td>
-												
-													<td><a href="" class="btn btn-color">Edit</a></td>
+												<tr class="text-dark"
+													th:each="category, index : ${categories}">
+													<td th:text="${index.index + 1}"></td>
+													<td th:text="${category.id}"></td>
+													<td th:text="${category.name}"></td>
+														<td th:text="${category.description}"></td>
+													<td><a th:href="@{/shoeshop/admin/list-category/edit/{id}(id=${category.id})}" class="btn btn-primary">Edit</a></td>
 												</tr>
 											</tbody>
-
 										</table>
+
 										<div class="float-end">
 											<button type="button" class="btn btn-primary ">
 												<i class="fa-solid fa-backward-fast"></i>

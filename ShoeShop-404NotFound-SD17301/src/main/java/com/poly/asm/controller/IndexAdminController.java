@@ -60,18 +60,25 @@ public class IndexAdminController {
 	@RequestMapping("/ui-brand")
 	public String listUIBrandAdmin(Model model) {
 		model.addAttribute("ui_brand", "active");
+		Brand item = new Brand();
+		model.addAttribute("brand", item);
 		return "/admin/views/ui-brand";
 	}
 
 	@RequestMapping("/ui-category")
 	public String listUICategoryAdmin(Model model) {
 		model.addAttribute("ui_category", "active");
+		Category item = new Category();
+		model.addAttribute("category", item);
+
 		return "/admin/views/ui-category";
 	}
 
 	@RequestMapping("/ui-product")
 	public String listUIProductAdmin(@ModelAttribute("product") Product product, Model model) {
 		model.addAttribute("ui_product", "active");
+		DetailedImage detailedImage = new DetailedImage();
+		model.addAttribute("detailedImage", detailedImage);
 //		Danh mục
 		Category itemCategory = new Category();
 		model.addAttribute("category", itemCategory);
@@ -82,6 +89,7 @@ public class IndexAdminController {
 		model.addAttribute("brand", itemBrand);
 		List<Brand> itemsBrand = daoBrandRepository.findAll();
 		model.addAttribute("brands", itemsBrand);
+
 		return "/admin/views/ui-product";
 	}
 

@@ -38,9 +38,9 @@
 <body>
 	<div class="wrapper">
 
-		<div th:replace="./admin/layout/sidebar ::  #sidebar"></div>
+		<div th:replace="~{./admin/layout/sidebar ::  #sidebar}"></div>
 		<div class="main">
-			<div th:replace="./admin/layout/nav ::  #nav-admin"></div>
+			<div th:replace="~{./admin/layout/nav ::  #nav-admin}"></div>
 
 			<main class="content">
 				<div class="container-fluid p-0">
@@ -84,14 +84,17 @@
 								</div>
 								<!-- 3 ảnh chi tiết -->
 								<div class="card-body">
+
+									<input class="form-control" type="text" th:id="*{id_image}"
+										th:field="*{id_image}" id="ee" th:value="${idImage}" />
 									<div class="mb-3">
+
 										<label for="detailedOne" class="form-label">Chọn hình
 											chi tiết 1</label> <input class="form-control" type="file"
 											id="detailedOne" th:field="*{detailedOne}" />
 									</div>
-									 <input
-												type="file" id="imageInput" th:field="*{mainImage}"
-												style="display: none" />
+									<input type="file" id="imageInput" th:field="*{mainImage}"
+										style="display: none" />
 									<div class="mb-3">
 										<label for="detailedTwo" class="form-label">Chọn hình
 											chi tiết 2</label> <input class="form-control" type="file"
@@ -102,7 +105,11 @@
 											hình chi tiết 3</label> <input class="form-control" type="file"
 											id="detailedThree" th:field="*{detailedThree}" />
 									</div>
-									<button type="submit" class="btn btn-primary">Submit</button>
+									<input class="form-control" type="text"
+										th:field="*{product.id}" id="details" th:value="${idProduct}" />
+
+
+									<button type="submit" class="btn btn-primary">Lưu Hình</button>
 								</div>
 							</form>
 
@@ -123,26 +130,35 @@
 											<div class="mb-3 col-lg-12">
 												<label for="" class="form-label"><b>ID?</b></label> <input
 													type="text" class="form-control" th:field="*{id}"
-													th:id="${id}" aria-describedby="helpId" placeholder="" />
+													th:id="${id}" aria-describedby="helpId" placeholder=""
+													oninput="document.getElementById('details').value = this.value" />
+												<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
+													class="text-danger"></span>
 											</div>
 
 											<div class="mb-3 col-lg-12">
 												<label for="" class="form-label"><b>Name?</b></label> <input
 													type="text" class="form-control" th:field="*{name}" id=""
-													aria-describedby="helpId" placeholder="" />
+													aria-describedby="helpId" placeholder="" /> <span
+													th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+													class="text-danger"></span>
 											</div>
 
 											<div class="mb-3 col-lg-12">
 												<label for="" class="form-label"><b>Price?</b></label> <input
 													type="text" class="form-control" th:field="*{price}" id=""
-													aria-describedby="helpId" placeholder="" />
+													aria-describedby="helpId" placeholder="" /> <span
+													th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+													class="text-danger"></span>
 											</div>
 										</div>
 										<div class="row">
 											<div class="mb-3 col-lg-12">
 												<label for="" class="form-label"><b>Quantity?</b></label> <input
 													type="number" class="form-control" th:field="*{quantity}"
-													id="" aria-describedby="helpId" placeholder="" />
+													id="" aria-describedby="helpId" placeholder="" /> <span
+													th:if="${#fields.hasErrors('quantity')}"
+													th:errors="*{quantity}" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="row">
@@ -152,7 +168,9 @@
 													placeholder="Nhập nội dung..."
 													id="exampleFormControlTextarea1" rows="10"
 													th:field="*{description}"></textarea>
-												<label for="exampleFormControlTextarea1">info...</label>
+												<label for="exampleFormControlTextarea1">info...</label> <span
+													th:if="${#fields.hasErrors('description')}"
+													th:errors="*{description}" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="row">
@@ -160,45 +178,40 @@
 												<label for="" class="form-label"><b>Trạng thái:</b></label>
 												<div class="form-check">
 													<input class="form-check-input" type="radio" name="status"
-														id="statusActive" th:value="true"
-														th:checked="${product.status ? 'checked' : null}">
-													<label class="form-check-label" for="statusActive">Đang
+														th:field="*{status}" id="statusActive" th:value="true"
+														th:checked="${product.status}" /> <label
+														class="form-check-label" for="statusActive">Đang
 														bán</label>
 												</div>
 												<div class="form-check">
 													<input class="form-check-input" type="radio"
 														th:field="*{status}" name="status" id="statusInactive"
-														th:value="false"
-														th:checked="${!product.status ? 'checked' : null}">
-													<label class="form-check-label" for="statusInactive">Ngừng
+														th:value="false" th:checked="${!product.status}" /> <label
+														class="form-check-label" for="statusInactive">Ngừng
 														kinh doanh</label>
 												</div>
+												<span th:if="${#fields.hasErrors('status')}"
+													th:errors="*{status}" class="text-danger"></span>
 											</div>
-
-
 										</div>
 										<div class="row mt-5 mb-3">
 											<div class="form-floating col-lg-6">
 												<select class="form-select" id="exampleFormControlSelect1"
 													aria-label="Chọn một lựa chọn" th:field="*{brand.id}">
-
 													<option th:each="brand : ${brands}" th:value="${brand.id}"
-														th:selected="${brand.id == product.brand.id}"
+														th:selected="${brand.id == product.brand?.id}"
 														th:text="${brand.name}"></option>
-
-												</select><label for="exampleFormControlSelect1">Brand</label>
+												</select> <label for="exampleFormControlSelect1">Brand</label>
 											</div>
 											<div class="form-floating col-lg-6">
-												<select class="form-select" id="exampleFormControlSelect1"
+												<select class="form-select" id="exampleFormControlSelect2"
 													aria-label="Chọn một lựa chọn" th:field="*{category.id}">
-
 													<option th:each="category : ${categories}"
-														th:selected="${category.id == product.category.id}"
-														th:value="${category.id}" th:text="${category.name}"></option>
-
-												</select> <label for="exampleFormControlSelect1">Categories</label>
+														th:value="${category.id}"
+														th:selected="${category.id == product.category?.id}"
+														th:text="${category.name}"></option>
+												</select> <label for="exampleFormControlSelect2">Categories</label>
 											</div>
-
 										</div>
 										<div class="me-auto mt-5">
 											<button type="submit"
@@ -212,8 +225,8 @@
 												Update <i class="fa-solid fa-pen"></i>
 											</button>
 										</div>
-
 									</form>
+
 								</div>
 							</div>
 						</div>
@@ -223,10 +236,37 @@
 				</div>
 			</main>
 
-
-			<div th:replace="./admin/layout/footer ::  #footer-admin"></div>
+			<div th:if="${successMessage}" id="successDialog"
+				class="dialog-overlay">
+				<div class="dialog-content">
+					<p th:text="${successMessage}"></p>
+				</div>
+			</div>
+			<div th:if="${failed}" id="successDialog" class="dialog-overlay">
+				<div class="dialog-content-failed">
+					<p th:text="${failed}"></p>
+				</div>
+			</div>
+			<div th:replace="~{./admin/layout/footer ::  #footer-admin}"></div>
 		</div>
 	</div>
+	<script th:inline="javascript">
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 1000); // 5000 milliseconds = 5 seconds
+	</script>
+	<script th:inline="javascript">
+		document.addEventListener('DOMContentLoaded',
+				function() {
+					var idInput = document
+							.getElementById(/* id của input đầu tiên */);
+					var detailsInput = document.getElementById('details');
+
+					idInput.addEventListener('input', function() {
+						detailsInput.value = idInput.value;
+					});
+				});
+	</script>
 
 	<script th:src="@{/admin/js/app.js}"></script>
 	<script th:inline="javascript">
