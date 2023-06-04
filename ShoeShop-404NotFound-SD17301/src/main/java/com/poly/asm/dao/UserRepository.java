@@ -6,4 +6,5 @@ import com.poly.asm.model.User;
 
 public interface UserRepository extends JpaRepository<User, String> {
 	// Các phương thức tùy chọn khác nếu cần thiết
+	
 }

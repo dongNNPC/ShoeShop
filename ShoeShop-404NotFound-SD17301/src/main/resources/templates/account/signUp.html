@@ -33,9 +33,15 @@
 					<h6 class="text-secondary text-center">Vui lòng điền thông tin
 						của bạn vào</h6>
 					<div class="mb-3 col-md-9 mx-auto">
-						<label for="name" class="form-label">Name :</label> <input
-							type="text" class="form-control" id="fullName"  th:field="*{fullName}">
-						  <span class="text-danger" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" ></span>
+						<label for="name" class="form-label">User Name :</label> <input
+							type="text" class="form-control" id="name"  th:field="*{iD}">
+						  <span class="text-danger" th:if="${#fields.hasErrors('iD')}" th:errors="*{iD}" ></span>
+					</div>	
+						
+					<div class="mb-3 col-md-9 mx-auto">
+						<label for="name" class="form-label">Full Name :</label> <input
+							type="text" class="form-control" id="name"  th:field="*{name}">
+						  <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" ></span>
 					</div>
 					<!-- Email -->
 					<div class="mb-3 col-md-9 mx-auto">
@@ -50,10 +56,11 @@
                     <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></span>
 					</div>
 					<!-- Pass -->
+					
 					<div class="mb-3 col-md-9 mx-auto">
-						<label for="name" class="form-label">confirm password :</label> 
-						<input type="password" class="form-control" >
-						 <span class="text-danger" 		></span>
+						<label for="name" class="form-label">confirm password :</label>
+                    <input type="password" class="form-control">
+                    <span class="text-danger" ></span>
 					</div>
 
 					<div class="d-grid gap-2 col-md-9 mx-auto mb-2">
