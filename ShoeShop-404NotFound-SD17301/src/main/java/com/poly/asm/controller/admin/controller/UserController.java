@@ -64,6 +64,13 @@ public class UserController {
 				return "/admin/views/ui-user";
 			}
 		}
+		for (User b : users) {
+			if (b.getPhone().equalsIgnoreCase(user.getPhone())) {
+				String successMessage = "Số điện thoại đã tồn tại !";
+				model.addAttribute("failed", successMessage);
+				return "/admin/views/ui-user";
+			}
+		}
 
 		dao.save(user);
 		String successMessage = "Create successful";

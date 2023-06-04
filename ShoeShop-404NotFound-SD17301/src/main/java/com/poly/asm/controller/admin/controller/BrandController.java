@@ -86,7 +86,7 @@ public class BrandController {
 
 	@RequestMapping("/edit-update/{id}")
 	public String editUpdate(Model model, @PathVariable("id") String id) {
-		String successMessage = "Update successful";
+		String successMessage = "Cập nhật thành công";
 		model.addAttribute("successMessage", successMessage);
 		Brand brand = dao.findById(id).get();
 		model.addAttribute("brand", brand);

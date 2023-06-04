@@ -29,11 +29,11 @@ public class User {
 	private String name;
 
 	@NotEmpty(message = "{NotEmpty.User.password}")
-	@Size(max = 10, message = "{Size.User.password}")
+	@Size(min = 8, message = "{Size.User.password}")
 	private String password;
 
-//	@NotEmpty(message = "{NotEmpty.User.phone}")
-	@Pattern(regexp = "\\d{10}", message = "{Pattern.User.phone}")
+	@NotEmpty(message = "{NotEmpty.User.phone}")
+	@Pattern(regexp = "^SĐT NUll|0\\d{9}", message = "{Pattern.User.phone}")
 	private String phone;
 
 	@NotEmpty(message = "{NotEmpty.User.email}")

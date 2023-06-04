@@ -18,6 +18,7 @@ import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.Product;
 import com.poly.asm.model.User;
+import com.poly.asm.service.SessionService;
 
 @Controller
 @RequestMapping("/shoeshop/admin")
@@ -38,9 +39,16 @@ public class IndexAdminController {
 	@Autowired
 	BrandRepository daoBrandRepository;
 
+	@Autowired
+	SessionService session;
+
 	@RequestMapping("/index")
-	public String indexAdmin(Model model) {
+	public String indexAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("index", "active");
+		user = session.get("user");
+		model.addAttribute("user", user);
+		System.out.println(user.getImage() + "admin");
+
 		return "/admin/index";
 	}
 
