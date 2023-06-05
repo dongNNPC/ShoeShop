@@ -25,22 +25,22 @@ public class User {
 	@Id
 	private String iD;
 
-	@NotEmpty(message = "{NotEmpty.User.fullName}")
+	@NotEmpty(message = "{NotEmpty.User.name}")
 	private String name;
 
 	@NotEmpty(message = "{NotEmpty.User.password}")
-	@Size(max = 10, message = "{Size.User.password}")
+	@Size(min = 8, message = "{Size.User.password}")
 	private String password;
 
-	@NotEmpty(message = "{NotEmpty.User.phoneNumber}")
-	@Pattern(regexp = "\\d{10}", message = "{Pattern.User.phoneNumber}")
+	@NotEmpty(message = "{NotEmpty.User.phone}")
+	@Pattern(regexp = "^SĐT NUll|0\\d{9}", message = "{Pattern.User.phone}")
 	private String phone;
 
 	@NotEmpty(message = "{NotEmpty.User.email}")
 	@Email(message = "{Email.User.email}")
 	private String email;
 
-	@NotEmpty(message = "{NotEmpty.User.address}")
+//	@NotEmpty(message = "{NotEmpty.User.address}")
 	private String address;
 
 	private String image;

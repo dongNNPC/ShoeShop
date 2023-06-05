@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link rel="shortcut icon" th:href="@{/icons/logoMain_48.png}" type="image/x-icon">
+<link rel="shortcut icon" th:href="@{/icons/logoMain_48.png}"
+	type="image/x-icon">
 <head>
 <title>Trang đăng kí</title>
 <!-- Required meta tags -->
@@ -14,8 +15,54 @@
 	rel="stylesheet"
 	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
 	crossorigin="anonymous">
+	
+	
 
 </head>
+
+<style>
+
+/* Bắt lỗi*/
+.dialog-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	z-index: 9999;
+}
+
+.dialog-content {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #429A43;
+	margin: 20px;
+	padding: 10px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+
+.dialog-content-failed {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #FF0000;
+	margin: 20px;
+	padding: 10px;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+</style>
 
 <body style="background-color: #232946;">
 	<header>
@@ -23,9 +70,10 @@
 	</header>
 	<main class="container ">
 		<div class="card mt-3  bg-white col-md-7 mx-auto"
-			style="height:650px;">
+			style="max-height: 850px;">
 			<div class="card-body ">
-				<form th:action="@{/shoeshop/signUp}" th:object="${user}" method="post">
+				<form th:action="@{/shoeshop/signUp}" th:object="${user}"
+					method="post">
 					<img th:src="@{/icons/logo.jpg}" width="70px" height="60px"
 						class="mx-auto d-block">
 
@@ -33,29 +81,42 @@
 					<h6 class="text-secondary text-center">Vui lòng điền thông tin
 						của bạn vào</h6>
 					<div class="mb-3 col-md-9 mx-auto">
-						<label for="name" class="form-label">Name :</label> <input
-							type="text" class="form-control" id="fullName"  th:field="*{fullName}">
-						  <span class="text-danger" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" ></span>
+						<label for="name" class="form-label">User Name :</label> <input
+							type="text" class="form-control" id="name" th:field="*{iD}">
+						<span class="text-danger" th:if="${#fields.hasErrors('iD')}"
+							th:errors="*{iD}"></span>
+					</div>
+
+					<div class="mb-3 col-md-9 mx-auto">
+						<label for="name" class="form-label">Full Name :</label> <input
+							type="text" class="form-control" id="name" th:field="*{name}">
+						<span class="text-danger" th:if="${#fields.hasErrors('name')}"
+							th:errors="*{name}"></span>
 					</div>
 					<!-- Email -->
 					<div class="mb-3 col-md-9 mx-auto">
 						<label for="name" class="form-label">Email :</label> <input
-							type="text" class="form-control" id="email"  th:field="*{email}">
-						 <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" ></span>
+							type="text" class="form-control" id="email" th:field="*{email}">
+						<span class="text-danger" th:if="${#fields.hasErrors('email')}"
+							th:errors="*{email}"></span>
 					</div>
 					<!-- Pass -->
 					<div class="mb-3 col-md-9 mx-auto">
-						<label for="name" class="form-label">Password :</label>
-                    <input type="password" class="form-control" id="password1"  th:field="*{password}">
-                    <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></span>
+						<label for="name" class="form-label">Password :</label> <input
+							type="password" class="form-control" id="password1"
+							th:field="*{password}"> <span class="text-danger"
+							th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
 					</div>
+					
 					<!-- Pass -->
-					<div class="mb-3 col-md-9 mx-auto">
-						<label for="name" class="form-label">confirm password :</label> 
-						<input type="password" class="form-control" >
-						 <span class="text-danger" 		></span>
-					</div>
 
+					<div class="mb-3 col-md-9 mx-auto">
+						<label for="name" class="form-label">confirm password :</label> <input
+						 name="pw1"	type="password" class="form-control"> <span
+							class="text-danger"></span>
+					</div>
+<input type="text" class="form-control" id="phone" name="pw"
+						th:field="*{phone}">
 					<div class="d-grid gap-2 col-md-9 mx-auto mb-2">
 						<button type="submit" name="" id="" class="btn "
 							style="background-color: #232946; color: #fffffe;">Đăng
@@ -64,16 +125,37 @@
 					<div style="cursor: pointer;"
 						class=" mb-1 text-center col-md-9 mx-auto">
 
-						<a class="text-dark" th:href="@{/shoeshop/login}" style="cursor: pointer ; text-decoration: none;" >Bạn đã có tài khoản / đăng nhập ? </a>
+						<a class="text-dark" th:href="@{/shoeshop/login}"
+							style="cursor: pointer; text-decoration: none;">Bạn đã có tài
+							khoản / đăng nhập ? </a>
 					</div>
 				</form>
 			</div>
 		</div>
 	</main>
+	<div th:if="${successMessage}" id="successDialog"
+		class="dialog-overlay">
+		<div class="dialog-content">
+			<p th:text="${successMessage}"></p>
+		</div>
+	</div>
+	<div th:if="${failed}" id="successDialog" class="dialog-overlay">
+		<div class="dialog-content-failed">
+			<p th:text="${failed}"></p>
+		</div>
+	</div>
 	<footer>
 		<!-- place footer here -->
 	</footer>
 	<!-- Bootstrap JavaScript Libraries -->
+
+	<script th:inline="javascript">
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 2000); // 5000 milliseconds = 5 seconds
+	</script>
+
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
 		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

@@ -65,26 +65,24 @@
                       aria-label="Slide 4"
                     ></button>
                   </div>
-                  <div class="carousel-inner">
+                  <div class="carousel-inner"  >
                     <div class="carousel-item active" data-bs-interval="1500">
                       <img
-                        src="../assets/images/Bird.png" th:src = "@{/images/NikeAriMax.png}"
+                       th:src = "@{/images/product-images/__${d.getMainImage()}__}"
+                        class="d-block w-100"
+                        alt="..."
+                      />
+                    </div>
+                   <div class="carousel-item" data-bs-interval="1500">
+                      <img
+                       th:src = "@{/images/product-images/__${d.getDetailedOne()}__}"
                         class="d-block w-100"
                         alt="..."
                       />
                     </div>
                     <div class="carousel-item" data-bs-interval="1500">
                       <img
-                        src="../assets/images/Bird.png"
-                        th:src = "@{/images/nikeTheThoa.png}"
-                        class="d-block w-100"
-                        alt="..."
-                      />
-                    </div>
-                    <div class="carousel-item" data-bs-interval="1500">
-                      <img
-                        src="../assets/images/Bird.png"
-                        th:src = "@{/images/bitHunter11.png}"
+                       th:src = "@{/images/product-images/__${d.getDetailedTwo()}__}"
                         class="d-block w-100"
                         alt="..."
                       />
@@ -92,7 +90,7 @@
                     <div class="carousel-item" data-bs-interval="1500">
                       <img
                      
-                         th:src = "@{/images/bitHunterX.png}"
+                          th:src = "@{/images/product-images/__${d.getDetailedThree()}__}"
                        
                         class="d-block w-100"
                         alt="..."
@@ -137,7 +135,7 @@
                 >
                   <img
                     class="img-left-details"
-                   th:src = "@{/images/NikeAriMax.png}"
+                  th:src = "@{/images/product-images/__${d.getMainImage()}__}"
                     alt=""
                   />
                 </button>
@@ -150,7 +148,7 @@
                 >
                   <img
                     class="img-left-details"
-              th:src = "@{/images/nikeTheThoa.png}"
+                th:src = "@{/images/product-images/__${d.getDetailedOne()}__}"
                     alt=""
                   />
                 </button>
@@ -163,7 +161,7 @@
                 >
                   <img
                     class="img-left-details"
-                      th:src = "@{/images/bitHunter11.png}"
+                       th:src = "@{/images/product-images/__${d.getDetailedTwo()}__}"
                     alt=""
                   />
                 </button>
@@ -176,7 +174,7 @@
                 >
                   <img
                     class="img-left-details"
-                    th:src = "@{/images/bitHunterCord.png}"
+                    th:src = "@{/images/product-images/__${d.getDetailedThree()}__}"
                     alt=""
                   />
                 </button>
@@ -184,18 +182,16 @@
             </div>
           </div>
 
-          <div class="container  col-sm-6 col-md-6 col-lg-6">
-            <h3 class="title-detail">
-              Giày Thể Thao Nam Biti’s Hunter Core – Midnight Black Inverted
-              DSMH01203DEN (Đen)
+          <div class="container  col-sm-6 col-md-6 col-lg-6" th:object="${product}">
+            <h3 class="title-detail" th:text="${p.getName()}">
+              
             </h3>
             <hr class="rounded" />
             <span class="price-amount-details"
-              >499.000&nbsp;<span class="woocommerce-Price-currencySymbol"
+              th:text="${p.getPrice()}" >&nbsp;<span class="woocommerce-Price-currencySymbol"
                 >&#8363;</span
               ></span
             >
-
             <div class="row ">
               <div class="form-outline col-sm-6" style="max-width: 100px">
                 <input
@@ -211,9 +207,11 @@
             </div>
 
             <hr class="dotted mt-5  " />
-            <h5 class="masp-details">Mã: DSMH01300XNH40-1</h5>
+            <h5 class="masp-details">Mã sản phẩm:</h5>
+           <h5 class="masp-details"  th:text="${p.getId()}"></h5> 
             <hr class="dotted" />
-            <h5 class="masp-details">Danh mục: Boots, Cao gót, Đế bệt, Đế gỗ, Giày búp bê, Sneaker, Thể thao</h5>
+            <h5 class="masp-details">Danh mục:</h5>
+             <h5 class="masp-details" th:text="${c.getName()}"></h5>
             <hr class="dotted" />
             <div class="row" style="max-width: 150px;">
                  <a href="" class="col-sm-3 col-md-3 col-lg-3">
@@ -270,7 +268,7 @@
                             <h4 class="font-italic mb-4">Description</h4>
                             
                             <hr class="dotted" />
-                            <p class="font-italic text-muted mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <p class="font-italic text-muted mb-2" th:text="${p.getDescription()}"></p>
                             <hr class="dotted" />
                                <h4 class="font-italic mb-4">Sản Phẩm tương tự</h4>
                             
@@ -296,26 +294,10 @@
         </div>
     
     </section>
-     <div th:replace="layout/itemBanChayNhat.html"></div>
+     <div th:replace="layout/ItemMoiVe.html"></div>
     </main>
   <div th:replace="./layout/footer ::  footer"></div>
-  <div th:replace="modal/modalCart.html :: #GioHang"></div>
-
-		<!-- ModalLogin -->
-		<div th:replace="modal/modalLogin.html :: #modalLogin"></div>
-
-		<!-- The Modal signup -->
-		<div th:replace="modal/modalSignUp.html :: #modalSignUp"></div>
-		<!-- Quên mật khẩu -->
-		<div th:replace="modal/modalForget.html :: #modalForget"></div>
-		<!-- Quên mật khẩu ->> nhập mật khẩu mới -->
-		<div th:replace="modal/modalRePass.html :: #modalRePass"></div>
-
-
-		<!-- Đổi mật khẩu-->
-		<div th:replace="modal/modalChangePass.html :: #modalChangePass"></div>
-		<!-- Đổi mật khẩu ->> nhập mật khẩu mới -->
-		<div th:replace="modal/modalChangeRePass.html :: #modalChangeRePass"></div>
+ 
     <!-- Bootstrap JavaScript Libraries -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

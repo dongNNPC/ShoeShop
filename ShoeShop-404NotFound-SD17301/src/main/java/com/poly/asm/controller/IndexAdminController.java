@@ -18,6 +18,7 @@ import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.Product;
 import com.poly.asm.model.User;
+import com.poly.asm.service.SessionService;
 
 @Controller
 @RequestMapping("/shoeshop/admin")
@@ -38,15 +39,42 @@ public class IndexAdminController {
 	@Autowired
 	BrandRepository daoBrandRepository;
 
+	@Autowired
+	SessionService session;
+
 	@RequestMapping("/index")
-	public String indexAdmin(Model model) {
+	public String indexAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("index", "active");
+
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
+//		System.out.println(user.getImage() + "admin");
+
 		return "/admin/index";
 	}
 
 	@RequestMapping("/ui-user")
 	public String listUIUsetAdmin(@ModelAttribute("user") User user, Model model) {
 		model.addAttribute("ui_user", "active");
+
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
 		return "/admin/views/ui-user";
 	}
 
@@ -58,14 +86,38 @@ public class IndexAdminController {
 //	}
 
 	@RequestMapping("/ui-brand")
-	public String listUIBrandAdmin(Model model) {
+	public String listUIBrandAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("ui_brand", "active");
+
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
+		Brand item = new Brand();
+		model.addAttribute("brand", item);
 		return "/admin/views/ui-brand";
 	}
 
 	@RequestMapping("/ui-category")
-	public String listUICategoryAdmin(Model model) {
+	public String listUICategoryAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("ui_category", "active");
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
+
 		Category item = new Category();
 		model.addAttribute("category", item);
 
@@ -73,8 +125,21 @@ public class IndexAdminController {
 	}
 
 	@RequestMapping("/ui-product")
-	public String listUIProductAdmin(@ModelAttribute("product") Product product, Model model) {
+	public String listUIProductAdmin(@ModelAttribute("product") Product product, Model model,
+			@ModelAttribute("user") User user) {
 		model.addAttribute("ui_product", "active");
+
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
+
 		DetailedImage detailedImage = new DetailedImage();
 		model.addAttribute("detailedImage", detailedImage);
 //		Danh mục
@@ -92,8 +157,20 @@ public class IndexAdminController {
 	}
 
 	@RequestMapping("/list-brand")
-	public String listBardAdmin(Model model) {
+	public String listBardAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("list_brand", "active");
+
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
+
 		Brand item = new Brand();
 		model.addAttribute("brand", item);
 
@@ -104,8 +181,20 @@ public class IndexAdminController {
 	}
 
 	@RequestMapping("/list-category")
-	public String listCategoryAdmin(Model model) {
+	public String listCategoryAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("list_category", "active");
+
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
+
 		Category item = new Category();
 		model.addAttribute("category", item);
 		List<Category> items = daoCategory.findAll();
@@ -115,8 +204,20 @@ public class IndexAdminController {
 	}
 
 	@RequestMapping("/list-product")
-	public String listProductAdmin(Model model) {
+	public String listProductAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("list_product", "active");
+
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
+
 		Product item = new Product();
 		model.addAttribute("product", item);
 		List<Product> items = daoProduct.findAll();
@@ -131,8 +232,20 @@ public class IndexAdminController {
 	}
 
 	@RequestMapping("/list-user")
-	public String listUserAdmin(Model model) {
+	public String listUserAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("list_user", "active");
+
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
+
 		User item = new User();
 		model.addAttribute("user", item);
 		List<User> items = daoUser.findAll();

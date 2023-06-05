@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Invoice")
+@Table(name = "Invoices")
 public class Invoice {
 	@Id
 	private String id;
@@ -28,6 +28,7 @@ public class Invoice {
 
 	@OneToMany(mappedBy = "invoice")
 	List<DetailedInvoice> detailedInvoices;
+	
 
 	// Các trường khác và getter/setter
 }
