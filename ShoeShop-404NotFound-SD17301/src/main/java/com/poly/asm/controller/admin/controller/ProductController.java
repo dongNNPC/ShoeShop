@@ -18,6 +18,8 @@ import com.poly.asm.model.Brand;
 import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.Product;
+import com.poly.asm.model.User;
+import com.poly.asm.service.SessionService;
 
 import jakarta.validation.Valid;
 
@@ -37,9 +39,22 @@ public class ProductController {
 	@Autowired
 	DetailedImageRepository daoDetailedImage; // làm việc với ảnh chi tiết
 
-	@RequestMapping("/edit/{id}")
-	public String edit(Model model, @PathVariable("id") String id) {
+	@Autowired
+	SessionService session;
 
+	@RequestMapping("/edit/{id}")
+	public String edit(Model model, @PathVariable("id") String id, @ModelAttribute("user") User user) {
+
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
 		// product
 		Product product = dao.findById(id).get();
 		model.addAttribute("product", product);
@@ -80,7 +95,17 @@ public class ProductController {
 
 	@RequestMapping("/create")
 	public String create(Model model, @Valid @ModelAttribute("product") Product product, BindingResult rs,
-			@ModelAttribute("detailedImage") @Valid DetailedImage detailedImage) {
+			@ModelAttribute("detailedImage") @Valid DetailedImage detailedImage, @ModelAttribute("user") User user) {
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
 //		Danh mục
 		Category itemCategory = new Category();
 		model.addAttribute("category", itemCategory);
@@ -104,7 +129,17 @@ public class ProductController {
 
 	@RequestMapping("/update")
 	public String update(Model model, @Valid @ModelAttribute("product") Product product, BindingResult rs,
-			@Valid @ModelAttribute("detailedImage") DetailedImage detailedImage) {
+			@Valid @ModelAttribute("detailedImage") DetailedImage detailedImage, @ModelAttribute("user") User user) {
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
 //		Danh mục
 		Category itemCategory = new Category();
 		model.addAttribute("category", itemCategory);
@@ -126,7 +161,17 @@ public class ProductController {
 	}
 
 	@RequestMapping("/edit-update/{id}")
-	public String editUpdate(Model model, @PathVariable("id") String id) {
+	public String editUpdate(Model model, @PathVariable("id") String id, @ModelAttribute("user") User user) {
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
 		String successMessage = "Successful";
 		model.addAttribute("successMessage", successMessage);
 		// product

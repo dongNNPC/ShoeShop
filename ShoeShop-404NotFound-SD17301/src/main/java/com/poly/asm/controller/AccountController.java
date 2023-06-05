@@ -69,9 +69,12 @@ public class AccountController {
 					if (user2.isAdmin()) {
 						session.set("user", user2);
 						User sUser = session.get("user");
-						System.out.println(sUser.getImage());
+//						System.out.println(sUser.getImage());
 						return "redirect:/shoeshop/admin/index";
 					} else {
+						session.set("user", user2);
+						User sUser = session.get("user");
+//						System.out.println(sUser.getImage());
 						return "redirect:/shoeshop/index";
 					}
 				}

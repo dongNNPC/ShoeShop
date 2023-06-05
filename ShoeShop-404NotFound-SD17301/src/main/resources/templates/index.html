@@ -29,31 +29,10 @@
 <body>
 	<header>
 		<!-- place navbar here -->
-		<div  th:replace="layout/nav ::  nav"></div>
+		<div  th:replace="layout/nav ::  #nav"></div>
 
 
-		<!-- Hộp thoại giỏ hàng -->
-		<!-- 	<div   th:replace="_modals :: modal('modalCart')" ></div> -->
-		
-		<div th:replace="modal/modalCart.html :: #GioHang"></div>
-
-		<!-- ModalLogin -->
-		
-		<div th:replace="modal/modalLogin.html :: #modalLogin"></div>
-
-		<!-- The Modal signup -->
-		<div th:replace="modal/modalSignUp.html :: #modalSignUp"></div>
-		<!-- Quên mật khẩu -->
-		<div th:replace="modal/modalForget.html :: #modalForget"></div>
-		<!-- Quên mật khẩu ->> nhập mật khẩu mới -->
-		<div th:replace="modal/modalRePass.html :: #modalRePass"></div>
-
-
-		<!-- Đổi mật khẩu-->
-		<div th:replace="modal/modalChangePass.html :: #modalChangePass"></div>
-		<!-- Đổi mật khẩu ->> nhập mật khẩu mới -->
-		<div th:replace="modal/modalChangeRePass.html :: #modalChangeRePass"></div>
-
+	
 	</header>
 	<main>
 		<!-- casrousel -->
