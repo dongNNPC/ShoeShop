@@ -2,7 +2,6 @@ package com.poly.asm.controller;
 
 import java.util.List;
 import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -156,26 +155,63 @@ public class AccountController {
 
 	// trang kiểm tra password
 	@RequestMapping("/ChangePass")
-	public String ChangePass(@ModelAttribute("user") User user) {
+	public String ChangePass(@ModelAttribute("user") User user, Model model) {
+		model.addAttribute("ui_user", "active");
 		return "/account/ChangePass";
 	}
 
-	// trang nhập mật khẩu mới
+	// trang nhập mật khẩu mới confrimPassword 
 	@PostMapping("/ChangePass")
 	public String ChangePassCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
-		if (user.getPassword().equalsIgnoreCase("123")) {
-
-			return "redirect:/shoeshop/ChangeRePass";
-		}
+//		if (user.getPassword().equalsIgnoreCase("123")) {
+//
+//			
+//			return "redirect:/shoeshop/ChangeRePass";
+//		}
+		
+		if (dao.findAll().get(0).getPassword().equals(user.getPassword())) {
+			System.out.println(user.getPassword());
+			System.out.println("thành công");
+			
+			return "redirect:/shoeshop/ChangeRePass-Change";
+		}else {
+//			System.out.println("mật khẩu sai");
+			model.addAttribute("message", "mat khau sai");
+		
+					}
 		return "/account/ChangePass";
 	}
 
 	// trang nhập mật khẩu mới
-	@RequestMapping("/ChangeRePass")
-	public String ChangeRePass() {
+	@GetMapping("/ChangeRePass-Change")
+	public String ChangeRePass(@ModelAttribute("user") User user, Model model) {
+		
+		model.addAttribute("ui_user", "change");		
 		return "/account/ChangeRePass";
 	}
 
+	//phương thức thay đổi mật khẩu mới
+	@PostMapping("/ChangeRePass-Change")
+	public String PassCheck(@Valid @ModelAttribute("user") User user, Model model, BindingResult result) {
+				
+		List<User> uList = dao.findAll();
+		if(user.getPassword().equalsIgnoreCase(uList.get(0).getPassword())) {
+			user.setPassword(user.getPassword());
+			model.addAttribute(uList);
+			dao.save(user);
+			System.out.println("đổi mật khẩu thành công");
+			
+		
+			
+			return "redirect:/shoeshop/index";
+		}else {
+			model.addAttribute(uList);
+			System.out.println("lỗi");
+		}
+		return "/account/ChangeRePass";
+		
+	}
+	
 	// trang nhập mật khẩu mới
 	@RequestMapping("/Forget")
 	public String Forget(@ModelAttribute("user") User user) {

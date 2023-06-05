@@ -20,7 +20,7 @@
   <main class="container ">
     <div class="card mt-5 bg-white col-md-7 mx-auto" style="height: 330px;">
         <div class="card-body ">
-            <form id="myForm" th:object="${myObject}" th:action="@{/submit}" method="post">
+            <form id="myForm" th:action="@{/shoeshop/ChangePass}" th:object="${user}" method="post">
                 <!-- <img th:src = "@{/icons/logo.jpg}" alt="logo" width="80px" height="80px" class="col-md-9 mx-auto"> -->
 
                 <h1 class="text-center ">Đổi mật khẩu</h1>
@@ -28,16 +28,19 @@
                 
                 <div class="mb-3 col-md-9 mx-auto">
                     <label for="name" class="form-label">Password <i class="text-danger">*</i> : </label>
-                    <input type="password" class="form-control" id="name">
+                   <input type="password" class="form-control" id="password"  th:field="*{password}" >
+                     <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></span>
+                    
                     <div class="invalid-feedback" ></div>
                 </div>
                 <div class="mb-3 col-md-9 mx-auto">
-                    <label for="name" class="form-label">Confirm password <i class="text-danger">*</i> : </label>
-                    <input type="password" class="form-control" id="name" >
+                    <label for="confirmpassword" class="form-label">Confirm password <i class="text-danger">*</i> : </label>
+                    <input type="password" class="form-control" id="confirmpassword">
+                    
                     <div class="invalid-feedback" ></div>
                 </div>
                <div class="d-grid gap-2 col-md-9  mx-auto mb-3" style="margin-right: 80px;">
-                 <button type="button" name="" id="" class="btn " style="background-color: #232946 ;color: #fffffe;">Đổi mật khẩu</button>
+                 <button type="submit" name="" id="" class="btn " style="background-color: #232946 ;color: #fffffe;">Đổi mật khẩu</button>
                </div>
               
               </form>
