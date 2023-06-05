@@ -1,12 +1,15 @@
 package com.poly.asm.controller;
 
+import java.security.Principal;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
 import javax.sound.midi.Soundbank;
+import javax.swing.JOptionPane;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.dao.support.DaoSupport;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poly.asm.service.ParamService;
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
@@ -147,71 +151,69 @@ public class AccountController {
 		user.setAddress(null);
 		
 		dRepository.save(user);
-//		
-//		model.addAttribute("user", user);
-//		List<User> users = dRepository.findAll();
-//		model.addAttribute("lits_user", users);		
-////		
-//		String um = request.getParameter("name");
-//		String em = request.getParameter("email");
-//		String pw = request.getParameter("password");
-////		String cp = request.getParameter("confirm password");
-////		
-//		 
-//	//	user.getEmail().equalsIgnoreCase(em)
-//	 if (user.getName().equals(user.getName()) && user.getEmail().equals(user.getEmail()) && user.getPassword().equals(user.getPassword())) {
-//		try {
-//			for(int  i = 0 ;i < dRepository.findAll().size() ;i ++) {
-//				if ( !dRepository.findAll().get(i).getName().equals(user.getName())
-//				&& !dRepository.findAll().get(i).getEmail().equals(user.getEmail())	) {
-////				
-////					user.setName(user.getName());
-////					user.setEmail(user.getEmail());
-////				user.setPassword(user.getPassword());
-////				
-//				user.setAdmin(false);
-//				System.out.println(user.getID());
-//				System.out.println(user.getName());
-//				System.out.println(user.getEmail());
-//				System.out.println(user.getPassword());
-//					dRepository.save(user); // thêm
-//					System.out.println("thành công");
-//				return "redirect:/account/login";					
-//				}			
-//			}
-//			
-//	} catch (Exception e) {
-//		System.out.println(e);
-//	}
-//		
-//	}
-//		
-//		return "/account/signUp";
+
 		return "redirect:/shoeshop/login";
 	}
 
 	// trang kiểm tra password
 	@RequestMapping("/ChangePass")
-	public String ChangePass(@ModelAttribute("user") User user) {
+	public String ChangePass(@ModelAttribute("user") User user, Model model) {
+		model.addAttribute("ui_user", "active");
 		return "/account/ChangePass";
 	}
 
-	// trang nhập mật khẩu mới
+	// trang nhập mật khẩu mới confrimPassword 
 	@PostMapping("/ChangePass")
 	public String ChangePassCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
-		if (user.getPassword().equalsIgnoreCase("123")) {
-
-			return "redirect:/shoeshop/ChangeRePass";
-		}
+//		if (user.getPassword().equalsIgnoreCase("123")) {
+//
+//			
+//			return "redirect:/shoeshop/ChangeRePass";
+//		}
+		
+		if (dRepository.findAll().get(0).getPassword().equals(user.getPassword())) {
+			System.out.println(user.getPassword());
+			System.out.println("thành công");
+			
+			return "redirect:/shoeshop/ChangeRePass-Change";
+		}else {
+//			System.out.println("mật khẩu sai");
+			model.addAttribute("message", "mat khau sai");
+		
+					}
 		return "/account/ChangePass";
 	}
 
 	// trang nhập mật khẩu mới
-	@RequestMapping("/ChangeRePass")
-	public String ChangeRePass() {
+	@GetMapping("/ChangeRePass-Change")
+	public String ChangeRePass(@ModelAttribute("user") User user, Model model) {
+		
+		model.addAttribute("ui_user", "change");		
 		return "/account/ChangeRePass";
 	}
 
+	//phương thức thay đổi mật khẩu mới
+	@PostMapping("/ChangeRePass-Change")
+	public String PassCheck(@Valid @ModelAttribute("user") User user, Model model, BindingResult result) {
+				
+		List<User> uList = dRepository.findAll();
+		if(user.getPassword().equalsIgnoreCase(uList.get(0).getPassword())) {
+			user.setPassword(user.getPassword());
+			model.addAttribute(uList);
+			dRepository.save(user);
+			System.out.println("đổi mật khẩu thành công");
+			
+		
+			
+			return "redirect:/shoeshop/index";
+		}else {
+			model.addAttribute(uList);
+			System.out.println("lỗi");
+		}
+		return "/account/ChangeRePass";
+		
+	}
+	
 	// trang nhập mật khẩu mới
 	@RequestMapping("/Forget")
 	public String Forget(@ModelAttribute("user") User user) {
