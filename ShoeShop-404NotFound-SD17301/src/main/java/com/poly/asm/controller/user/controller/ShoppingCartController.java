@@ -1,7 +1,7 @@
 package com.poly.asm.controller.user.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +10,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poly.asm.dao.DetailedImageRepository;
 import com.poly.asm.dao.ProductRepository;
-import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.Product;
 import com.poly.asm.model.User;
@@ -39,7 +38,23 @@ public class ShoppingCartController {
 			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
 			model.addAttribute("user", user);
 		}
+    	
         model.addAttribute("cart", cart);
+        List<Product> products = new ArrayList<>(cart.getItems());
+
+        
+        List<DetailedImage> detailedImages = daoDetailedImageRepository.findAll();
+        for (DetailedImage d : detailedImages) {
+        	 for (Product product : products) {
+     			if (d.getProduct().getId().equals(product.getId())) {
+     				model.addAttribute("setimg" , d);
+     				System.out.println(d.getMainImage() + "SSS");
+     			}
+     		}
+		}
+        
+       
+        
         // Check nếu cart rỗng sẽ ẩn đi button clear cart
         boolean hasProducts = !cart.getItems().isEmpty();
         model.addAttribute("hasProducts", hasProducts);
