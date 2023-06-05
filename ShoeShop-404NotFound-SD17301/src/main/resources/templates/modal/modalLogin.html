@@ -3,6 +3,8 @@
 <head>
 </head>
 <body>
+
+ <form th:action="@{/login}" th:object="${user}" method="post">
 <div class="modal fade row" id="modalLogin">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -33,7 +35,8 @@
               </label>
 
             </div>
-            <button type="button" class="btn mt-2 pr-2 mb-3" style="background-color: #232946 ;color: #fffffe;">Đăng nhập</button><br>
+            <a th:href="@{/shoeshop/login}"> <button type="submit" class="btn mt-2 pr-2 mb-3" style="background-color: #232946 ;color: #fffffe;">Đăng nhập</button></a>
+           <br>
            <div style="cursor: pointer ;">
             <p  data-bs-toggle="modal" data-bs-target="#modalSignUp" >Bạn chưa có tài khoản ? đăng kí </p>
             <p data-bs-toggle="modal" data-bs-target="#modalForget" style="margin-top: -12px;">Quên mật khẩu ?</p>
@@ -43,5 +46,7 @@
         </div>
       </div>
     </div>
+     </form>
+    
   </body>
 </html>
