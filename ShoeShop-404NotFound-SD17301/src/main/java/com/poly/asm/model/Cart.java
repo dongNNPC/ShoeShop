@@ -29,6 +29,5 @@ public class Cart {
 	private int quantity;
 	private Date orderDate;
 	private String status;
-
 	// Các trường khác và getter/setter
 }

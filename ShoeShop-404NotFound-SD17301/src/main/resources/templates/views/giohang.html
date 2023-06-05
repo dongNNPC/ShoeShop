@@ -1,147 +1,185 @@
 <!doctype html>
-<html 
-	xmlns:th="http://www.thymeleaf.org">
-<link rel="shortcut icon" th:href="@{/icons/logoMain_48.png}" type="image/x-icon">
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon" th:href="@{/icons/logoMain_48.png}"
+	type="image/x-icon">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <title>Trang Giỏ hàng</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+	crossorigin="anonymous">
+<title>Trang Giỏ hàng</title>
 </head>
-<link th:href="@{/css/giohang.css}" href="/css/giohang.css" rel="stylesheet" type="text/css" media="all">
+<link th:href="@{/css/giohang.css}" href="/css/giohang.css"
+	rel="stylesheet" type="text/css" media="all">
 
 <script src="../assets/js/giohang.js"></script>
 
-<script th:src="@{/js/giohang.js}" src="../assets/js/giohang.js" type="text/js"></script>
+<script th:src="@{/js/giohang.js}" src="../assets/js/giohang.js"
+	type="text/js"></script>
 
 
-<link rel="stylesheet" href="https://icons.getbootstrap.com/icons/trash/">
-    <!-- link css local -->
-    	<link th:href="@{/css/index.css}" href="/css/index.css" rel="stylesheet" type="text/css" media="all" />
-	<link th:href="@{/css/details.css}" href="/css/details.css" rel="stylesheet" type="text/css" media="all" />
-	    <!-- link fonts local -->
-    <link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}" href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" type="text/css" media="all" />
-  	
+<link rel="stylesheet"
+	href="https://icons.getbootstrap.com/icons/trash/">
+<!-- link css local -->
+<link th:href="@{/css/index.css}" href="/css/index.css" rel="stylesheet"
+	type="text/css" media="all" />
+<link th:href="@{/css/details.css}" href="/css/details.css"
+	rel="stylesheet" type="text/css" media="all" />
+<!-- link fonts local -->
+<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}"
+	href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet"
+	type="text/css" media="all" />
+
 
 <body>
-  	<div th:replace="layout/nav ::  nav"></div>
+	<div th:replace="~{layout/nav ::  nav}"></div>
 
-    <div class="container" style="min-width: 1200px; padding:10px;">
-   
-        
-        <div class="row giohangmain">
-<h3>GIỎ HÀNG</h3>
-            <div class="col-lg-8" style="min-width: 250px;">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Sản phẩm</th>
-                            <th scope="col" style="min-width: 20px;">Tên sản phẩm</th>
-                            <th scope="col">Giá</th>
-                            <th scope="col" style="max-width: 30px;">Số lượng</th>
-                             <th scope="col">Tổng</th>
-                            <th scope="col">Xóa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                  <!--   src="/assets/images/bitHunter.jpg" -->
-                        <tr>
-                            <td style="max-width: 100px;"><img th:src = "@{/images/bitHunterCord.png}"   height="90px" alt=""></td>
-                            <td style="max-width: 50px;">Giày thể thao nam đẹp nhất năm 2023</td>
-                            <td name="price">499000 </td>
-                            <td>
-                               
-                                 <!-- Nút để giảm giá trị của biến quantity -->
-                                 <span onclick="decrementQuantity()" style="color: #232946; font-size: 23px;">-</span>
-                               
-                                <!-- <ul><a href="" onclick="incrementQuantity()" >+</a></ul> -->
-                                <span id="quantity" style="font-size: 25px;"> 1 </span>
-                                <!-- Nút để tăng giá trị của biến quantity -->
-                                <!-- <button  type="button" class="btn btn-outline-danger" onclick="incrementQuantity()">+</button> -->
-                                <span onclick="incrementQuantity()" style="color: #232946; font-size: 23px;">+</span>
+	<div class="container" style="min-width: 1200px; padding: 10px;">
 
-                            
 
-                            </td>
-                            <td id="price">499000 </td>
-                            <td><i class="fa-regular fa-circle-xmark fa-lg " style="margin-bottom: 35px;margin-right: 100px;"></i></td> </td> 
-                        </tr>
-                      
-                      
-                    </tbody>
-                </table>
+		<div class="row giohangmain">
+			<h3>GIỎ HÀNG</h3>
+			<div class="col-lg-8" style="min-width: 250px;">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Sản phẩm</th>
+							<th scope="col" style="min-width: 20px;">Tên sản phẩm</th>
+							<th scope="col">Giá</th>
+							<th scope="col" style="max-width: 30px;">Số lượng</th>
+							<th scope="col">Tổng</th>
+							<th scope="col">Xóa</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item, iStat: ${cart.items}">
+							<td style="max-width: 100px;"><img
+								th:src="@{/images/product-images/__${p}__}" alt="Image"
+								height="90px"></td>
+							<td style="max-width: 50px;" th:text="${item.name}"></td>
+							<td style="max-width: 50px;" th:text="${item.price}"></td>
+							<td><input class="quantity"
+								onchange="updateTotalPrice(this)" type="number" min="1"
+								value="0"></td>
+							<td class="totalPrice">0</td>
+							<td><a th:href="@{/cart/remove/__${item.id}__}"> <i
+									class="fa-regular fa-circle-xmark fa-lg"
+									style="margin-bottom: 35px; margin-right: 100px;"></i>
+							</a></td>
+						</tr>
 
-            </div>
+						 <tr id="emptyCartRow" th:if="${#lists.isEmpty(cart.items)}"class="text-secondary text-center">
+					      <td colspan="6" >Trong giỏ hàng chưa có sản phẩm.</td>
+					    </tr>
+					</tbody>
+				</table>
 
-            <div class="col-lg-4">
-                <div class="card">
-                    <!-- <div class="card-header">
+			</div>
+
+			<div class="col-lg-4">
+				<div class="card">
+					<!-- <div class="card-header">
                         Cộng giỏ hàng
                     </div> -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="card-title">
-                                <h4>Cộng giỏ hàng</h4>
+					<div class="card-body">
+						<div class="row">
+							<div class="card-title">
+								<h4>Cộng giỏ hàng</h4>
 
-                            </div>
-                            <hr>
+							</div>
+							<hr>
 
-                            <div class="col-sm-5">
+							<div class="col-sm-5">
 
 
-                                <h5 class="card-title">Tạm tính:</h5> 
-                                <hr>
-                                <h5 class="card-title">Tổng:</h5>
-                            </div>
-                            <div class="col-sm-7">
+								<h5 class="card-title">Tạm tính:</h5>
+								<hr>
+								<h5 class="card-title">Tổng:</h5>
+							</div>
+							<div class="col-sm-7">
 
-                                <p id="price">499.000 VND</p>
-                                <hr>
-                                <p id="price">499.000 VND</p>
-                            </div>
+								<p id="subtotal">0 VND</p>
+								<hr>
+								<p id="total">0 VND</p>
+							</div>
 
-                            <a th:href="@{/shoeshop/thanhtoan}"><button style="height: 50px; width: 380px; background-color: #232946; color: white;"  type="button" class="btn">Thanh toán   </button></a>  
-                        </div>
-                       
-                    </div>
-                    <!-- <div class="card-header">
+							<div class="row">
+								<a th:href="@{/shoeshop/thanhtoan}"><button
+										style="background-color: #232946; color: white;" type="button"
+										class="btn col-md-12 text-center	">Thanh toán</button></a>
+							</div>
+						</div>
+
+					</div>
+					<!-- <div class="card-header">
                      
                     </div> -->
-                </div>
-            </div>
+				</div>
+			</div>
 
-        </div>
-        <a  th:href="@{/shoeshop/index}" style="background-color: #232946; color: white;" type="button" class="btn btn-outline-light"> <-Tiếp tục xem sản phẩm</a>
-    
-
-
-
-
-    </div>
-    	  <div th:replace="layout/footer ::  footer"></div>
-    	  <div th:replace="modal/modalCart.html :: #GioHang"></div>
-
-		<!-- ModalLogin -->
-		<div th:replace="modal/modalLogin.html :: #modalLogin"></div>
-
-		<!-- The Modal signup -->
-		<div th:replace="modal/modalSignUp.html :: #modalSignUp"></div>
-		<!-- Quên mật khẩu -->
-		<div th:replace="modal/modalForget.html :: #modalForget"></div>
-		<!-- Quên mật khẩu ->> nhập mật khẩu mới -->
-		<div th:replace="modal/modalRePass.html :: #modalRePass"></div>
+		</div>
+		<a th:href="@{/shoeshop/index}"
+			style="background-color: #232946; color: white;" type="button"
+			class="btn btn-outline-light">
+			<i class="fa-solid fa-caret-left fa-xs"></i>
+			Tiếp tục xem sản phẩm</a> 
+				<a th:if="${hasProducts}" th:href="@{/cart/clear}" type="button" class="btn btn-danger"
+				   style="margin-left: 400px">
+				   <i class="fa-solid fa-trash-can fa-sm"></i>
+				   Xoá tất cả
+			</a>
 
 
-		<!-- Đổi mật khẩu-->
-		<div th:replace="modal/modalChangePass.html :: #modalChangePass"></div>
-		<!-- Đổi mật khẩu ->> nhập mật khẩu mới -->
-		<div th:replace="modal/modalChangeRePass.html :: #modalChangeRePass"></div> 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        crossorigin="anonymous"></script>
-       
+	</div>
+	<script th:inline="javascript">
+		function updateTotalPrice(input) {
+		
+			// Lấy giá trị số lượng từ trường input
+			var quantity = parseInt(input.value);
+
+			// Lấy giá trị giá từ phần tử anh em trước của phần tử cha của input
+			var price = parseFloat(input.parentNode.previousElementSibling.textContent);
+
+			// Lấy phần tử nơi hiển thị tổng giá trị tính toán
+			var totalPriceCell = input.parentNode.nextElementSibling;
+
+			// Lấy phần tử tổng và phần tử tổng cộng bằng ID tương ứng
+			var subtotalElement = document.getElementById("subtotal");
+			var totalElement = document.getElementById("total");
+
+			// Tính toán giá trị tổng bằng cách nhân số lượng và giá
+			var totalPrice = quantity * price;
+
+			// Cập nhật phần tử hiển thị tổng giá trị với giá trị tính toán, làm tròn 2 chữ số thập phân
+			totalPriceCell.textContent = totalPrice.toFixed(2);
+
+			// Lấy tất cả các phần tử có lớp "totalPrice"
+			var allTotalPrices = document.getElementsByClassName("totalPrice");
+
+			// Tính toán giá trị tổng cộng bằng cách cộng tổng giá trị từ mỗi hàng
+			var subtotal = 0;
+			for (var i = 0; i < allTotalPrices.length; i++) {
+				subtotal += parseFloat(allTotalPrices[i].textContent);
+			}
+
+			// Cập nhật phần tử tổng và phần tử tổng cộng với giá trị tính toán, làm tròn 2 chữ số thập phân
+			subtotalElement.textContent = subtotal.toFixed(2);
+			totalElement.textContent = subtotal.toFixed(2) + " VND";
+		}
+	</script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+		crossorigin="anonymous"></script>
+	
+	
+
 </body>
 
 </html>

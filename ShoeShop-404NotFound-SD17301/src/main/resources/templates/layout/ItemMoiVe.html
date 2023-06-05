@@ -45,12 +45,15 @@
 						</p>
 						<p class="text-center text-dark">
 						<label style="color:  black">
-							Giá: <del class="text-secondary  text-decoration-none">1.000.00</del>₫<i class="text-danger fw-bold"> 
+							Giá: <del class="text-secondary  text-decoration-none text-decoration-line-through">1.000.00</del>₫<i class="text-danger fw-bold"> 
 							<label th:text="${item.price}"></label>₫
 							</i> 
-							<a th:href="@{/shoeshop/giohang}" class="IMGItem me-auto text-dark" style="text-decoration: none"> 
-							<i class="fa-solid fa-basket-shopping"></i>
+							<a th:href="@{/cart/add/__${item.id}__}" class="IMGItem me-auto text-dark" style="text-decoration: none">
+							    <i id="#GioHang" class="fa-solid fa-basket-shopping"></i>
 							</a>
+							
+
+
 							</label>
 						</p>
 					</div>
@@ -68,13 +71,15 @@
 		crossorigin="anonymous">
 		
 	</script>
-
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
 		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
 		crossorigin="anonymous">
 		
 	</script>
+	
 </body>
 
 </html>

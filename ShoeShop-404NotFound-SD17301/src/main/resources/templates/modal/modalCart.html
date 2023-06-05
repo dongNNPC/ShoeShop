@@ -3,47 +3,65 @@
 <head>
 </head>
 <body>
-<div class="offcanvas offcanvas-end" id="GioHang" >
-      <div class="offcanvas-header ">
-        <h4 style="margin-left: 120px;">Giỏ hàng <i class="fa-solid fa-basket-shopping fa-xs"></i></h4>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-       
-      </div>
-     
-     
-      <i class="fa-solid fa-minus fa-2xl text-center mb-2"></i>
-      <div class="offcanvas-body text-center text-secondary">
-     
-        <table class="table table-responsivetable-primary text-start col-lg-12 col-sm-12">
-          <thead>
-            <tr>
-              <td scope="col">
-                <img th:src ="@{/images/bitHunter10.png}"  width="70px" height="70px">
-              </td>
-              <td scope="col mx-auto">
-                <h6 class="text-truncate" style="font-weight: bold; max-width: 200px; margin-bottom: -20px;">Già thể thao nam đẹp nhất năm 2023</h6> <br>
-                <i>Màu sắc: cam</i> | <i>Size: 39</i> <br>
-                <i>1 x <i class="text-danger">999.000đ</i></i>
-              </td>
-              <td scope="col" >
-              <i class="fa-regular fa-circle-xmark fa-lg " style="margin-bottom: 35px;margin-right: 100px;"></i></td>
-            </tr>
-          </thead>
-        </table>
-        <!-- Tạm tính  -->
-        <div class="">
-          <h6 class="text-dark fw-bold">Tạm Tính :  <i class="text-danger">999.000đ</i></h6>  
-        
-        </div>
-        <hr>
-        <!-- button thanh toán -->
-        <div class="d-grid gap-2">
-          <a type="button" th:href="@{/shoeshop/giohang}" class="btn " style="background-color: #232946 ;color: #fffffe;">Đến giỏ
-            hàng</a>
-          <a type="button" th:href="@{/shoeshop/thanhtoan}" class="btn" style="background-color: #232946 ;color: #fffffe;">Thanh
-            Toán</a>
-        </div>
-      </div>
-  </div>
-  </body>
+	<div class="offcanvas offcanvas-end" id="GioHang">
+		<div class="offcanvas-header ">
+			<h4 style="margin-left: 120px;">
+				Giỏ hàng <i class="fa-solid fa-basket-shopping fa-xs"></i>
+			</h4>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+
+		</div>
+
+
+		<i class="fa-solid fa-minus fa-2xl text-center mb-2"></i>
+		<div class="offcanvas-body text-center text-secondary">
+
+			<table
+				class="table table-responsivetable-primary text-start col-lg-12 col-sm-12">
+				<thead>
+					<tr >
+						<td scope="col"><img th:src="@{/images/bitHunter10.png}"
+							width="70px" height="70px"></td>
+						<td scope="col mx-auto">
+							<h6 class="text-truncate"
+								style="font-weight: bold; max-width: 200px; margin-bottom: -20px;"
+								th:text="${item.name}"></h6> <br> <i>Màu sắc: cam</i> | <i>Size:
+								39</i> <br> <i>1 x <i class="text-danger"
+								th:text="${item.price}"></i></i>
+						</td>
+						<td scope="col"><i class="fa-regular fa-circle-xmark fa-lg"
+							style="margin-bottom: 35px; margin-right: 100px;"></i></td>
+					</tr>
+
+
+				</thead>
+			</table>
+			<!-- Tạm tính  -->
+			<div class="">
+				<h6 class="text-dark fw-bold">
+					Tạm Tính : <i class="text-danger">999.000đ</i>
+				</h6>
+
+			</div>
+			<hr>
+			<!-- button thanh toán -->
+			<div class="d-grid gap-2">
+				<a type="button" th:href="@{/shoeshop/cart/view}" class="btn "
+					style="background-color: #232946; color: #fffffe;">Đến giỏ hàng</a>
+				<a type="button" th:href="@{/shoeshop/thanhtoan}" class="btn"
+					style="background-color: #232946; color: #fffffe;">Thanh Toán</a>
+			</div>
+		</div>
+	</div>
+	<script>
+		/*<![CDATA[*/
+		// Check if the addedItem is not empty
+		var addedItem = /*[[${addedItem}]]*/null;
+		if (addedItem) {
+			// Show the modal
+			$('#modalCart').modal('show');
+		}
+		/*]]>*/
+	</script>
+</body>
 </html>

@@ -40,11 +40,11 @@ public class IndexController {
 		return "/views/details";
 	}
 	
-	@RequestMapping("/giohang")
-	public String giohang () {
-		
-		return "/views/giohang";
-	}
+//	@RequestMapping("/giohang")
+//	public String giohang () {
+//		
+//		return "/views/giohang";
+//	}
 	
 	@RequestMapping("/thanhtoan")
 	public String thanhtoan() {
