@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -35,27 +36,34 @@ public class IndexController {
 	@RequestMapping("/index")
 	public String index(Model model, @RequestParam("p") Optional<Integer> p, @ModelAttribute User user) {
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-//			System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
-		List<Category> categories = daoCategoryRepository.findAll();
-		model.addAttribute("categories", categories);
+	    if (session.get("user") == null) {
+	        // Xử lý khi session là null
+	        // Ví dụ: Tạo một đối tượng User mặc định
+	        User defaultUser = new User();
+	        model.addAttribute("user", defaultUser);
+	    } else {
+	        user = session.get("user");
+	        // System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+	        model.addAttribute("user", user);
+	    }
+	    
+	    List<Category> categories = daoCategoryRepository.findAll();
+	    model.addAttribute("categories", categories);
 
-		Pageable pageable = PageRequest.of(p.orElse(0), 3);
-		Product item = new Product();
-		model.addAttribute("item", item);
-		List<Product> items = daoPro.findAll();
-		model.addAttribute("items", items);
-		// trả về view
-		return "/index";
+	    Pageable pageable = PageRequest.of(p.orElse(0), 8);
+	    Page<Product> page = daoPro.findAll(pageable);
+	    List<Product> items = page.getContent();
+	    model.addAttribute("items", items);
+	    model.addAttribute("currentPage", page.getNumber());
+	    model.addAttribute("totalPages", page.getTotalPages());
+
+	    Product item = new Product();
+	    model.addAttribute("item", item);
+	    
+	    // trả về view
+	    return "/index";
 	}
+
 
 	@RequestMapping("/details")
 	public String details() {

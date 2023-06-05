@@ -54,30 +54,29 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="item, iStat: ${cart.items}">
-							<td style="max-width: 100px;"><img
-								th:src="@{/images/product-images/__${p}__}" alt="Image"
-								height="90px"></td>
-							<td style="max-width: 50px;" th:text="${item.name}"></td>
-							<td style="max-width: 50px;" th:text="${item.price}"></td>
-							<td><input class="quantity"
-								onchange="updateTotalPrice(this)" type="number" min="1"
-								value="0"></td>
-							<td class="totalPrice">0</td>
-							<td><a th:href="@{/cart/remove/__${item.id}__}"> <i
-									class="fa-regular fa-circle-xmark fa-lg"
-									style="margin-bottom: 35px; margin-right: 100px;"></i>
-							</a></td>
-						</tr>
-
-						 <tr id="emptyCartRow" th:if="${#lists.isEmpty(cart.items)}"class="text-secondary text-center">
-					      <td colspan="6" >Trong giỏ hàng chưa có sản phẩm.</td>
-					    </tr>
+							<tr th:each="item, iStat: ${cart.items}">
+								<td style="max-width: 100px;"><img alt="Image" height="90px"></td>
+								<td style="max-width: 50px;" th:text="${item.name}"></td>
+								<td style="max-width: 50px;" th:text="${item.price}"></td>
+								<td><input class="quantity"
+									onchange="updateTotalPrice(this)" type="number" min="1"
+									value="0"></td>
+									
+								<td class="totalPrice">0</td>
+								<td><a th:href="@{/cart/remove/__${item.id}__}"> <i
+										class="fa-regular fa-circle-xmark fa-lg"
+										style="margin-bottom: 35px; margin-right: 100px;"></i>
+								</a></td>
+							</tr>
+	
+							 <tr id="emptyCartRow" th:if="${#lists.isEmpty(cart.items)}"class="text-secondary text-center">
+						      <td colspan="6" >Trong giỏ hàng chưa có sản phẩm.</td>
+						    </tr>
 					</tbody>
 				</table>
 
 			</div>
-
+			
 			<div class="col-lg-4">
 				<div class="card">
 					<!-- <div class="card-header">

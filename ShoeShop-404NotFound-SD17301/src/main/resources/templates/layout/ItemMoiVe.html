@@ -1,41 +1,56 @@
+<div class="container py-1 mt-3">
+    <div class="row justify-content-center">
+    	<h1 class="text-center"># TẤT CẢ SẢN PHẨM </h1>
+    	<h6 class="text-center text-secondary">mang đến những trải nghiệm tuyệt vời cho khách hàng </h6>
+        <div class="col-12 col-lg-3" th:each="item : ${items}">
+            <div class="card box-shadow mx-auto my-2" style="width: 17rem;">
+                <a th:href="@{/shoeshop/details/{id}(id=${item.id})}">
+                    <img th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}"
+                         class="card-img-top" alt="..." width="200px">
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate text-dark" style="max-width: 230px;">
+                            <label th:text="${item.name}"></label>
+                        </h5>
+                        <hr>
+                        <p class="text-center text-secondary" style="text-decoration: none;">
+                            <label class="text-secondary">Thương hiệu: <label th:text="${item.brand.name}"></label>,
+                                <br>Trạng thái: <label
+                                        th:text="${item.status ? 'Đang bán' : 'Ngừng kinh doanh'}"></label>
+                                | số lượng: <label th:text="${item.quantity}"></label>
+                            </label>
+                        </p>
+                        <p class="text-center text-dark">
+                            <label style="color: black">
+                                Giá: <del class="text-secondary text-decoration-none text-decoration-line-through">1.000.00</del>₫<i
+                                        class="text-danger fw-bold">
+                                    <label th:text="${item.price}"></label>₫
+                                </i>
+                                <a th:href="@{/cart/add/__${item.id}__}" class="IMGItem me-auto text-dark"
+                                   style="text-decoration: none">
+                                    <i id="#GioHang" class="fa-solid fa-basket-shopping"></i>
+                                </a>
+                            </label>
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 
-	<div class="container py-1">
-
-		<div class="row justify-content-center ">
-			<div class="col-12 col-lg-3" th:each="item : ${items}">
-				<div class="card box-shadow mx-auto my-2 " style="width: 17rem;">
-				<a th:href="@{/shoeshop/details/{id}(id=${item.id})}">
-					<img th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}"
-						class="card-img-top" alt="..." width="200px">
-					<div class="card-body  ">
-						<h5 class="card-title text-truncate text-dark" style="max-width: 230px;">
-							<label th:text="${item.name}"></label>
-						</h5>
-						<hr>
-						<p class="text-center text-secondary  " style="text-decoration: none;">
-							<label class="text-secondary">Thương hiệu: <label th:text="${item.brand.name}" ></label> ,
-							 <br>Trạng thái : <label th:text="*{item.status ? 'Đang bán' : 'Ngừng kinh doanh'}" ></label>
-							| số lượng : <label th:text="${item.quantity}"></label>
-							</label>
-						</p>
-						<p class="text-center text-dark">
-						<label style="color:  black">
-							Giá: <del class="text-secondary  text-decoration-none text-decoration-line-through">1.000.00</del>₫<i class="text-danger fw-bold"> 
-							<label th:text="${item.price}"></label>₫
-							</i> 
-							<a th:href="@{/cart/add/__${item.id}__}" class="IMGItem me-auto text-dark" style="text-decoration: none">
-							    <i id="#GioHang" class="fa-solid fa-basket-shopping"></i>
-							</a>
-							
-
-
-							</label>
-						</p>
-					</div>
-					</a>
-				</div>
-			</div>
-
-		</div>
-
-	</div>
+    <!-- Phân trang -->
+    <div class="row  mt-3" style="margin-left: 450px">
+        <div class="col">
+            <ul class="pagination">
+                <li class="page-item" th:class="${currentPage == 0 ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{index(p=${currentPage - 1})}">&laquo;</a>
+                </li>
+                <li class="page-item" th:class="${page == currentPage ? 'active' : ''}" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a class="page-link" th:href="@{index(p=${page})}" th:text="${page + 1}"></a>
+                </li>
+                <li class="page-item" th:class="${currentPage == totalPages - 1 ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{index(p=${currentPage + 1})}">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

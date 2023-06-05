@@ -23,7 +23,6 @@
 	href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet"
 	type="text/css" media="all" />
 
-
 </head>
 
 <body>
@@ -74,11 +73,15 @@
         navLink.classList.add('active');
       });
     });
-
-
-
+    
+    $(document).ready(function() {
+        $('#GioHang').click(function() {
+            $(this).removeClass('fa-basket-shopping').addClass('fa-check');
+        });
+    });
   </script>
-
+	
+	
 	<!-- Bootstrap JavaScript Libraries -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -92,57 +95,7 @@
 		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
 		crossorigin="anonymous">
     </script>
-	<script type="text/javascript">
-	// Function to animate the cart icon
-	function animateCartIcon() {
-	    // Get the position of the cart icon
-	    var cartIconPosition = $('#cartIcon').offset();
-
-	    // Create a clone of the cart icon
-	    var clone = $('#cartIcon').clone().appendTo('body');
-	    clone.css({
-	        'position': 'absolute',
-	        'top': cartIconPosition.top,
-	        'left': cartIconPosition.left,
-	        'opacity': '0.5',
-	        'z-index': '1000'
-	    });
-
-	    // Animate the clone to the cart position
-	    clone.animate({
-	        'top': $('#collapsibleNavId .fa-basket-shopping').offset().top,
-	        'left': $('#collapsibleNavId .fa-basket-shopping').offset().left,
-	        'width': 20,
-	        'height': 20
-	    }, 1000, 'swing', function() {
-	        // Remove the clone once the animation is complete
-	        clone.remove();
-	    });
-	}
-
-	// Call the animateCartIcon function when adding an item to the cart
-	function addItemToCart(id) {
-	    // Add the item to the cart
-	    // ...
-
-	    // Animate the cart icon
-	    animateCartIcon();
-	}
-
-	// Event listener for the "Clear Cart" button
-	$(document).ready(function() {
-	    // Check if there are products in the cart
-	    var hasProducts = true; // Replace with your logic to check if there are products in the cart
-
-	    // Show or hide the "Clear Cart" button based on the cart status
-	    if (hasProducts) {
-	        $("#clearCartButton").show();
-	    } else {
-	        $("#clearCartButton").hide();
-	    }
-	});
-
-	</script>
+	
 </body>
 
 </html>

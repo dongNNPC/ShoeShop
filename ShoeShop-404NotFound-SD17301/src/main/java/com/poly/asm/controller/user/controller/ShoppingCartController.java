@@ -10,9 +10,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poly.asm.dao.DetailedImageRepository;
 import com.poly.asm.dao.ProductRepository;
-
+import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.Product;
+import com.poly.asm.model.User;
+import com.poly.asm.service.SessionService;
 import com.poly.asm.service.ShoppingCartService;
 
 @Controller
@@ -22,11 +24,23 @@ public class ShoppingCartController {
     
     @Autowired ProductRepository dao;
     @Autowired DetailedImageRepository daoIMG;
-    
+    @Autowired SessionService session;
+    @Autowired DetailedImageRepository daoDetailedImageRepository;
     @RequestMapping("/shoeshop/cart/view")
-    public String viewCart(Model model) {
+    public String viewCart(Model model ,@ModelAttribute("user") User user) {
+    	
+    	if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
         model.addAttribute("cart", cart);
-        // Check if the cart is not empty
+        // Check nếu cart rỗng sẽ ẩn đi button clear cart
         boolean hasProducts = !cart.getItems().isEmpty();
         model.addAttribute("hasProducts", hasProducts);
         
@@ -40,25 +54,31 @@ public class ShoppingCartController {
         Product product = cart.add(id);
         List<Product> products = dao.findAll();
         List<DetailedImage> de = daoIMG.findAll();
+        
+        List<DetailedImage> detailedImages = daoDetailedImageRepository.findAll();
         Product p2 = new Product();
         for (Product p : products) {
-        	if (p.getId().equals(id)) {
-        		p2 = p;
-        		
-        	}
-		}
-        for (DetailedImage d : de) {
-			if (p2.getId().equals(d.getProduct().getId())) {
-				System.out.println(d.getMainImage()+ "sssssssss");
-				 model.addAttribute("p" , d );
+			if (p.getId().equals(id)) {
+//				System.out.println(p.getDetailedImages());
+				model.addAttribute("p", p);
+				for (DetailedImage d : detailedImages) {
+					if (p.getId().equalsIgnoreCase(d.getProduct().getId())) {
+						  model.addAttribute("imagePath", d.getMainImage());
+
+						
+					}
+				}
+				
 			}
 		}
        
         if (product != null) {
-            redirectAttributes.addFlashAttribute("successMessage", "Added item to cart successfully");
+        	 redirectAttributes.addFlashAttribute("successMessage", "Thành công!");
+             model.addAttribute("item", p2);
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to add item to cart");
         }
+       
         return "redirect:/shoeshop/index";
     }
 
