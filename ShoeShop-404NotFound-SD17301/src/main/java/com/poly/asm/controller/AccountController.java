@@ -2,6 +2,7 @@ package com.poly.asm.controller;
 
 import java.util.List;
 import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.poly.asm.dao.UserRepository;
+import com.poly.asm.model.MailInfo2;
 import com.poly.asm.model.User;
 import com.poly.asm.service.CookieService;
+import com.poly.asm.service.MailerService2;
 import com.poly.asm.service.ParamService;
 import com.poly.asm.service.SessionService;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
@@ -43,10 +47,14 @@ public class AccountController {
 	@Autowired
 	SessionService session;
 
+	@Autowired
+	private MailerService2 mailerService2;
+
 	@RequestMapping("/login")
 	public String login(@ModelAttribute("user") User user, Model model) {
-
+		model.addAttribute("failed", session.getString("mess"));
 		user.setEmail(cookieService.getValue("email"));
+		session.remove("mess");
 		return "/account/login";
 	}
 
@@ -61,21 +69,21 @@ public class AccountController {
 		} else {
 			cookieService.remove("email");
 		}
-
 		for (User user2 : users) {
 			if (user.getEmail().equalsIgnoreCase(user2.getEmail())) {
 				if (user.getPassword().equalsIgnoreCase(user2.getPassword())) {
-					if (user2.isAdmin()) {
-						session.set("user", user2);
-						User sUser = session.get("user");
-//						System.out.println(sUser.getImage());
-						return "redirect:/shoeshop/admin/index";
-					} else {
-						session.set("user", user2);
-						User sUser = session.get("user");
-//						System.out.println(sUser.getImage());
-						return "redirect:/shoeshop/index";
-					}
+					session.set("user", user2, 30);
+//					if (user2.isAdmin()) {
+//						
+////						User sUser = session.get("user");
+////						System.out.println(sUser.getImage());
+////						return "redirect:/shoeshop/admin/index";
+//					} else {
+//						session.set("user", user2, 30);
+////						User sUser = session.get("user");
+////						System.out.println(sUser.getImage());
+////						return "redirect:/shoeshop/index";
+//					}
 				}
 			}
 		}
@@ -160,7 +168,7 @@ public class AccountController {
 		return "/account/ChangePass";
 	}
 
-	// trang nhập mật khẩu mới confrimPassword 
+	// trang nhập mật khẩu mới confrimPassword
 	@PostMapping("/ChangePass")
 	public String ChangePassCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
 //		if (user.getPassword().equalsIgnoreCase("123")) {
@@ -168,63 +176,102 @@ public class AccountController {
 //			
 //			return "redirect:/shoeshop/ChangeRePass";
 //		}
-		
+
 		if (dao.findAll().get(0).getPassword().equals(user.getPassword())) {
 			System.out.println(user.getPassword());
 			System.out.println("thành công");
-			
+
 			return "redirect:/shoeshop/ChangeRePass-Change";
-		}else {
+		} else {
 //			System.out.println("mật khẩu sai");
 			model.addAttribute("message", "mat khau sai");
-		
-					}
+
+		}
 		return "/account/ChangePass";
 	}
 
 	// trang nhập mật khẩu mới
 	@GetMapping("/ChangeRePass-Change")
 	public String ChangeRePass(@ModelAttribute("user") User user, Model model) {
-		
-		model.addAttribute("ui_user", "change");		
+
+		model.addAttribute("ui_user", "change");
 		return "/account/ChangeRePass";
 	}
 
-	//phương thức thay đổi mật khẩu mới
+	// phương thức thay đổi mật khẩu mới
 	@PostMapping("/ChangeRePass-Change")
 	public String PassCheck(@Valid @ModelAttribute("user") User user, Model model, BindingResult result) {
-				
+
 		List<User> uList = dao.findAll();
-		if(user.getPassword().equalsIgnoreCase(uList.get(0).getPassword())) {
+		if (user.getPassword().equalsIgnoreCase(uList.get(0).getPassword())) {
 			user.setPassword(user.getPassword());
 			model.addAttribute(uList);
 			dao.save(user);
 			System.out.println("đổi mật khẩu thành công");
-			
-		
-			
+
 			return "redirect:/shoeshop/index";
-		}else {
+		} else {
 			model.addAttribute(uList);
 			System.out.println("lỗi");
 		}
 		return "/account/ChangeRePass";
-		
+
 	}
-	
+
 	// trang nhập mật khẩu mới
-	@RequestMapping("/Forget")
+	@GetMapping("/Forget")
 	public String Forget(@ModelAttribute("user") User user) {
+
 		return "/account/Forget";
 	}
 
 	// trang nhập mật khẩu mới
-	@PostMapping("/Forget")
-	public String ForgetCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
-		if (user.getEmail().equalsIgnoreCase("user@gmail.com")) {
+	private String sendCodeString = "";
 
-			return "redirect:/shoeshop/ChangeRePass";
+	@PostMapping("/Forget")
+	public String ForgetCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model)
+			throws MessagingException {
+		User u = session.get("user");
+
+		if (user.getEmail().equalsIgnoreCase(u.getEmail())) {
+			MailInfo2 mailInfo2 = new MailInfo2();
+			sendCodeString = generateRandomNumber();
+			mailInfo2.setFrom("khanhttpc03027@fpt.edu.vn");
+			mailInfo2.setTo("khanhttpc03027@fpt.edu.vn");
+			mailInfo2.setSubject("Shoe Shop code");
+			mailInfo2.setBody(sendCodeString);
+
+			mailerService2.queue(mailInfo2);
+
+//			mailerService2.send("khanhttpc03027@fpt.edu.vn", "Subjectt", "123");
+			return "redirect:/shoeshop/sendcode";
 		}
 		return "/account/Forget";
+	}
+
+	@GetMapping("/sendcode")
+	public String sendCode() {
+
+		return "/account/SendCode";
+	}
+
+	@PostMapping("/sendcode")
+	public String sendCode(@RequestParam("code") String code) {
+		if (sendCodeString.equals(code)) {
+			return "/account/sendCodeChangePass";
+		}
+		return "/account/SendCode";
+	}
+
+	@RequestMapping("/sendcode-change")
+	public String sendCodeChange(@ModelAttribute("user") User user) {
+		User u = session.get("user");
+
+		u.setPassword(user.getPassword());
+
+		dao.save(u);
+
+		return "redirect:/shoeshop/index";
+
 	}
 }
