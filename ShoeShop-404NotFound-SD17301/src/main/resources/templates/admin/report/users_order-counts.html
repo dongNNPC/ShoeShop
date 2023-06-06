@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description"
+	content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+<meta name="author" content="AdminKit">
+<meta name="keywords"
+	content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}"
+	href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet"
+	type="text/css" media="all" />
+<link rel="preconnect" href="https://fonts.gstatic.com"
+	th:href="@{https://fonts.gstatic.com}">
+<link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
+
+<link rel="canonical" th:href="@{https://demo-basic.adminkit.io/}" />
+
+<title>Thống kê người dùng đã mua</title>
+<link th:href="@{/admin/css/admin.css}" rel="stylesheet" type="text/css"
+	media="all">
+<link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css"
+	media="all">
+<link
+	th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}"
+	rel="stylesheet" type="text/css" media="all">
+</head>
+
+<body>
+	<div class="wrapper">
+		<div th:replace="~{./admin/layout/sidebar :: #sidebar}"></div>
+		<div class="main">
+			<div th:replace="~{./admin/layout/nav ::  #nav-admin}"></div>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<div class="mb-3">
+						<h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO PRODUCT</h3>
+					</div>
+					<div class="row">
+
+						<div class="col-md-12 col-xl-12">
+							<div class="card">
+								<form th:action="@{/shoeshop/admin/users/order-counts}"
+									method="get">
+									<div class="input-group rounded col-2 mt-3"
+										style="width: 500px; margin-left: 400px">
+										<input type="search" class="form-control rounded col-2"
+											name="name" th:value="${searchName}" /> <span
+											class="input-group-text border-0 bg-white" id="search-addon">
+											<button type="submit" class="btn btn-basic col-2">
+												<i class="fas fa-search"></i>
+											</button>
+
+										</span>
+									</div>
+								</form>
+
+								<table class="table mt-3 table-striped">
+									<thead>
+										<tr>
+											<th>User ID</th>
+											<th>User Name</th>
+											<th>Total Orders</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- Loop through the user order counts -->
+										<tr th:each="order : ${orderCounts}">
+											<td th:text="${order.id}"></td>
+											<td th:text="${order.name}"></td>
+											<td th:text="${order.totalOrders}"></td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- 4 nút điều hướng -->
+								
+									<div class="row" style="width: 500px; margin-left: 600px" >
+									<a class="col-2 btn btn-primary m-1"  th:unless="${currentPage == 0}" th:href="@{/shoeshop/admin/users/order-counts(page=${currentPage - 1}, name=${searchName})}">
+										<i class="fa-solid fa-backward-fast"></i>
+									</a>
+								
+									<a class="col-2 btn btn-primary m-1" th:href="@{/shoeshop/admin/users/order-counts(page=0, name=${searchName})}">
+											<i class="fa-solid fa-backward"></i>
+									</a>
+								
+									<a  class="col-2 btn btn-primary m-1" th:unless="${currentPage == totalPages - 1}" th:href="@{/shoeshop/admin/users/order-counts(page=${currentPage + 1}, name=${searchName})}">
+										<i class="fa-solid fa-forward"></i>
+									</a>
+														
+									<a class="col-2 btn btn-primary m-1"  th:href="@{/shoeshop/admin/users/order-counts(page=${totalPages - 1}, name=${searchName})}">
+										<i class="fa-solid fa-forward-fast"></i>
+									</a>
+									
+									</div>
+								
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+
+
+			<div th:replace="~{./admin/layout/footer ::  #footer-admin}"></div>
+		</div>
+	</div>
+
+	<script th:src="@{/admin/js/app.js}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Order Counts Report</title>
+</head>
+<body>
+    <h1>User Order Counts Report</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Total Inventory</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="orderCount : ${orderCounts}">
+                <td th:text="${orderCount.productId}"></td>
+                <td th:text="${orderCount.productName}"></td>
+                <td th:text="${orderCount.totalInventory}"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div>
+        <ul>
+            <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
+                <a th:href="@{/admin/users/order-counts(page=${pageNumber}, name=${searchName})}"
+                   th:text="${pageNumber}"
+                   th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
+            </li>
+        </ul>
+    </div>
+    
+   
+</body>
+</html>
