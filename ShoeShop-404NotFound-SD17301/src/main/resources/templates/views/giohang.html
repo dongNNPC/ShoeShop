@@ -55,7 +55,7 @@
 					</thead>
 					<tbody>
 							<tr th:each="item, iStat: ${cart.items}">
-								<td style="max-width: 100px;"><img      th:src = "@{/images/product-images/__${setimg.getMainImage()}__}"  alt="Image" height="90px"></td>
+								<td style="max-width: 100px;"><img th:src = "@{/images/product-images/__${setimg.getMainImage()}__}"  alt="Image" height="90px"></td>
 								<td style="max-width: 50px;" th:text="${item.name}"></td>
 								<td style="max-width: 50px;" th:text="${item.price}"></td>
 								<td><input class="quantity"

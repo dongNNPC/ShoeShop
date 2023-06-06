@@ -19,9 +19,11 @@ public class SessionService {
 		return (String) session.getAttribute(name);
 	}
 
-	public void set(String name, Object value) {
+	public void set(String name, Object value, int time) {
 		// Thiết lập giá trị mới cho attribute trong session
 		session.setAttribute(name, value);
+		int sessionTimeoutInSeconds = time * 60;
+		session.setMaxInactiveInterval(sessionTimeoutInSeconds);
 	}
 
 	public void remove(String name) {
