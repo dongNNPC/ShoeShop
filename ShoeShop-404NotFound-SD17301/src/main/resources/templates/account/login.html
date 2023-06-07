@@ -20,7 +20,7 @@
     <!-- place navbar here -->
   </header>
   <main class="container ">
-    <div class="card mt-5 bg-white col-md-7 mx-auto" style="height: 520px;">
+    <div class="card mt-5 bg-white col-md-7 mx-auto" style="height: 580px;">
         <div class="card-body ">
             <form th:action="@{/shoeshop/login}" th:object="${user}" method="post">
   				 <img th:src = "@{/icons/logo.jpg}" width="70px" height="70px" class="mx-auto d-block"> 
@@ -48,7 +48,8 @@
 
                   <a  th:href="@{/shoeshop/Forget}" class="mt-1 col-md-3 text-end text-dark" style="margin-left: 190px; text-decoration: none;cursor: pointer;">Quên mật khẩu ?</a>
                 </div>
-           <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                
+          		 <div class="col-md-9 mx-auto mb-3 g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
 
 
                 <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" th:value="your_test_value">
