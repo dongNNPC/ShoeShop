@@ -54,8 +54,8 @@
 						</tr>
 					</thead>
 					<tbody>
-							<tr th:each="item, iStat: ${cart.items}">
-								<td style="max-width: 100px;"><img   alt="Image" height="90px"></td>
+							<tr th:each="item, iStat: ${cart}">
+								<td style="max-width: 100px;"><img th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}"  alt="Image" height="90px"></td>
 								<td style="max-width: 50px;" th:text="${item.name}"></td>
 								<td style="max-width: 50px;" th:text="${item.price}"></td>
 								<td><input class="quantity"
@@ -69,7 +69,7 @@
 								</a></td>
 							</tr>
 	
-							 <tr id="emptyCartRow" th:if="${#lists.isEmpty(cart.items)}"class="text-secondary text-center">
+							 <tr id="emptyCartRow" th:if="${#lists.isEmpty(cart)}"class="text-secondary text-center">
 						      <td colspan="6" >Trong giỏ hàng chưa có sản phẩm.</td>
 						    </tr>
 					</tbody>

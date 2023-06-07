@@ -19,9 +19,9 @@
 			<table
 				class="table table-responsivetable-primary text-start col-lg-12 col-sm-12">
 				<thead>
-					<tr >
-						<td scope="col"><img th:src="@{/images/bitHunter10.png}"
-							width="70px" height="70px"></td>
+					<tr th:each="item, iStat: ${cart}">
+						<td scope="col"><img th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}"  alt="Image" height="90px"></td>
+							
 						<td scope="col mx-auto">
 							<h6 class="text-truncate"
 								style="font-weight: bold; max-width: 200px; margin-bottom: -20px;"
