@@ -1,5 +1,6 @@
 package com.poly.asm.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +20,13 @@ import com.poly.asm.model.Category;
 import com.poly.asm.model.Product;
 import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
+import com.poly.asm.service.ShoppingCartService;
 
 @Controller
 @RequestMapping("/shoeshop")
 public class IndexController {
+	@Autowired
+	private ShoppingCartService cart; // Tiêm Spring Bean đã viết ở bài trước
 
 	@Autowired
 	ProductRepository daoPro;
@@ -36,43 +40,46 @@ public class IndexController {
 	@RequestMapping("/index")
 	public String index(Model model, @RequestParam("p") Optional<Integer> p, @ModelAttribute User user) {
 
-	    if (session.get("user") == null) {
-	        // Xử lý khi session là null
-	        // Ví dụ: Tạo một đối tượng User mặc định
-	        User defaultUser = new User();
-	        model.addAttribute("user", defaultUser);
-	    } else {
-	        user = session.get("user");
-	        // System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-	        model.addAttribute("user", user);
-	    }
-	    
-	    List<Category> categories = daoCategoryRepository.findAll();
-	    model.addAttribute("categories", categories);
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+			model.addAttribute("user", user);
+		}
+//		Giỏ hàng
+		List<Product> products = new ArrayList<>(cart.getItems());
+		List<Product> products2 = daoPro.findAll();
+		List<Product> products3 = new ArrayList<>();
+		for (Product p1 : products) {
+			for (Product p2 : products2) {
+				if (p1.getId().equalsIgnoreCase(p2.getId())) {
+					products3.add(p2);
+				}
+			}
+		}
+		model.addAttribute("cart", products3);
 
-	    Pageable pageable = PageRequest.of(p.orElse(0), 8);
-	    Page<Product> page = daoPro.findAll(pageable);
-	    List<Product> items = page.getContent();
-	    model.addAttribute("items", items);
-	    model.addAttribute("currentPage", page.getNumber());
-	    model.addAttribute("totalPages", page.getTotalPages());
+		List<Category> categories = daoCategoryRepository.findAll();
+		model.addAttribute("categories", categories);
 
-	    Product item = new Product();
-	    model.addAttribute("item", item);
-	    
-	    // trả về view
-	    return "/index";
+		Pageable pageable = PageRequest.of(p.orElse(0), 8);
+		Page<Product> page = daoPro.findAll(pageable);
+		List<Product> items = page.getContent();
+		model.addAttribute("items", items);
+		model.addAttribute("currentPage", page.getNumber());
+		model.addAttribute("totalPages", page.getTotalPages());
+
+		Product item = new Product();
+		model.addAttribute("item", item);
+
+		// trả về view
+		return "/index";
 	}
 
-
-	@RequestMapping("/details")
-	public String details() {
-
-		return "/views/details";
-	}
-	
-
-	
 	@RequestMapping("/thanhtoan")
 	public String thanhtoan() {
 

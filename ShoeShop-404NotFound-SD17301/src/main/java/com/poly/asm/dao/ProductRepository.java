@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import com.poly.asm.model.Product;
 import com.poly.asm.model.ProductInventory;
 import com.poly.asm.model.Report;
@@ -25,4 +26,9 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 		List<Report> getTotalRevenue();
 
 	//12345678
+
+	Page<Product> findAllByNameLike(String keywords, Pageable pageable);
+
+	Page<Product> findAll(Pageable pageable);
+
 }

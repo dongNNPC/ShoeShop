@@ -6,10 +6,10 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class InterConfig implements WebMvcConfigurer {
+public class InterConfigAuth implements WebMvcConfigurer {
 
 	@Autowired
-	AuthInterceptor auth;
+	InterceptorAuth auth;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

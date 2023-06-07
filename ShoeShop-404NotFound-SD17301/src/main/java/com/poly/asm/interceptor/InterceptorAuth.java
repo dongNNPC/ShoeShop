@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Service
-public class AuthInterceptor implements HandlerInterceptor {
+public class InterceptorAuth implements HandlerInterceptor {
 	@Autowired
 	SessionService session;
 

@@ -42,6 +42,21 @@
 					<div class="mb-3">
 						<h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO PRODUCT</h3>
 					</div>
+					
+						<form th:action="@{/shoeshop/admin/list-brand}"
+						class="form-inline" method="post" style="max-width: 400px">
+						<label for="inputName" class="form-label">Key work</label>
+						<div class="row mb-3 justify-content-end">
+							<div class="col-8">
+								<input class="form-control" name="keywords"
+									th:value="${keywords}">
+							</div>
+							<div class="col-4">
+								<button class="btn btn-primary" type="submit"
+									>Tìm kiếm</button>
+							</div>
+						</div>
+					</form>
 					<div class="row">
 
 						<div class="col-md-12 col-xl-12">
@@ -55,8 +70,10 @@
 											<thead>
 												<tr class="tr-color text-light">
 													<th>TT</th>
-													<th>NAME</th>
-
+														<th><a href="#" th:id="'sortLink_id'"
+														th:onclick="toggleSortOrder('id')">ID <i class="fas fa-sort"></i></a></th>
+													<th><a href="#" th:id="'sortLink_name'"
+														th:onclick="toggleSortOrder('name')">NAME <i class="fas fa-sort"></i></a></th>
 													<th>ADDRESS</th>
 													<th>OPTION</th>
 												</tr>
@@ -64,6 +81,7 @@
 											<tbody>
 												<tr class="text-dark" th:each="brand, index : ${brands}">
 													<td th:text="${index.index + 1}"></td>
+													<td th:text="${brand.id}"></td>
 													<td th:text="${brand.name}"></td>
 													<td th:text="${brand.address}"></td>
 													<td><a th:href="@{/shoeshop/admin/list-brand/edit/{id}(id=${brand.id})}" class="btn btn-primary">Edit</a></td>
@@ -71,20 +89,38 @@
 											</tbody>
 
 										</table>
-										<div class="float-end">
-											<button type="button" class="btn btn-primary ">
-												<i class="fa-solid fa-backward-fast"></i>
-											</button>
-											<button type="button" class="btn btn-primary">
-												<i class="fa-solid fa-backward"></i>
-											</button>
-											<button type="button" class="btn btn-primary ">
+									
+										<div>
+											<!-- Nút First -->
+											<a th:if="${brands.hasPrevious()}"
+												th:href="@{/shoeshop/admin/list-brand(p=0, keywords=${session.keywords})}"
+												class="btn btn-primary"
+												th:disabled="${!brands.hasPrevious()}"> <i
+												class="fa-solid fa-backward-fast"></i>
+											</a>
+
+											<!-- Nút Previous -->
+											<a th:if="${brands.hasPrevious()}"
+												th:href="@{/shoeshop/admin/list-brand(p=${brands.number - 1}, keywords=${session.keywords})}"
+												class="btn btn-primary"
+												th:disabled="${!brands.hasPrevious()}"><i
+												class="fa-solid fa-backward"></i> </a>
+
+											<!-- Nút Next -->
+											<a th:if="${brands.hasNext()}"
+												th:href="@{/shoeshop/admin/list-brand(p=${brands.number + 1}, keywords=${session.keywords})}"
+												class="btn btn-primary" th:disabled="${!brands.hasNext()}">
 												<i class="fa-solid fa-forward"></i>
-											</button>
-											<button type="button" class="btn btn-primary ">
+											</a>
+
+											<!-- Nút Last -->
+											<a th:if="${brands.hasNext()}"
+												th:href="@{/shoeshop/admin/list-brand(p=${brands.totalPages - 1}, keywords=${session.keywords})}"
+												class="btn btn-primary" th:disabled="${!brands.hasNext()}">
 												<i class="fa-solid fa-forward-fast"></i>
-											</button>
+											</a>
 										</div>
+
 									</div>
 								</div>
 							</div>
@@ -98,6 +134,27 @@
 			<div th:replace="~{./admin/layout/footer ::  #footer-admin}"></div>
 		</div>
 	</div>
+	<script th:inline="javascript">
+		function toggleSortOrder(columnName) {
+			var currentUrl = new URL(window.location.href);
+			var fieldParam = currentUrl.searchParams.get("field");
+			var sortOrderParam = currentUrl.searchParams.get("sortOrder");
+
+			// Xác định thứ tự sắp xếp hiện tại
+			var currentSortOrder = sortOrderParam === "desc" ? "asc" : "desc";
+
+			// Cập nhật tham số field và sortOrder trong URL
+			currentUrl.searchParams.set("field", columnName);
+			currentUrl.searchParams.set("sortOrder", currentSortOrder);
+
+			// Cập nhật href của thẻ a tương ứng
+			var link = document.getElementById("sortLink_" + columnName);
+			link.href = currentUrl.href;
+
+			// Làm mới trang
+			window.location.href = currentUrl.href;
+		}
+	</script>
 
 	<script th:src="@{/admin/js/app.js}"></script>
 

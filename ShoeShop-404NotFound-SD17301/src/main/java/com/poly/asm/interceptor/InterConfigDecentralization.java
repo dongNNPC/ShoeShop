@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class InterConfigDecentralization implements WebMvcConfigurer {
 
 	@Autowired
-	Decentralization auth;
+	InterceptorDecentralization auth;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

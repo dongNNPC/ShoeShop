@@ -2,10 +2,17 @@ package com.poly.asm.controller.user.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poly.asm.dao.DetailedImageRepository;
@@ -49,22 +56,21 @@ public class ShoppingCartController {
 			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
 			model.addAttribute("user", user);
 		}
-    	
-        model.addAttribute("cart", cart);
-        List<Product> products = new ArrayList<>(cart.getItems());
 
-        
-        List<DetailedImage> detailedImages = daoDetailedImageRepository.findAll();
-        for (DetailedImage d : detailedImages) {
-        	 for (Product product : products) {
-     			if (d.getProduct().getId().equals(product.getId())) {
-     				model.addAttribute("setimg" , d);
-     				System.out.println(d.getMainImage() + "SSS");
-     			}
-     		}
+//		model.addAttribute("cart", cart);
+
+		List<Product> products = new ArrayList<>(cart.getItems());
+		List<Product> products2 = dao.findAll();
+		List<Product> products3 = new ArrayList<>();
+		for (Product p : products) {
+			for (Product p2 : products2) {
+				if (p.getId().equalsIgnoreCase(p2.getId())) {
+					products3.add(p2);
+				}
+			}
 		}
         
-      
+		model.addAttribute("cart", products3);
         // Check nếu cart rỗng sẽ ẩn đi button clear cart
         boolean hasProducts = !cart.getItems().isEmpty();
         model.addAttribute("hasProducts", hasProducts);
@@ -113,12 +119,14 @@ public class ShoppingCartController {
         return "redirect:/shoeshop/index";
     }
     
+
+	//sử  lý load trang
     @RequestMapping("/clear-success-message")
     public void clearSuccessMessage(HttpSession session) {
         session.removeAttribute("successMessage");
     }
 
-
+	//button xoá  từng sản phẩm
     @RequestMapping("/cart/remove/{id}")
     public String removeItemFromCart(@PathVariable("id") String id, RedirectAttributes redirectAttributes ,HttpSession session) {
         cart.remove(id);
@@ -133,18 +141,8 @@ public class ShoppingCartController {
         return "redirect:/shoeshop/cart/view";
     }
 
-    @RequestMapping("/cart/update/{id}")
-    public String updateItemQuantityInCart(@PathVariable("id") String id, @RequestParam("qty") int qty,
-                                           RedirectAttributes redirectAttributes) {
-        Product product = cart.update(id, qty);
-        if (product != null) {
-            redirectAttributes.addFlashAttribute("successMessage", "Updated item quantity in cart successfully");
-        } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Failed to update item quantity in cart");
-        }
-        return "redirect:/shoeshop/cart/view";
-    }
-
+		
+	//button xoá tấy cả
     @RequestMapping("/cart/clear")
     public String clearCart(RedirectAttributes redirectAttributes ,HttpSession session) {
         cart.clear();
@@ -154,11 +152,21 @@ public class ShoppingCartController {
         return "redirect:/shoeshop/cart/view";
     }
 
-    @ResponseBody
-    @PostMapping("/cart/item/update")
-    public Product updateCardItem(@RequestBody Product item) {
-        // Process the data received via AJAX
-        Product updatedItem = cart.update(item.getId(), item.getQuantity());
-        return updatedItem;
-    }
+	//sử lý cập nhật
+	@RequestMapping("/cart/update/{id}")
+	public String updateItemQuantityInCart(@PathVariable("id") String id, @RequestParam("qty") int qty,
+			RedirectAttributes redirectAttributes) {
+		Product product = cart.update(id, qty);
+		if (product != null) {
+			redirectAttributes.addFlashAttribute("successMessage", "Updated item quantity in cart successfully");
+		} else {
+			redirectAttributes.addFlashAttribute("errorMessage", "Failed to update item quantity in cart");
+		}
+		return "redirect:/shoeshop/cart/view";
+	}
+
+
+	
+
+	
 }
