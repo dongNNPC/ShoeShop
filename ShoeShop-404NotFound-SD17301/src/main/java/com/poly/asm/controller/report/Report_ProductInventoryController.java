@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poly.asm.dao.ProductRepository;
 import com.poly.asm.dao.StockReceiptRepository;
 import com.poly.asm.model.ProductInventory;
+import com.poly.asm.model.Report;
 import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
 
@@ -30,6 +32,7 @@ public class Report_ProductInventoryController {
     @Autowired
     private SessionService sessionService;
 
+    @Autowired ProductRepository daoProductRepository;	
     @GetMapping("admin/report/productInventory")
     public String productInventory(
             Model model,
@@ -56,7 +59,7 @@ public class Report_ProductInventoryController {
         model.addAttribute("searchName", productName);
 
         //System.out.println(productInventoryPage.getContent() + "ssssss");
-
+		
         return "admin/report/product_Inventory";
     }
 }

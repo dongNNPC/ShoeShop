@@ -16,15 +16,26 @@ import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
 import com.poly.asm.service.ShoppingCartService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class ShoppingCartController {
     @Autowired
-    private ShoppingCartService cart; // Tiêm Spring Bean đã viết ở bài trước
+    ShoppingCartService cart; // Tiêm Spring Bean đã viết ở bài trước
     
-    @Autowired ProductRepository dao;
-    @Autowired DetailedImageRepository daoIMG;
-    @Autowired SessionService session;
-    @Autowired DetailedImageRepository daoDetailedImageRepository;
+    @Autowired 
+    ProductRepository dao;
+    
+    @Autowired 
+    DetailedImageRepository daoIMG;
+    
+    @Autowired 
+    SessionService session;
+    
+    @Autowired 
+    DetailedImageRepository daoDetailedImageRepository;
+    
+    
     @RequestMapping("/shoeshop/cart/view")
     public String viewCart(Model model ,@ModelAttribute("user") User user) {
     	
@@ -53,8 +64,7 @@ public class ShoppingCartController {
      		}
 		}
         
-       
-        
+      
         // Check nếu cart rỗng sẽ ẩn đi button clear cart
         boolean hasProducts = !cart.getItems().isEmpty();
         model.addAttribute("hasProducts", hasProducts);
@@ -65,42 +75,61 @@ public class ShoppingCartController {
     
     
     @RequestMapping("/cart/add/{id}")
-    public String addItemToCart(@PathVariable("id") String id, RedirectAttributes redirectAttributes, Model model) {
+    public String addItemToCart(@PathVariable("id") String id, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
         Product product = cart.add(id);
         List<Product> products = dao.findAll();
         List<DetailedImage> de = daoIMG.findAll();
-        
+
         List<DetailedImage> detailedImages = daoDetailedImageRepository.findAll();
         Product p2 = new Product();
         for (Product p : products) {
-			if (p.getId().equals(id)) {
-//				System.out.println(p.getDetailedImages());
-				model.addAttribute("p", p);
-				for (DetailedImage d : detailedImages) {
-					if (p.getId().equalsIgnoreCase(d.getProduct().getId())) {
-						  model.addAttribute("imagePath", d.getMainImage());
+            if (p.getId().equals(id)) {
+                model.addAttribute("p", p);
+                for (DetailedImage d : detailedImages) {
+                    if (p.getId().equalsIgnoreCase(d.getProduct().getId())) {
+                        model.addAttribute("imagePath", d.getMainImage());
+                    }
+                }
+            }
+        }
 
-						
-					}
-				}
-				
-			}
-		}
-       
+        boolean addedToCart = false; //biến xác định thêm vào giỏ hàng hay chưa
+
         if (product != null) {
-        	 redirectAttributes.addFlashAttribute("successMessage", "Thành công!");
-             model.addAttribute("item", p2);
+        	
+            addedToCart = true; // Gán giá trị true cho biến cờ khi sản phẩm được thêm vào giỏ hàng
+            String name = product.getName();
+           session.setAttribute("successMessage", "Đã thêm sản phẩm " + name +"  vào giỏ hàng!");
+           
+            // Lưu số lượng sản phẩm vào session
+            int cartItemCount = session.getAttribute("cartItemCount") != null ? (int) session.getAttribute("cartItemCount") : 0;
+            session.setAttribute("cartItemCount", cartItemCount + 1);
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to add item to cart");
         }
-       
+
+        model.addAttribute("addedToCart", addedToCart); // Truyền giá trị của biến cờ vào view
+
         return "redirect:/shoeshop/index";
     }
+    
+    @RequestMapping("/clear-success-message")
+    public void clearSuccessMessage(HttpSession session) {
+        session.removeAttribute("successMessage");
+    }
+
 
     @RequestMapping("/cart/remove/{id}")
-    public String removeItemFromCart(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
+    public String removeItemFromCart(@PathVariable("id") String id, RedirectAttributes redirectAttributes ,HttpSession session) {
         cart.remove(id);
         redirectAttributes.addFlashAttribute("successMessage", "Removed item from cart successfully");
+        
+        // Giảm số lượng sản phẩm trong giỏ hàng trong session đi 1
+        int cartItemCount = session.getAttribute("cartItemCount") != null ? (int) session.getAttribute("cartItemCount") : 0;
+        if (cartItemCount > 0) {
+            session.setAttribute("cartItemCount", cartItemCount - 1);
+        }
+        
         return "redirect:/shoeshop/cart/view";
     }
 
@@ -117,8 +146,10 @@ public class ShoppingCartController {
     }
 
     @RequestMapping("/cart/clear")
-    public String clearCart(RedirectAttributes redirectAttributes) {
+    public String clearCart(RedirectAttributes redirectAttributes ,HttpSession session) {
         cart.clear();
+        session.setAttribute("cartItemCount", 0);
+
         redirectAttributes.addFlashAttribute("successMessage", "Cleared cart successfully");
         return "redirect:/shoeshop/cart/view";
     }

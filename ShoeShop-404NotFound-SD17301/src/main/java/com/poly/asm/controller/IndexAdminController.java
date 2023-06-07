@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.poly.asm.dao.BrandRepository;
 import com.poly.asm.dao.CategoryRepository;
 import com.poly.asm.dao.DetailedImageRepository;
+import com.poly.asm.dao.DetailedInvoiceRepository;
 import com.poly.asm.dao.ProductRepository;
+import com.poly.asm.dao.StockReceiptRepository;
 import com.poly.asm.dao.UserRepository;
 import com.poly.asm.model.Brand;
 import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.Product;
+import com.poly.asm.model.Report;
 import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
 
@@ -41,7 +44,13 @@ public class IndexAdminController {
 
 	@Autowired
 	SessionService session;
-
+	
+	@Autowired 
+	StockReceiptRepository daoReceiptRepository;
+	
+	@Autowired
+	DetailedInvoiceRepository daodetailedInvoiceRepository;
+	
 	@RequestMapping("/index")
 	public String indexAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("index", "active");
@@ -58,7 +67,26 @@ public class IndexAdminController {
 		}
 //		System.out.println(user.getImage() + "admin");
 
+		
+		   //tổng số lượng sản phẩm
+		   List<Report> reports =  daoProduct.getTotalQuantity();
+		   model.addAttribute( "rpIndex" ,reports);
+		
+		   //tổng số lượng nhập kho 
+		   List<Report> totalInventory =  daoReceiptRepository.getTotalInventory();
+		   model.addAttribute( "totalInventory" , totalInventory);
+		   
+		   //tổng doanh thu
+		   List<Report> TotalRevenue =  daoProduct.getTotalRevenue();
+		   model.addAttribute( "TotalRevenue" , TotalRevenue);
+		   
+		   //tổng oder
+		   List<Report> TotalODer =  daodetailedInvoiceRepository.getTotalODer();
+		   model.addAttribute( "TotalODer" , TotalODer);
+
 		return "/admin/index";
+		
+		
 	}
 
 	@RequestMapping("/ui-user")
