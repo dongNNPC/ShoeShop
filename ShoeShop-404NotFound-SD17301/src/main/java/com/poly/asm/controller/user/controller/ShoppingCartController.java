@@ -47,7 +47,7 @@ public class ShoppingCartController {
 			model.addAttribute("user", defaultUser);
 		} else {
 			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
+
 			model.addAttribute("user", user);
 		}
 
