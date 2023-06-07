@@ -10,11 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "StockReceipts")
+@Table(name = "stock_receipts")
 public class StockReceipt {
 	@Id
 	private String id;

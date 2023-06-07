@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class ProductInventory {
     @Id
-    private String productId;
+    private String id;
     private String productName;
-    private Integer totalInventory;
+    private double totalValue;
 }
