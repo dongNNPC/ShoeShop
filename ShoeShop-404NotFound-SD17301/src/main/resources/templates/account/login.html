@@ -49,11 +49,12 @@
                   <a  th:href="@{/shoeshop/Forget}" class="mt-1 col-md-3 text-end text-dark" style="margin-left: 190px; text-decoration: none;cursor: pointer;">Quên mật khẩu ?</a>
                 </div>
                 
-          		 <div class="col-md-9 mx-auto mb-3 g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+          		<div class="col-md-9 mx-auto mb-3 g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div> 
+				<!--		<div class="col-md-9 mx-auto mb-3" id="recaptchaContainer" th:attr="data-sitekey=${siteKey}"></div> -->
 
-
-                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" th:value="your_test_value">
+               <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" th:value="your_test_value">  
                 
+			<!--	<input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response"> -->
 
                
                <div class="d-grid gap-2 col-md-9 mx-auto mb-3">

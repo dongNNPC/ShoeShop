@@ -310,8 +310,71 @@
 	</div>
 
 	<script th:src="@{/admin/js/app.js}"></script>
+	<!-- ĐỒ THỊ -->
+	    <script th:inline="javascript">
+	    
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+            var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+            gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+            gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+            
+            /* Dữ liệu được truyền từ Spring Boot */
+            var salesData = /*[[${salesData}]]*/ [];
 
-	<script>
+            // Line chart
+            new Chart(document.getElementById("chartjs-dashboard-line"), {
+                type: "line",
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                     label: "Sales ($)",
+                        fill: true,
+                        backgroundColor: gradient,
+                        borderColor: window.theme.primary,
+                        data: salesData
+                    }]
+                },
+                options: {
+                	maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false
+					},
+					hover: {
+						intersect: true
+					},
+					plugins: {
+						filler: {
+							propagate: false
+						}
+					},
+					scales: {
+						xAxes: [{
+							reverse: true,
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}],
+						yAxes: [{
+							ticks: {
+								stepSize: 1000
+							},
+							display: true,
+							borderDash: [3, 3],
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}]
+					}
+                }
+            });
+        });
+    </script>
+
+	<script>/*
 		document.addEventListener("DOMContentLoaded", function() {
 			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
 			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
@@ -379,10 +442,45 @@
 					}
 				}
 			});
-		});
-	</script>
+		});*/
+	</script> 
+	
+	
+	<!-- Đồ thị tròn-->
+	 <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /* Dữ liệu được truyền từ Spring Boot */
+            var pieData = /*[[${pieData}]]*/ [];
+
+            // Pie chart
+            new Chart(document.getElementById("chartjs-dashboard-pie"), {
+                type: "pie",
+                data: {
+                    labels: ["Chrome", "Firefox", "IE"],
+                    datasets: [{
+                        data: pieData,
+                        backgroundColor: [
+                            window.theme.primary,
+                            window.theme.warning,
+                            window.theme.danger
+                        ],
+                        borderWidth: 5
+                    }]
+                },
+                options: {
+                    responsive: !window.MSInputMethodContext,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    cutoutPercentage: 75
+                }
+            });
+        });
+    </script>
+    
 	<script>
-		document.addEventListener("DOMContentLoaded", function() {
+		/*document.addEventListener("DOMContentLoaded", function() {
 			// Pie chart
 			new Chart(document.getElementById("chartjs-dashboard-pie"), {
 				type: "pie",
@@ -407,9 +505,59 @@
 					cutoutPercentage: 75
 				}
 			});
-		});
+		});*/
 	</script>
-	<script>
+	<!-- Đồ thị cột -->
+	  <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /* Dữ liệu được truyền từ Spring Boot */
+            var barData = /*[[${barData}]]*/ [];
+
+            // Bar chart
+            new Chart(document.getElementById("chartjs-dashboard-bar"), {
+                type: "bar",
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                        label: "This year",
+                        backgroundColor: window.theme.primary,
+                        borderColor: window.theme.primary,
+                        hoverBackgroundColor: window.theme.primary,
+                        hoverBorderColor: window.theme.primary,
+                        data: barData,
+                        barPercentage: .75,
+                        categoryPercentage: .5
+                    }]
+                },
+                options: {
+                	maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					scales: {
+						yAxes: [{
+							gridLines: {
+								display: false
+							},
+							stacked: false,
+							ticks: {
+								stepSize: 20
+							}
+						}],
+						xAxes: [{
+							stacked: false,
+							gridLines: {
+								color: "transparent"
+							}
+						}]
+					}
+                }
+            });
+        });
+    </script>
+	
+	
+	<script>/*
 		document.addEventListener("DOMContentLoaded", function() {
 			// Bar chart
 			new Chart(document.getElementById("chartjs-dashboard-bar"), {
@@ -451,11 +599,12 @@
 					}
 				}
 			});
-		});
+		});*/
 	</script>
+	
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
-			var markers = [{
+			var markers = [/*{
 					coords: [31.230391, 121.473701],
 					name: "Shanghai"
 				},
@@ -494,6 +643,10 @@
 				{
 					coords: [40.416775, -3.703790],
 					name: "Madrid "
+				},*/
+				{
+					coords: [9.1769, 105.1526],
+					name: "Cà Mau"
 				}
 			];
 			var map = new jsVectorMap({
@@ -520,6 +673,7 @@
 			});
 		});
 	</script>
+	
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);

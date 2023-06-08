@@ -80,11 +80,11 @@ public class IndexController {
 		return "/index";
 	}
 
-	@RequestMapping("/thanhtoan")
-	public String thanhtoan() {
-
-		return "/views/thanhtoan";
-	}
+//	@RequestMapping("/thanhtoan")
+//	public String thanhtoan() {
+//
+//		return "/views/thanhtoan";
+//	}
 
 	@RequestMapping("/profile")
 	public String profile() {

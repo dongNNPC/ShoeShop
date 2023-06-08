@@ -1,5 +1,6 @@
 package com.poly.asm.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.Product;
 import com.poly.asm.model.Report;
+import com.poly.asm.model.StockReceipt;
 import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
 
@@ -53,13 +55,13 @@ public class IndexAdminController {
 
 	@Autowired
 	SessionService session;
-	
-	@Autowired 
+
+	@Autowired
 	StockReceiptRepository daoReceiptRepository;
-	
+
 	@Autowired
 	DetailedInvoiceRepository daodetailedInvoiceRepository;
-	
+
 	@RequestMapping("/index")
 	public String indexAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("index", "active");
@@ -71,31 +73,41 @@ public class IndexAdminController {
 			model.addAttribute("user", defaultUser);
 		} else {
 			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
 			model.addAttribute("user", user);
 		}
 //		System.out.println(user.getImage() + "admin");
 
-		
-		   //tổng số lượng sản phẩm
-		   List<Report> reports =  daoProduct.getTotalQuantity();
-		   model.addAttribute( "rpIndex" ,reports);
-		
-		   //tổng số lượng nhập kho 
-		   List<Report> totalInventory =  daoReceiptRepository.getTotalInventory();
-		   model.addAttribute( "totalInventory" , totalInventory);
-		   
-		   //tổng doanh thu
-		   List<Report> TotalRevenue =  daoProduct.getTotalRevenue();
-		   model.addAttribute( "TotalRevenue" , TotalRevenue);
-		   
-		   //tổng oder
-		   List<Report> TotalODer =  daodetailedInvoiceRepository.getTotalODer();
-		   model.addAttribute( "TotalODer" , TotalODer);
+		// tổng số lượng sản phẩm
+		List<Report> reports = daoProduct.getTotalQuantity();
+		model.addAttribute("rpIndex", reports);
 
+		// tổng số lượng nhập kho
+		List<Report> totalInventory = daoReceiptRepository.getTotalInventory();
+		model.addAttribute("totalInventory", totalInventory);
+
+		// tổng doanh thu
+		List<Report> TotalRevenue = daoProduct.getTotalRevenue();
+		model.addAttribute("TotalRevenue", TotalRevenue);
+
+		// tổng oder
+		List<Report> TotalODer = daodetailedInvoiceRepository.getTotalODer();
+		model.addAttribute("TotalODer", TotalODer);
+
+//		Biểu đồ sales
+		List<Integer> salesData = Arrays.asList(2115, 1562, 1584, 1892, 1587, 1923, 2566, 2448, 2805, 3438, 2917, 3327);
+		model.addAttribute("salesData", salesData);
+
+//		Biểu đồ tròn
+		List<Integer> pieData = Arrays.asList(4306, 3801, 1689);
+
+		model.addAttribute("pieData", pieData);
+
+//	Thống kê tháng
+		List<Integer> barData = Arrays.asList(54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79);
+
+		model.addAttribute("barData", barData);
 		return "/admin/index";
-		
-		
+
 	}
 
 	@RequestMapping("/ui-user")
@@ -375,6 +387,48 @@ public class IndexAdminController {
 //		model.addAttribute("users", items);
 
 		return "/admin/views/list-user";
+	}
+
+	@RequestMapping("/list-stock")
+	public String listStockAdmin(Model model, @ModelAttribute("user") User user,
+			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
+			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
+
+		model.addAttribute("list_stock", "active");
+
+		if (session.get("user") == null) {
+			// Xử lý khi session là null
+			// Ví dụ: Tạo một đối tượng User mặc định
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		} else {
+			user = session.get("user");
+			model.addAttribute("user", user);
+		}
+
+		String order = request.getParameter("sortOrder");
+
+		Sort sort = Sort.by(Direction.ASC, field.orElse("price"));
+		if (order != null) {
+			if (order.equals("desc")) {
+				sort = Sort.by(Direction.DESC, field.orElse("price"));
+			}
+		}
+
+		session.remove("keywords");
+		String kwords = kw.orElse(session.get("keywords"));
+		session.set("keywords", kwords, 30);
+		model.addAttribute("keywords", session.get("keywords"));
+		Pageable pageable = PageRequest.of(p.orElse(0), 5, sort);
+
+		if (kw.isPresent()) {
+			Page<StockReceipt> page = daoReceiptRepository.findAllByIdLike("%" + kwords + "%", pageable);
+			model.addAttribute("stocks", page);
+		} else {
+			Page<StockReceipt> items = daoReceiptRepository.findAll(pageable);
+			model.addAttribute("stocks", items);
+		}
+		return "/admin/views/list-stock";
 	}
 
 }

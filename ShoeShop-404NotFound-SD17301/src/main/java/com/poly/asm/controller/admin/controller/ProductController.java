@@ -1,6 +1,8 @@
 package com.poly.asm.controller.admin.controller;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,12 @@ import com.poly.asm.dao.BrandRepository;
 import com.poly.asm.dao.CategoryRepository;
 import com.poly.asm.dao.DetailedImageRepository;
 import com.poly.asm.dao.ProductRepository;
+import com.poly.asm.dao.StockReceiptRepository;
 import com.poly.asm.model.Brand;
 import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.Product;
+import com.poly.asm.model.StockReceipt;
 import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
 
@@ -39,6 +43,8 @@ public class ProductController {
 	@Autowired
 	DetailedImageRepository daoDetailedImage; // làm việc với ảnh chi tiết
 
+	@Autowired
+	StockReceiptRepository daoStockReceiptRepository; // Làm việc với phiếu nhập kho
 	@Autowired
 	SessionService session;
 
@@ -93,17 +99,27 @@ public class ProductController {
 
 	}
 
+	public static String generateRandomNumber() {
+		Random random = new Random();
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < 5; i++) {
+			int digit = random.nextInt(10); // Sinh số ngẫu nhiên từ 0 đến 9
+			sb.append(digit);
+		}
+
+		return sb.toString();
+	}
+
 	@RequestMapping("/create")
 	public String create(Model model, @Valid @ModelAttribute("product") Product product, BindingResult rs,
 			@ModelAttribute("detailedImage") @Valid DetailedImage detailedImage, @ModelAttribute("user") User user) {
+		Date currentDate = new Date();
 		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
 			User defaultUser = new User();
 			model.addAttribute("user", defaultUser);
 		} else {
 			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
 			model.addAttribute("user", user);
 		}
 //		Danh mục
@@ -122,6 +138,17 @@ public class ProductController {
 			return "/admin/views/ui-product";
 		}
 		dao.save(product);
+
+		StockReceipt stockReceipt = new StockReceipt();
+		stockReceipt.setBrand(product.getBrand());
+		stockReceipt.setId(generateRandomNumber());
+		stockReceipt.setOrderDate(currentDate);
+		stockReceipt.setPrice(product.getPrice());
+		stockReceipt.setProduct(product);
+		stockReceipt.setQuantity(product.getQuantity());
+
+		daoStockReceiptRepository.save(stockReceipt);
+
 		String successMessage = "Create successful";
 		model.addAttribute("successMessage", successMessage);
 		return "redirect:/shoeshop/admin/list-product/edit-update/" + product.getId();
@@ -207,9 +234,7 @@ public class ProductController {
 				model.addAttribute("detailedImage", d);
 			}
 		}
-
 		return "/admin/views/ui-product";
-
 	}
 
 	@RequestMapping("/delete/{id}")

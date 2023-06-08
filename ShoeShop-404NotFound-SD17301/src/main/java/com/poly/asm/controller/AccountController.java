@@ -79,8 +79,13 @@ public class AccountController {
 		ResponseEntity<Map> recaptchaResponseEntity = restTemplate.postForEntity(url, body, Map.class);
 		Map<String, Object> responseBody = recaptchaResponseEntity.getBody();
 
+		int statusCode = recaptchaResponseEntity.getStatusCodeValue();
+		System.out.println(responseBody);
+		System.out.println("Mã trạng thái: " + statusCode);
+
 		// Kiểm tra kết quả từ Google reCAPTCHA
 		boolean success = (Boolean) responseBody.get("success");
+
 		return success;
 	}
 
@@ -89,15 +94,15 @@ public class AccountController {
 			@RequestParam(name = "remember", defaultValue = "false") boolean remember,
 			@RequestParam(name = "g-recaptcha-response") String recaptchaResponse) {
 		List<User> users = dao.findAll();
-//
-//		System.out.println(recaptchaResponse + "2345678");
 		String input = recaptchaResponse;
 		String searchTerm = ",your_test_value";
 		String result = input.replace(searchTerm, "");
-		System.out.println(result);
+		System.out.println("Khóa trang web" + recaptchaResponse);
+		System.out.println("Khóa rs" + result);
+		System.out.println("Khóa bảo mật" + recaptchaSecretKey);
 
 		// Kiểm tra reCAPTCHA
-//		if (!verifyRecaptcha(recaptchaResponse)) {
+//		if (!verifyRecaptcha(result)) {
 //			String errorMessage = "Vui lòng xác nhận bạn không phải là robot.";
 //			System.out.println(errorMessage);
 //			model.addAttribute("recaptchaError", errorMessage);
@@ -108,6 +113,7 @@ public class AccountController {
 		if (result.equals("")) {
 			String errorMessage = "Vui lòng xác nhận bạn không phải là robot.";
 			System.out.println(errorMessage);
+			model.addAttribute("failed", errorMessage);
 			model.addAttribute("recaptchaError", errorMessage);
 			return "/account/login";
 		}
@@ -133,11 +139,14 @@ public class AccountController {
 ////						System.out.println(sUser.getImage());
 ////						return "redirect:/shoeshop/index";
 //					}
+				} else {
+					String successMessage = "Tài khoản hoặc mật khẩu không chính xác?";
+					model.addAttribute("failed", successMessage);
 				}
+
 			}
 		}
-		String successMessage = "Tài khoản hoặc mật khẩu không chính xác?";
-		model.addAttribute("failed", successMessage);
+
 		return "/account/login";
 	}
 
@@ -287,14 +296,18 @@ public class AccountController {
 			sendCodeString = generateRandomNumber();
 			mailInfo2.setFrom("khanhttpc03027@fpt.edu.vn");
 			mailInfo2.setTo("khanhttpc03027@fpt.edu.vn");
-			mailInfo2.setSubject("Shoe Shop code");
-			mailInfo2.setBody(sendCodeString);
+			mailInfo2.setSubject("SHOE SHOP CODE");
+			mailInfo2.setBody("Đây là mã xác nhận của bạn: " + sendCodeString);
 
 			mailerService2.queue(mailInfo2);
 
 //			mailerService2.send("khanhttpc03027@fpt.edu.vn", "Subjectt", "123");
 			return "redirect:/shoeshop/sendcode";
 		}
+
+		String errorMessage = ("Email bạn nhập không đúng");
+		model.addAttribute("failed", errorMessage);
+
 		return "/account/Forget";
 	}
 
@@ -305,21 +318,20 @@ public class AccountController {
 	}
 
 	@PostMapping("/sendcode")
-	public String sendCode(@RequestParam("code") String code) {
+	public String sendCode(@RequestParam("code") String code, Model model) {
 		if (sendCodeString.equals(code)) {
 			return "/account/sendCodeChangePass";
 		}
+		String errorMessage = ("Code bạn nhập không chính xác");
+		model.addAttribute("failed", errorMessage);
 		return "/account/SendCode";
 	}
 
 	@RequestMapping("/sendcode-change")
 	public String sendCodeChange(@ModelAttribute("user") User user) {
 		User u = session.get("user");
-
 		u.setPassword(user.getPassword());
-
 		dao.save(u);
-
 		return "redirect:/shoeshop/index";
 
 	}

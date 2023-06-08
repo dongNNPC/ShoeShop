@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Service
-public class InterceptorAuth implements HandlerInterceptor {
+public class InterceptorLogin implements HandlerInterceptor {
 	@Autowired
 	SessionService session;
 
@@ -27,13 +27,6 @@ public class InterceptorAuth implements HandlerInterceptor {
 		if (user == null) {
 			error = "No sign in!";
 			messageString = "Vui lòng đăng nhập!!!";
-		}
-		// check admin
-		else if (user.isAdmin() == false) {
-			session.remove("user");
-			error = "Not admin!";
-			messageString = "Vui lòng đăng nhập bằng tài khoản của admin!!!";
-
 		}
 
 		if (error.length() > 0) { // có lỗi
