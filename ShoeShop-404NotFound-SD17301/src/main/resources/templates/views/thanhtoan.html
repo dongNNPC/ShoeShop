@@ -27,39 +27,22 @@
         <hr>
         <form class="row g-3">
             <div class="col-md-6">
-              <label for="inputName" class="form-label">Họ và tên:</label>
-              <input type="text" class="form-control" id="inputName" placeholder="Nguyễn Văn A">
+              <label for="name" class="form-label">Họ và tên:</label>
+              <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nguyễn Văn A" >
             </div>
             <div class="col-md-6">
-              <label for="inputNumber" class="form-label">Số điện thoại</label>
-              <input type="text" class="form-control" id="inputNumber" placeholder="0900000123">
+              <label for="phone" class="form-label">Số điện thoại</label>
+              <input type="text" class="form-control" id="phone" placeholder="0900000123">
             </div>
             <div class="col-md-6">
-              <label for="inputAddress" class="form-label">Địa chỉ</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="Ninh Kiều, Cần Thơ">
+              <label for="address" class="form-label">Địa chỉ</label>
+              <input type="text" class="form-control" id="address" th:field="*{address}" placeholder="Ninh Kiều, Cần Thơ">
             </div>
             
             <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Email:</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Anguyenvan@gmail.com">
-              </div>
-            <div class="col-md-6">
-              <label for="inputquocgia" class="form-label">Quốc gia</label>
-             
-              <select for="inputquocgia" class="form-select form-select-sm " aria-label=".form-select-sm example">
-                <option selected>Việt Nam</option>
-                <option value="1">Mỹ</option>
-                <option value="2">Brazill</option>
-                <option value="4">Pháp</option>
-                <option value="5">Anh</option>
-                <option value="6">Thái Lan</option>
-                <option value="7">Đài Loan</option>
-                <option value="8">Ba Lan</option>
-                <option value="9">Ý</option>
-                <option value="10">Bồ Đào Nha</option>
-              </select>
-            </div>
-           
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Anguyenvan@gmail.com">
+              </div>   
             <div class="col-12">
               <div class="form-checkk">
                 <input class="form-check-input" type="checkbox" id="gridCheck">
