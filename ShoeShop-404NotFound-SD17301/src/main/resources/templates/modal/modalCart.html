@@ -16,8 +16,7 @@
 		<i class="fa-solid fa-minus fa-2xl text-center mb-2"></i>
 		<div class="offcanvas-body text-center text-secondary">
 
-			<table
-				class="table table-responsivetable-primary text-start col-lg-12 col-sm-12">
+			<table class="table table-responsivetable-primary text-start col-lg-12 col-sm-12" style="max-width: 400px">
 				<thead>
 					<tr th:each="item, iStat: ${cart}">
 						<td scope="col"><img th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}"  alt="Image" height="90px"></td>
@@ -30,10 +29,15 @@
 								 <i>Màu sắc: cam</i> | <i>Size:
 								39</i> <br> <i>1 x
 								 <i class="text-danger"
-								th:text="${item.price}"></i></i>
+								th:text="${item.price}"></i> VND</i>
 						</td>
-						<td scope="col"><i  class="fa-regular fa-circle-xmark fa-lg"
-							style="margin-bottom: 35px; margin-right: 100px;"></i></td>
+						<td scope="col">
+						    <a th:href="@{/shoeshop/remove(productId=${item.id})}">
+						        
+						        <i class="fa-regular fa-circle-xmark fa-lg" style="margin-bottom: 35px; margin-right: 100px;"></i>
+						    </a>
+						</td>
+
 					</tr>
 					<tr id="emptyCartRow" th:if="${#lists.isEmpty(cart)}"class="text-secondary text-center">
 						      <td colspan="6" >Trong giỏ hàng chưa có sản phẩm.</td>
@@ -43,10 +47,9 @@
 			</table>
 			<!-- Tạm tính  -->
 			<div class="">
-				<h6 class="text-dark fw-bold">
-					Tạm Tính : <i class="text-danger">999.000đ</i>
-				</h6>
-
+			    <h6 class="text-dark fw-bold">
+			        Tạm Tính : <i id="totalPrice" class="toalPrice text-danger"></i>
+			    </h6>
 			</div>
 			<hr>
 			<!-- button thanh toán -->
@@ -68,5 +71,7 @@
 		}
 		/*]]>*/
 	</script>
+	
+
 </body>
 </html>
