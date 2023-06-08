@@ -19,20 +19,25 @@
 			<table
 				class="table table-responsivetable-primary text-start col-lg-12 col-sm-12">
 				<thead>
-					<tr >
-						<td scope="col"><img th:src="@{/images/bitHunter10.png}"
-							width="70px" height="70px"></td>
+					<tr th:each="item, iStat: ${cart}">
+						<td scope="col"><img th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}"  alt="Image" height="90px"></td>
+							
 						<td scope="col mx-auto">
 							<h6 class="text-truncate"
 								style="font-weight: bold; max-width: 200px; margin-bottom: -20px;"
-								></h6> <br> <i>Màu sắc: cam</i> | <i>Size:
-								39</i> <br> <i>1 x <i class="text-danger"
+								th:text="${item.name}"></h6>
+								 <br> 
+								 <i>Màu sắc: cam</i> | <i>Size:
+								39</i> <br> <i>1 x
+								 <i class="text-danger"
 								th:text="${item.price}"></i></i>
 						</td>
-						<td scope="col"><i class="fa-regular fa-circle-xmark fa-lg"
+						<td scope="col"><i  class="fa-regular fa-circle-xmark fa-lg"
 							style="margin-bottom: 35px; margin-right: 100px;"></i></td>
 					</tr>
-
+					<tr id="emptyCartRow" th:if="${#lists.isEmpty(cart)}"class="text-secondary text-center">
+						      <td colspan="6" >Trong giỏ hàng chưa có sản phẩm.</td>
+						    </tr>
 
 				</thead>
 			</table>

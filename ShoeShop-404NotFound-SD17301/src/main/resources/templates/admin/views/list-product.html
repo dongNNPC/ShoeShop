@@ -28,6 +28,13 @@
 	th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}"
 	rel="stylesheet" type="text/css" media="all">
 </head>
+
+<style>
+.disabled {
+	background-color: red;
+	cursor: not-allowed;
+}
+</style>
 <body>
 	<div class="wrapper">
 
@@ -41,6 +48,22 @@
 					<div class="mb-3">
 						<h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO PRODUCT</h3>
 					</div>
+					<form th:action="@{/shoeshop/admin/list-product}"
+						class="form-inline" method="post" style="max-width: 400px">
+						<label for="inputName" class="form-label">Key work</label>
+						<div class="row mb-3 justify-content-end">
+							<div class="col-8">
+								<input class="form-control" name="keywords"
+									th:value="${keywords}">
+							</div>
+							<div class="col-4">
+								<button class="btn btn-primary" type="submit"
+									>Tìm kiếm</button>
+							</div>
+						</div>
+					</form>
+
+
 					<div class="row">
 
 						<div class="col-md-12 col-xl-12">
@@ -53,10 +76,18 @@
 											<thead>
 												<tr class="tr-color text-light">
 													<th>TT</th>
-													<th>NAME</th>
-													<th>PRICE</th>
-													<th>QUANTITY</th>
-													<th>STATUS</th>
+													<th><a href="#" th:id="'sortLink_id'"
+														th:onclick="toggleSortOrder('id')">ID <i class="fas fa-sort"></i></a></th>
+													<th><a href="#" th:id="'sortLink_name'"
+														th:onclick="toggleSortOrder('name')">NAME <i class="fas fa-sort"></i></a></th>
+													<th><a href="#" th:id="'sortLink_price'"
+														th:onclick="toggleSortOrder('price')">PRICE <i class="fas fa-sort"></i></a></th>
+
+													<!-- Các cột khác -->
+
+													<th><a href="#" th:id="'sortLink_quantity'"
+														th:onclick="toggleSortOrder('quantity')">QUANTITY <i class="fas fa-sort"></i></a></th>
+													<th>Status</th>
 													<th>IMAGE</th>
 													<th>BRAND</th>
 													<th>CATEGORY</th>
@@ -66,6 +97,7 @@
 											<tbody>
 												<tr th:each="item, index : ${products}" class="text-dark">
 													<td th:text="*{index.index + 1}"></td>
+													<td th:text="*{item.getId()}"></td>
 													<td th:text="*{item.getName()}"></td>
 													<td th:text="*{item.getPrice()}"></td>
 													<td th:text="*{item.getQuantity()}"></td>
@@ -73,7 +105,7 @@
 														th:text="*{item.status ? 'Đang bán' : 'Ngừng kinh doanh'}"></td>
 													<td><img
 														th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}"
-														alt="Image" style="max-width: 200px"></td>
+														alt="Image" style="max-width: 100px"></td>
 
 
 													<td th:text="*{item.brand.name}"></td>
@@ -84,20 +116,41 @@
 												</tr>
 											</tbody>
 										</table>
-										<div class="float-end">
-											<button type="button" class="btn btn-primary">
-												<i class="fa-solid fa-backward-fast"></i>
-											</button>
-											<button type="button" class="btn btn-primary">
-												<i class="fa-solid fa-backward"></i>
-											</button>
-											<button type="button" class="btn btn-primary">
+
+
+										<div>
+											<!-- Nút First -->
+											<a th:if="${products.hasPrevious()}"
+												th:href="@{/shoeshop/admin/list-product(p=0, keywords=${session.keywords})}"
+												class="btn btn-primary"
+												th:disabled="${!products.hasPrevious()}"> <i
+												class="fa-solid fa-backward-fast"></i>
+											</a>
+
+											<!-- Nút Previous -->
+											<a th:if="${products.hasPrevious()}"
+												th:href="@{/shoeshop/admin/list-product(p=${products.number - 1}, keywords=${session.keywords})}"
+												class="btn btn-primary"
+												th:disabled="${!products.hasPrevious()}"><i
+												class="fa-solid fa-backward"></i> </a>
+
+											<!-- Nút Next -->
+											<a th:if="${products.hasNext()}"
+												th:href="@{/shoeshop/admin/list-product(p=${products.number + 1}, keywords=${session.keywords})}"
+												class="btn btn-primary" th:disabled="${!products.hasNext()}">
 												<i class="fa-solid fa-forward"></i>
-											</button>
-											<button type="button" class="btn btn-primary">
+											</a>
+
+											<!-- Nút Last -->
+											<a th:if="${products.hasNext()}"
+												th:href="@{/shoeshop/admin/list-product(p=${products.totalPages - 1}, keywords=${session.keywords})}"
+												class="btn btn-primary" th:disabled="${!products.hasNext()}">
 												<i class="fa-solid fa-forward-fast"></i>
-											</button>
+											</a>
 										</div>
+
+
+
 									</div>
 								</div>
 							</div>
@@ -110,6 +163,28 @@
 			<div th:replace="~{./admin/layout/footer ::  #footer-admin}"></div>
 		</div>
 	</div>
+	<script th:inline="javascript">
+		function toggleSortOrder(columnName) {
+			var currentUrl = new URL(window.location.href);
+			var fieldParam = currentUrl.searchParams.get("field");
+			var sortOrderParam = currentUrl.searchParams.get("sortOrder");
+
+			// Xác định thứ tự sắp xếp hiện tại
+			var currentSortOrder = sortOrderParam === "desc" ? "asc" : "desc";
+
+			// Cập nhật tham số field và sortOrder trong URL
+			currentUrl.searchParams.set("field", columnName);
+			currentUrl.searchParams.set("sortOrder", currentSortOrder);
+
+			// Cập nhật href của thẻ a tương ứng
+			var link = document.getElementById("sortLink_" + columnName);
+			link.href = currentUrl.href;
+
+			// Làm mới trang
+			window.location.href = currentUrl.href;
+		}
+	</script>
+
 
 	<script th:src="@{/admin/js/app.js}"></script>
 

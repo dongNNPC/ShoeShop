@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Service
-public class Decentralization implements HandlerInterceptor {
+public class InterceptorDecentralization implements HandlerInterceptor {
 	@Autowired
 	SessionService session;
 

@@ -1,17 +1,23 @@
 package com.poly.asm.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import com.poly.asm.dao.UserRepository;
 import com.poly.asm.model.MailInfo2;
@@ -29,6 +35,9 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/shoeshop")
 public class AccountController {
+
+	@Value("${recaptcha.secretkey}")
+	private String recaptchaSecretKey;
 
 	@Autowired
 	UserRepository dao; // dao của user
@@ -59,10 +68,50 @@ public class AccountController {
 		return "/account/login";
 	}
 
+	private boolean verifyRecaptcha(String recaptchaResponse) {
+		// Gửi yêu cầu xác thực reCAPTCHA đến Google
+		String url = "https://www.google.com/recaptcha/api/siteverify";
+		RestTemplate restTemplate = new RestTemplate();
+
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+		body.add("secret", recaptchaSecretKey);
+		body.add("response", recaptchaResponse);
+
+		ResponseEntity<Map> recaptchaResponseEntity = restTemplate.postForEntity(url, body, Map.class);
+		Map<String, Object> responseBody = recaptchaResponseEntity.getBody();
+
+		// Kiểm tra kết quả từ Google reCAPTCHA
+		boolean success = (Boolean) responseBody.get("success");
+		return success;
+	}
+
 	@PostMapping("/login")
 	public String loginCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model,
-			@RequestParam(name = "remember", defaultValue = "false") boolean remember) {
+			@RequestParam(name = "remember", defaultValue = "false") boolean remember,
+			@RequestParam(name = "g-recaptcha-response") String recaptchaResponse) {
 		List<User> users = dao.findAll();
+//
+//		System.out.println(recaptchaResponse + "2345678");
+		String input = recaptchaResponse;
+		String searchTerm = ",your_test_value";
+		String result = input.replace(searchTerm, "");
+		System.out.println(result);
+
+		// Kiểm tra reCAPTCHA
+//		if (!verifyRecaptcha(recaptchaResponse)) {
+//			String errorMessage = "Vui lòng xác nhận bạn không phải là robot.";
+//			System.out.println(errorMessage);
+//			model.addAttribute("recaptchaError", errorMessage);
+//			return "/account/login";
+//		} else {
+//
+//		}
+		if (result.equals("")) {
+			String errorMessage = "Vui lòng xác nhận bạn không phải là robot.";
+			System.out.println(errorMessage);
+			model.addAttribute("recaptchaError", errorMessage);
+			return "/account/login";
+		}
 
 		if (remember) {
 			cookieService.add("email", user.getEmail(), 10);

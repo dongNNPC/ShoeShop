@@ -6,14 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class ProductInventory {
-    @Id
-    private String id;
-    private String productName;
-    private double totalValue;
+public class Report {
+	@Id
+	String id ;
+	long totalQuantity ;
+	long totalInventory;
+	double totalRevenue;
+	long totalODer;
 }

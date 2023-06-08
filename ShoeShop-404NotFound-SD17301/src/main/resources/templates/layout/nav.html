@@ -1,26 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-light sticky-top" id="nav">
 	<div class="container-fluid">
-		<button class="navbar-toggler d-lg-none fa-solid bg-dark " type="button" data-bs-toggle="collapse"
-			data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-			aria-label="Toggle navigation">
+		<button class="navbar-toggler d-lg-none fa-solid bg-dark "
+			type="button" data-bs-toggle="collapse"
+			data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+			aria-expanded="false" aria-label="Toggle navigation">
 			<i class="fas fa-list" style="color: aliceblue"></i>
 		</button>
 		<!-- logo -->
-		<a class="ms-auto" href="#"> <img th:src="@{/icons/logo.jpg}" alt="logo" width="80px" height="80px">
+		<a class="ms-auto" href="#"> <img th:src="@{/icons/logo.jpg}"
+			alt="logo" width="80px" height="80px">
 		</a>
 		<!-- seach -->
 		<div class="collapse navbar-collapse" id="collapsibleNavId">
 			<ul class="navbar-nav me-auto m-2 mb-lg-0">
-				<li class="nav-item  "><a class="nav-link text-dark" th:href="@{/shoeshop/index}"
-						aria-current="page">Trang chủ</a></li>
-				<li class="nav-item dropdown ative"><a class="nav-link text-dark" data-bs-toggle="dropdown" href="#">Sản
+				<li class="nav-item  "><a class="nav-link text-dark"
+					th:href="@{/shoeshop/index}" aria-current="page">Trang chủ</a></li>
+				<li class="nav-item dropdown ative"><a
+					class="nav-link text-dark" data-bs-toggle="dropdown" href="#">Sản
 						phẩm <i class="fa-solid fa-angle-down fa-xs"></i>
-					</a>
+				</a>
 					<ul class="dropdown-menu fade-up bg-light">
-						<li th:each="category : ${categories}"><a class="dropdown-item" style="color: #686868" href=""
-								th:text="${category.getName()}"> </a></li>
-					</ul>
-				</li>
+						<li th:each="category : ${categories}"><a
+							class="dropdown-item" style="color: #686868" href=""
+							th:text="${category.getName()}"> </a></li>
+					</ul></li>
 				<li class="nav-item"><a class="nav-link text-dark" href="">
 						Khuyến mãi</a></li>
 				<li class="nav-item"><a class="nav-link text-dark" href="">Tin
@@ -33,31 +36,38 @@
 
 			<ul class="navbar-nav m-2 mb-lg-0 ">
 
-				<li class="nav-item dropdown" style="cursor: pointer;"><a class="nav-link" th:object="${user}"
-						data-bs-toggle="dropdown" href="#"> <i class="fa-solid fa-user"></i> <img
-							th:src="@{/images/avatars/__*{image}__}" class="avatar img-fluid rounded me-1"
-							alt="Not logged in" onerror="this.style.display = 'none';" /> <span class="text-dark"
-							th:text="*{name}"></span>
-					</a>
-					<ul class="dropdown-menu fade-up bg-light" style="list-style: none;">
-						<li><a class="dropdown-item" style="color: #686868" th:href="@{/shoeshop/login}"> Đăng nhập</a>
-						</li>
-						<li><a class="dropdown-item" style="color: #686868" th:href="@{/shoeshop/signUp}"> Đăng kí </a>
-						</li>
-						<li><a class="dropdown-item" style="color: #686868" href="" th:href="@{/shoeshop/ChangePass}">
-								Đổi mật khẩu </a></li>
-						<li><a class="dropdown-item" style="color: #686868" href="" th:href="@{/shoeshop/Forget}"> quên
-								mật khẩu </a></li>
-								<li><a class="dropdown-item" style="color: #686868" href="" th:href="@{/shoeshop/personal-page}"> tài khoản </a></li>
-						<li><a class="dropdown-item" th:href="@{/shoeshop/log-out}" style="color: #686868" href=""> Đăng
-								xuất </a></li>
-					</ul>
-				</li>
-				
-				<li class="nav-item"><a class="nav-link" aria-current="page" href="#" type="button"
-						data-bs-toggle="offcanvas" data-bs-target="#GioHang"> <i
-							class="fa-solid fa-basket-shopping"></i>
-					</a></li> &ensp;
+				<li class="nav-item dropdown" style="cursor: pointer;"><a
+					class="nav-link" th:object="${user}" data-bs-toggle="dropdown"
+					href="#"> <i class="fa-solid fa-user"></i> <img
+						th:src="@{/images/avatars/__*{image}__}"
+						class="avatar img-fluid rounded me-1" alt="Not logged in"
+						onerror="this.style.display = 'none';" /> <span class="text-dark"
+						th:text="*{name}"></span>
+				</a>
+					<ul class="dropdown-menu fade-up bg-light"
+						style="list-style: none;">
+						<li><a class="dropdown-item" style="color: #686868"
+							th:href="@{/shoeshop/login}"> Đăng nhập</a></li>
+						<li><a class="dropdown-item" style="color: #686868"
+							th:href="@{/shoeshop/signUp}"> Đăng kí </a></li>
+						<li><a class="dropdown-item" style="color: #686868" href=""
+							th:href="@{/shoeshop/ChangePass}"> Đổi mật khẩu </a></li>
+						<li><a class="dropdown-item" style="color: #686868" href=""
+							th:href="@{/shoeshop/Forget}"> quên mật khẩu </a></li>
+						<li><a class="dropdown-item" style="color: #686868" href=""
+							th:href="@{/shoeshop/personal-page}"> tài khoản </a></li>
+						<li><a class="dropdown-item" th:href="@{/shoeshop/log-out}"
+							style="color: #686868" href=""> Đăng xuất </a></li>
+					</ul></li>
+
+				<li class="nav-item"><a class="nav-link" aria-current="page"
+					href="#" type="button" data-bs-toggle="offcanvas"
+					data-bs-target="#GioHang"> <i
+						class="fa-solid fa-basket-shopping position-relative"> <span style="font-size: 0.6rem"
+							class="position-absolute top-0 start-100  translate-middle badge rounded-pill bg-danger"
+							th:text="${session.cartItemCount != null ? session.cartItemCount : 0}"></span>
+					</i>
+				</a></li> &ensp;
 			</ul>
 		</div>
 	</div>
