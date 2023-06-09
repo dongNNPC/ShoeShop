@@ -1,321 +1,255 @@
 <!DOCTYPE html>
-<html 
-	xmlns:th="http://www.thymeleaf.org">
-	<link rel="shortcut icon" th:href="@{/icons/logoMain_48.png}" type="image/x-icon">
-  <head>
-    <title>Title</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon" th:href="@{/icons/logoMain_48.png}"
+	type="image/x-icon">
+<head>
+<title>Title</title>
+<!-- Required meta tags -->
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- Bootstrap CSS v5.2.1 -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
-      crossorigin="anonymous"
-    />
-    <!-- link css local -->
-    	<link th:href="@{/css/index.css}" href="/css/index.css" rel="stylesheet" type="text/css" media="all" />
-	<link th:href="@{/css/details.css}" href="/css/details.css" rel="stylesheet" type="text/css" media="all" />
-	    <!-- link fonts local -->
-    <link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}" href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" type="text/css" media="all" />
-  </head>
-  <body>
-    <div th:replace="./layout/nav ::  #nav"></div>
-    <div th:replace="modal/modalCart.html :: #GioHang"></div>
-    <main class="container main-details">
-      <div class="container">
-        <div class="row">
-          <div class="container col-sm-6 col-md-6 col-lg-6">
-            <div class="row">
-              <div class="col-sm-9 col-md-9 col-lg-9">
-                <div
-                  id="carouselExampleCaptions"
-                  class="carousel slide"
-                  data-bs-ride="carousel"
-                >
-                  <div class="carousel-indicators">
-                    <button
-                      type="button"
-                      data-bs-target="#carouselExampleCaptions"
-                      data-bs-slide-to="0"
-                      class="active"
-                      aria-current="true"
-                      aria-label="Slide 1"
-                    ></button>
-                    <button
-                      type="button"
-                      data-bs-target="#carouselExampleCaptions"
-                      data-bs-slide-to="1"
-                      aria-label="Slide 2"
-                    ></button>
-                    <button
-                      type="button"
-                      data-bs-target="#carouselExampleCaptions"
-                      data-bs-slide-to="2"
-                      aria-label="Slide 3"
-                    ></button>
-                    <button
-                      type="button"
-                      data-bs-target="#carouselExampleCaptions"
-                      data-bs-slide-to="3"
-                      aria-label="Slide 4"
-                    ></button>
-                  </div>
-                  <div class="carousel-inner"  >
-                    <div class="carousel-item active" data-bs-interval="1500">
-                      <img
-                       th:src = "@{/images/product-images/__${d.getMainImage()}__}"
-                        class="d-block w-100"
-                        alt="..."
-                      />
-                    </div>
-                   <div class="carousel-item" data-bs-interval="1500">
-                      <img
-                       th:src = "@{/images/product-images/__${d.getDetailedOne()}__}"
-                        class="d-block w-100"
-                        alt="..."
-                      />
-                    </div>
-                    <div class="carousel-item" data-bs-interval="1500">
-                      <img
-                       th:src = "@{/images/product-images/__${d.getDetailedTwo()}__}"
-                        class="d-block w-100"
-                        alt="..."
-                      />
-                    </div>
-                    <div class="carousel-item" data-bs-interval="1500">
-                      <img
-                     
-                          th:src = "@{/images/product-images/__${d.getDetailedThree()}__}"
-                       
-                        class="d-block w-100"
-                        alt="..."
-                      />
-                    </div>
-                  </div>
-                  <!-- prev -->
-                  <button
-                    class="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="prev"
-                  >
-                    <span
-                      class="carousel-control-prev-icon"
-                      aria-hidden="true"
-                    ></span>
-                    <span class="visually-hidden">Previous</span>
-                  </button>
-                  <!-- next -->
-                  <button
-                    class="carousel-control-next"
-                    type="button"
-                    data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="next"
-                  >
-                    <span
-                      class="carousel-control-next-icon"
-                      aria-hidden="true"
-                    ></span>
-                    <span class="visually-hidden">Next</span>
-                  </button>
-                </div>
-              </div>
-              <div class="col-sm-3 col-md-3 col-lg-3 bg-light">
-                <button
-                  class="btn choose-img col-xs-1 btn-sm"
-                  type="button"
-                  data-bs-target="#carouselExampleCaptions"
-                  data-bs-slide-to="0"
-                  aria-label="Slide 1"
-                >
-                  <img
-                    class="img-left-details"
-                  th:src = "@{/images/product-images/__${d.getMainImage()}__}"
-                    alt=""
-                  />
-                </button>
-                <button
-                  class="btn choose-img col-xs-1 btn-sm"
-                  type="button"
-                  data-bs-target="#carouselExampleCaptions"
-                  data-bs-slide-to="1"
-                  aria-label="Slide 2"
-                >
-                  <img
-                    class="img-left-details"
-                th:src = "@{/images/product-images/__${d.getDetailedOne()}__}"
-                    alt=""
-                  />
-                </button>
-                <button
-                  class="btn choose-img col-xs-1 btn-sm"
-                  type="button"
-                  data-bs-target="#carouselExampleCaptions"
-                  data-bs-slide-to="2"
-                  aria-label="Slide 3"
-                >
-                  <img
-                    class="img-left-details"
-                       th:src = "@{/images/product-images/__${d.getDetailedTwo()}__}"
-                    alt=""
-                  />
-                </button>
-                <button
-                  class="btn choose-img col-xs-1 btn-sm"
-                  type="button"
-                  data-bs-target="#carouselExampleCaptions"
-                  data-bs-slide-to="3"
-                  aria-label="Slide 4"
-                >
-                  <img
-                    class="img-left-details"
-                    th:src = "@{/images/product-images/__${d.getDetailedThree()}__}"
-                    alt=""
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
+<!-- Bootstrap CSS v5.2.1 -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+	crossorigin="anonymous" />
+<!-- link css local -->
+<link th:href="@{/css/index.css}" href="/css/index.css" rel="stylesheet"
+	type="text/css" media="all" />
+<link th:href="@{/css/details.css}" href="/css/details.css"
+	rel="stylesheet" type="text/css" media="all" />
+<!-- link fonts local -->
+<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}"
+	href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet"
+	type="text/css" media="all" />
+</head>
+<body>
+	<div th:replace="./layout/nav ::  #nav"></div>
+	<main class="container main-details">
+		<div class="container">
+			<div class="row">
+				<div class="container col-sm-6 col-md-6 col-lg-6">
+					<div class="row">
+						<div class="col-sm-9 col-md-9 col-lg-9">
+							<div id="carouselExampleCaptions" class="carousel slide"
+								data-bs-ride="carousel">
+								<div class="carousel-indicators">
+									<button type="button" data-bs-target="#carouselExampleCaptions"
+										data-bs-slide-to="0" class="active" aria-current="true"
+										aria-label="Slide 1"></button>
+									<button type="button" data-bs-target="#carouselExampleCaptions"
+										data-bs-slide-to="1" aria-label="Slide 2"></button>
+									<button type="button" data-bs-target="#carouselExampleCaptions"
+										data-bs-slide-to="2" aria-label="Slide 3"></button>
+									<button type="button" data-bs-target="#carouselExampleCaptions"
+										data-bs-slide-to="3" aria-label="Slide 4"></button>
+								</div>
+								<div class="carousel-inner">
+									<div class="carousel-item active" data-bs-interval="1500">
+										<img
+											th:src="@{/images/product-images/__${d.getMainImage()}__}"
+											class="d-block w-100" alt="..." />
+									</div>
+									<div class="carousel-item" data-bs-interval="1500">
+										<img
+											th:src="@{/images/product-images/__${d.getDetailedOne()}__}"
+											class="d-block w-100" alt="..." />
+									</div>
+									<div class="carousel-item" data-bs-interval="1500">
+										<img
+											th:src="@{/images/product-images/__${d.getDetailedTwo()}__}"
+											class="d-block w-100" alt="..." />
+									</div>
+									<div class="carousel-item" data-bs-interval="1500">
+										<img
+											th:src="@{/images/product-images/__${d.getDetailedThree()}__}"
+											class="d-block w-100" alt="..." />
+									</div>
+								</div>
+								<!-- prev -->
+								<button class="carousel-control-prev" type="button"
+									data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<!-- next -->
+								<button class="carousel-control-next" type="button"
+									data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
+						</div>
+						<div class="col-sm-3 col-md-3 col-lg-3 bg-light">
+							<button class="btn choose-img col-xs-1 btn-sm" type="button"
+								data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
+								aria-label="Slide 1">
+								<img class="img-left-details"
+									th:src="@{/images/product-images/__${d.getMainImage()}__}"
+									alt="" />
+							</button>
+							<button class="btn choose-img col-xs-1 btn-sm" type="button"
+								data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+								aria-label="Slide 2">
+								<img class="img-left-details"
+									th:src="@{/images/product-images/__${d.getDetailedOne()}__}"
+									alt="" />
+							</button>
+							<button class="btn choose-img col-xs-1 btn-sm" type="button"
+								data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+								aria-label="Slide 3">
+								<img class="img-left-details"
+									th:src="@{/images/product-images/__${d.getDetailedTwo()}__}"
+									alt="" />
+							</button>
+							<button class="btn choose-img col-xs-1 btn-sm" type="button"
+								data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
+								aria-label="Slide 4">
+								<img class="img-left-details"
+									th:src="@{/images/product-images/__${d.getDetailedThree()}__}"
+									alt="" />
+							</button>
+						</div>
+					</div>
+				</div>
 
-          <div class="container  col-sm-6 col-md-6 col-lg-6" th:object="${product}">
-            <h3 class="title-detail" th:text="${p.getName()}">
-              
-            </h3>
-            <hr class="rounded" />
-            <span class="price-amount-details"
-              th:text="${p.getPrice()}" >&nbsp;<span class="woocommerce-Price-currencySymbol"
-                >&#8363;</span
-              ></span
-            >
-            <div class="row ">
-              <div class="form-outline col-sm-6" style="max-width: 100px">
-                <input
-                  type="number"
-                  value="1"
-                  id="typeNumber"
-                  class="form-control"
-                />
-                <!-- <label class="form-label" for="typeNumber">Number input</label> -->
-              </div>
+				<div class="container  col-sm-6 col-md-6 col-lg-6"
+					th:object="${product}">
+					<h3 class="title-detail" th:text="${p.getName()}"></h3>
+					<hr class="rounded" />
+					<span class="price-amount-details" th:text="${p.getPrice()}">&nbsp;<span
+						class="woocommerce-Price-currencySymbol">&#8363;</span></span>
+					<div class="row ">
+						<div class="form-outline col-sm-6" style="max-width: 100px">
+							<input type="number" value="1" id="typeNumber"
+								class="form-control" />
+							<!-- <label class="form-label" for="typeNumber">Number input</label> -->
+						</div>
 
-              <div class="btn col-sm-6" style="max-width: 100px;background-color: #232946 ;color: #fffffe;"><a  th:href="@{/shoeshop/giohang}">Mua hàng</a></div>
-            </div>
+						<div class="btn col-sm-6"
+							style="max-width: 100px; background-color: #232946; color: #fffffe;">
+							<a th:href="@{/shoeshop/giohang}">Mua hàng</a>
+						</div>
+					</div>
 
-            <hr class="dotted mt-5  " />
-            <h5 class="masp-details">Mã sản phẩm:</h5>
-           <h5 class="masp-details"  th:text="${p.getId()}"></h5> 
-            <hr class="dotted" />
-            <h5 class="masp-details">Danh mục:</h5>
-             <h5 class="masp-details" th:text="${c.getName()}"></h5>
-            <hr class="dotted" />
-            <div class="row" style="max-width: 150px;">
-                 <a href="" class="col-sm-3 col-md-3 col-lg-3">
-              <div class="share-details">
-                <i class="fab fa-facebook-f icon"></i>
-              </div>
-            </a>
-            <a href="" class="col-sm-3 col-md-3 col-lg-3">
-              <div class="share-details">
-                <i class="fab fa-twitter icon"></i>
-              </div>
-            </a>   
-            <a href="" class="col-sm-3 col-md-3 col-lg-3">
-              <div class="share-details-gmail">
-                <i class="fas fa-envelope icon-gmail"></i>
-              </div>
-            </a>
-            <a href="" class="col-sm-3 col-md-3 col-lg-3">
-              <div class="share-details-inta">
-                <i class="fab fa-instagram icon-inta"></i>
-              </div>
-            </a>
-            </div>
-       
-          </div>
-        </div>
-      </div>
+					<hr class="dotted mt-5  " />
+					<h5 class="masp-details">Mã sản phẩm:</h5>
+					<h5 class="masp-details" th:text="${p.getId()}"></h5>
+					<hr class="dotted" />
+					<h5 class="masp-details">Danh mục:</h5>
+					<h5 class="masp-details" th:text="${c.getName()}"></h5>
+					<hr class="dotted" />
+					<div class="row" style="max-width: 150px;">
+						<a href="" class="col-sm-3 col-md-3 col-lg-3">
+							<div class="share-details">
+								<i class="fab fa-facebook-f icon"></i>
+							</div>
+						</a> <a href="" class="col-sm-3 col-md-3 col-lg-3">
+							<div class="share-details">
+								<i class="fab fa-twitter icon"></i>
+							</div>
+						</a> <a href="" class="col-sm-3 col-md-3 col-lg-3">
+							<div class="share-details-gmail">
+								<i class="fas fa-envelope icon-gmail"></i>
+							</div>
+						</a> <a href="" class="col-sm-3 col-md-3 col-lg-3">
+							<div class="share-details-inta">
+								<i class="fab fa-instagram icon-inta"></i>
+							</div>
+						</a>
+					</div>
 
-     
-      <section class="py-5 header">
-        <div class="container py-4">
-            <div class="row">
-              <hr class="solid">
-                <div class="">
-                    <div class="nav nav-pills nav-pills-custom row" style="max-width:400px;" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        
-                        <a class="nav-link mb-3 p-3 shadow active col-lg-6" id="v-plls-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
-                          <i class="far fa-calendar-plus mr-2"></i>
-                            <span class="small info-details">Thông Tin Bổ sung</span></a>
-    <div class="col-lg-1">
+				</div>
+			</div>
+		</div>
+		<section class="py-5 header">
+			<div class="container py-4">
+				<div class="row">
+					<hr class="solid">
+					<div class="">
+						<div class="nav nav-pills nav-pills-custom row"
+							style="max-width: 400px;" id="v-pills-tab" role="tablist"
+							aria-orientation="vertical">
 
-    </div>
-                        <a class="nav-link mb-3 p-3 shadow col-lg-5" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
-                         
-                           <i class="fas fa-user mr-2"></i>
-                            <span class="small info-details">Đánh Giá</span></a>
-    
-                        </div>
-                </div>
-                
-                    <!-- Tabs content -->
-                    <div class="tab-content" id="v-pills-tabContent" style="margin-left: -12px;">
-                        <div class="tab-pane fade shadow rounded bg-white show active p-5" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                            <h4 class="font-italic mb-4">Description</h4>
-                            
-                            <hr class="dotted" />
-                            <p class="font-italic text-muted mb-2" th:text="${p.getDescription()}"></p>
-                            <hr class="dotted" />
-                               <h4 class="font-italic mb-4">Sản Phẩm tương tự</h4>
-                            
-                               <hr class="dotted" />
-                          </div>
-                        
-                        <div class="tab-pane fade shadow rounded bg-white p-5" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                            <h4 class="font-italic mb-4">Đánh giá</h4>
-                         <div class="comment-details">
-                          <div class="form-group">
-                            <b for="exampleFormControlTextarea1" class="exampleFormControlTextarea1">Nhận xét của bạn*</b>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            <div class="btn btn-danger col-sm-6" style="max-width: 100px; margin-top: 20px;">Gửi Đi</div>
-                          </div>
-                        
-                         </div>
-                        </div>
-                        
-    
-                    </div>
-                
-            </div>
-        </div>
-    
-    </section>
- 	
+							<a class="nav-link mb-3 p-3 shadow active col-lg-6"
+								id="v-plls-home-tab" data-toggle="pill" href="#v-pills-home"
+								role="tab" aria-controls="v-pills-home" aria-selected="true">
+								<i class="far fa-calendar-plus mr-2"></i> <span
+								class="small info-details">Thông Tin Bổ sung</span>
+							</a>
+							<div class="col-lg-1"></div>
+							<a class="nav-link mb-3 p-3 shadow col-lg-5"
+								id="v-pills-profile-tab" data-toggle="pill"
+								href="#v-pills-profile" role="tab"
+								aria-controls="v-pills-profile" aria-selected="false"> <i
+								class="fas fa-user mr-2"></i> <span class="small info-details">Đánh
+									Giá</span></a>
 
-    </main>
-  <!--   <div th:replace="~{./layout/itemBanChayNhat :: itemBanChayNhat"></div> -->
-  <div th:replace="./layout/footer ::  footer"></div>
- 
-    <!-- Bootstrap JavaScript Libraries -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-      crossorigin="anonymous"
-    ></script>
+						</div>
+					</div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
-      crossorigin="anonymous"
-    ></script>
+					<!-- Tabs content -->
+					<div class="tab-content" id="v-pills-tabContent"
+						style="margin-left: -12px;">
+						<div class="tab-pane fade shadow rounded bg-white show active p-5"
+							id="v-pills-home" role="tabpanel"
+							aria-labelledby="v-pills-home-tab">
+							<h4 class="font-italic mb-4">Description</h4>
 
-    <script src="https://code.jquery.com/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js"></script>
-  </body>
+							<hr class="dotted" />
+							<p class="font-italic text-muted mb-2"
+								th:text="${p.getDescription()}"></p>
+							<hr class="dotted" />
+							<h4 class="font-italic mb-4">Sản Phẩm tương tự</h4>
+
+							<hr class="dotted" />
+						</div>
+
+						<div class="tab-pane fade shadow rounded bg-white p-5"
+							id="v-pills-profile" role="tabpanel"
+							aria-labelledby="v-pills-profile-tab">
+							<h4 class="font-italic mb-4">Đánh giá</h4>
+							<div class="comment-details">
+								<div class="form-group">
+									<b for="exampleFormControlTextarea1"
+										class="exampleFormControlTextarea1">Nhận xét của bạn*</b>
+									<textarea class="form-control" id="exampleFormControlTextarea1"
+										rows="3"></textarea>
+									<div class="btn btn-danger col-sm-6"
+										style="max-width: 100px; margin-top: 20px;">Gửi Đi</div>
+								</div>
+
+							</div>
+						</div>
+
+
+					</div>
+
+				</div>
+			</div>
+
+		</section>
+				<!-- Sản phẩm mới về -->
+	</main>
+	<div th:replace="./layout/footer ::  footer"></div>
+
+	<!-- Bootstrap JavaScript Libraries -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+		crossorigin="anonymous"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+		crossorigin="anonymous"></script>
+
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js"></script>
+</body>
 </html>

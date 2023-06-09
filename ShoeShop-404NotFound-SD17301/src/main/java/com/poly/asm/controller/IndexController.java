@@ -117,12 +117,12 @@ public class IndexController {
 	    redirectAttributes.addAttribute("modalCartOpen", "true"); // Truyền tham số để hiển thị lại modalCart
 	    return "redirect:/shoeshop/index";
 	}
+	
 //	@RequestMapping("/thanhtoan")
 //	public String thanhtoan() {
 //
 //		return "/views/thanhtoan";
 //	}
-
 
 	@RequestMapping("/profile")
 	public String profile() {
