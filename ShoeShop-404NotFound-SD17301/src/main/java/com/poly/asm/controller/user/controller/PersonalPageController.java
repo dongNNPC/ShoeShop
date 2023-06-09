@@ -76,49 +76,14 @@ public class PersonalPageController {
 	@PostMapping("/personal-page")
 	public String PersonalCheck(@Valid @ModelAttribute("user") User user, Model model, BindingResult rs) {
 		if (rs.hasErrors()) {
-//			String successMessage = "create failed";
-//			model.addAttribute("failed", successMessage);
 			System.out.println(rs.toString());
 			return "/account/personalpage";
 		}
-//		a = dao.findById(id).get();
 		dao.save(user);
-		return "/account/personalpage";
-
+		model.addAttribute("message", "cập nhật thành công");
+		
+	return "/account/personalpage";
+		
+		
 	}
-
-//	//cập nhật
-//	@RequestMapping(value = "/personal-page", method = RequestMethod.POST)
-//	public String updatePersonalPage(@ModelAttribute("user") User user) {
-//	  User currentUser = session.get("user");
-//	  
-//	  currentUser.setName(user.getName());
-//	  currentUser.setEmail(user.getEmail());
-//	  currentUser.setPassword(user.getPassword());
-//	  currentUser.setPhone(user.getPhone());
-//	  currentUser.setAddress(user.getAddress());
-//	  
-//	  dao.save(currentUser);
-//	  
-//	  return "redirect:/personal-page/" + currentUser.getID();
-//	}
-//	@RequestMapping("/update")
-//	public String update (Model model, @Valid @ModelAttribute("user") User user, BindingResult result) {
-//		if (result.hasErrors()) {
-//			String successMessage = "Cập nhật thất bại";
-//			model.addAttribute("Updatefailed", successMessage);
-//			return "/account/personalpage";
-//		}
-//		List<User> users = dao.findAll();
-//		for (User user2 : users) {
-//			if (user2.getID().equalsIgnoreCase(user.getID())) {
-//				dao.save(user);
-//				return "/account/personalpage";
-//			}
-//		}
-//		String successMessage = "ID Không tồn tại !";
-//		model.addAttribute("failed", successMessage);
-//		return "/account/personalpage";
-//		
-//	}
 }

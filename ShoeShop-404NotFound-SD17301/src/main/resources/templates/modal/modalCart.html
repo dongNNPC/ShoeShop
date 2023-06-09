@@ -55,12 +55,23 @@
 			</div>
 			<hr>
 			<!-- button thanh toán -->
-			<div class="d-grid gap-2">
-				<a type="button" th:href="@{/shoeshop/cart/view}" class="btn "
-					style="background-color: #232946; color: #fffffe;">Đến giỏ hàng</a>
-				<a type="button" th:href="@{/shoeshop/thanhtoan}" class="btn"
-					style="background-color: #232946; color: #fffffe;">Thanh Toán</a>
-			</div>
+			<a th:href="@{/shoeshop/cart/view}">
+    <button th:if="${not #lists.isEmpty(cart)}" 
+            style="background-color: #232946; color: white;" 
+            type="button" class="btn col-md-12 text-center">Giỏ hàng</button> <br>
+    <button th:unless="${not #lists.isEmpty(cart)}" 
+            style="background-color: #232946; color: white;" 
+            type="button" class="btn col-md-12 text-center" disabled>Giỏ hàng</button>
+</a>
+<br>
+			<a th:href="@{/shoeshop/thanhtoan}">
+    <button th:if="${not #lists.isEmpty(cart)}" 
+            style="background-color: #232946; color: white;" 
+            type="button" class="btn col-md-12 text-center">Thanh toán</button> <br>
+    <button th:unless="${not #lists.isEmpty(cart)}" 
+            style="background-color: #232946; color: white;" 
+            type="button" class="btn col-md-12 text-center" disabled>Thanh toán</button>
+</a>
 		</div>
 	</div>
 	<script>
