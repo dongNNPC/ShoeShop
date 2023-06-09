@@ -45,7 +45,7 @@ public class PersonalPageController {
 	@Autowired
 	private IndexController indexController;
 
-//	
+//
 	@GetMapping("/personal-page")
 	public String Personal(@ModelAttribute("user") User user, Model model) {
 		indexController.checkUser(model);
@@ -65,25 +65,20 @@ public class PersonalPageController {
 		model.addAttribute("cart", products3);
 		// tạo biến Tổng ti lưu tạm trong modal
 		model.addAttribute("totalAmount", totalAmount);
-
 		// đổ tất cả sản phẩm
 		List<Category> categories = daoCategoryRepository.findAll();
 		model.addAttribute("categories", categories);
 		return "/account/personalpage";
-
 	}
 
 	@PostMapping("/personal-page")
-	public String PersonalCheck(@Valid @ModelAttribute("user") User user, Model model, BindingResult rs) {
+	public String PersonalCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
 		if (rs.hasErrors()) {
 			System.out.println(rs.toString());
 			return "/account/personalpage";
 		}
 		dao.save(user);
 		model.addAttribute("message", "cập nhật thành công");
-		
-	return "/account/personalpage";
-		
-		
+		return "/account/personalpage";
 	}
 }

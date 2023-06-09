@@ -135,7 +135,6 @@ public class ProductController {
 		stockReceipt.setPrice(product.getPrice());
 		stockReceipt.setProduct(product);
 		stockReceipt.setQuantity(product.getQuantity());
-
 		daoStockReceiptRepository.save(stockReceipt);
 
 		String successMessage = "Create successful";

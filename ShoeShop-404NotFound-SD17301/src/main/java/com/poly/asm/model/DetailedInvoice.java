@@ -27,7 +27,8 @@ public class DetailedInvoice {
 	private Product product;
 
 	private int quantity;
-	private String paymentMethods;
+
+	private String paymentMethod;
 
 	// Các trường khác và getter/setter
 }
