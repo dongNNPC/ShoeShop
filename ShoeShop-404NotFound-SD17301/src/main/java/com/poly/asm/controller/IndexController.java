@@ -103,7 +103,7 @@ public class IndexController {
 		return "/index";
 	}
 
-	
+
 	//xoá trong modalCart
 	@RequestMapping("/remove")
 	public String removeFromCart(@RequestParam("productId") String productId ,HttpSession session ,RedirectAttributes redirectAttributes) {
@@ -117,15 +117,12 @@ public class IndexController {
 	    redirectAttributes.addAttribute("modalCartOpen", "true"); // Truyền tham số để hiển thị lại modalCart
 	    return "redirect:/shoeshop/index";
 	}
+//	@RequestMapping("/thanhtoan")
+//	public String thanhtoan() {
+//
+//		return "/views/thanhtoan";
+//	}
 
-
-
-	
-	@RequestMapping("/thanhtoan")
-	public String thanhtoan() {
-
-		return "/views/thanhtoan";
-	}
 
 	@RequestMapping("/profile")
 	public String profile() {

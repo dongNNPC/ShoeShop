@@ -31,7 +31,7 @@
                 
                 <div class="mb-3 col-md-9 mx-auto">
                     <label for="name" class="form-label">Current password <i class="text-danger">*</i> : </label>
-                    <input type="password" class="form-control" id="password"  th:field="*{password}" >
+                    <input type="password" class="form-control" name="password" id="password"  th:field="*{password}" >
                      <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></span>
                 </div>
                

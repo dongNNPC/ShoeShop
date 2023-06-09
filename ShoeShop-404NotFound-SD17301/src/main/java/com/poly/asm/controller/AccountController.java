@@ -27,6 +27,7 @@ import com.poly.asm.service.MailerService2;
 import com.poly.asm.service.ParamService;
 import com.poly.asm.service.SessionService;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -214,19 +215,16 @@ public class AccountController {
 	@RequestMapping("/ChangePass")
 	public String ChangePass(@ModelAttribute("user") User user, Model model) {
 		model.addAttribute("ui_user", "active");
+		
+		
 		return "/account/ChangePass";
 	}
 
 	// trang nhập mật khẩu mới confrimPassword
 	@PostMapping("/ChangePass")
-	public String ChangePassCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
-//		if (user.getPassword().equalsIgnoreCase("123")) {
-//
-//			
-//			return "redirect:/shoeshop/ChangeRePass";
-//		}
-
-		if (dao.findAll().get(0).getPassword().equals(user.getPassword())) {
+	public String ChangePassCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model, @RequestParam("password") String password) {
+		User a = session.get("user");
+		if (a.getPassword().equals(user.getPassword())) {
 			System.out.println(user.getPassword());
 			System.out.println("thành công");
 
@@ -236,35 +234,49 @@ public class AccountController {
 			model.addAttribute("message", "mat khau sai");
 
 		}
+//		List<User> users = dao.findAll();
+//		for (User user2 : users) {
+//			if (dao.findAll().equals(user.getID())) {
+//				if (dao.findAll().get(0).getPassword().equals(user.getPassword())) {
+//					return "redirect:/shoeshop/ChangeRePass-Change";
+//				}
+//			}
+//		}
 		return "/account/ChangePass";
 	}
 
 	// trang nhập mật khẩu mới
 	@GetMapping("/ChangeRePass-Change")
 	public String ChangeRePass(@ModelAttribute("user") User user, Model model) {
-
-		model.addAttribute("ui_user", "change");
+		User a = session.get("user");
+		model.addAttribute("user", a);
+		System.out.println("get"+"Sssssssssssssssssssssssssss");
+		System.out.println(a.getEmail()+"email");
 		return "/account/ChangeRePass";
 	}
-
 	// phương thức thay đổi mật khẩu mới
 	@PostMapping("/ChangeRePass-Change")
-	public String PassCheck(@Valid @ModelAttribute("user") User user, Model model, BindingResult result) {
+	public String PassCheck(@ModelAttribute("user") User user,@RequestParam("confirmpassword") String confirmpassword,Model model, BindingResult result) {
+if(result.hasErrors()) {
+	return "/account/ChangeRePass-Change";
+}
+			User defaultUser = new User();
+			model.addAttribute("user", defaultUser);
+		User a = session.get("user");
+		
+		System.out.println(user.getPassword()+"old");
+		
+		a.setPassword(user.getPassword());
+		System.out.println(a.getID());
+		System.out.println(a.getEmail());
+		System.out.println(a.getName());
+		System.out.println(a.getPassword());
+		System.out.println(a.getPhone());
+		dao.save(a);
+		System.out.println("post"+"saveeeeeeeeeee");
 
-		List<User> uList = dao.findAll();
-		if (user.getPassword().equalsIgnoreCase(uList.get(0).getPassword())) {
-			user.setPassword(user.getPassword());
-			model.addAttribute(uList);
-			dao.save(user);
-			System.out.println("đổi mật khẩu thành công");
 
-			return "redirect:/shoeshop/index";
-		} else {
-			model.addAttribute(uList);
-			System.out.println("lỗi");
-		}
-		return "/account/ChangeRePass";
-
+		 return "redirect:/shoeshop/index";
 	}
 
 	// trang nhập mật khẩu mới
