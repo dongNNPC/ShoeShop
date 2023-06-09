@@ -25,23 +25,27 @@
             <p class="s">(thông tin bắt buộc nhập)</p>
         </div>
         <hr>
-        <form class="row g-3">
+        <form class="row g-3" th:action="@{/shoeshop/thanhtoan}" th:object="${user}" method="post">
             <div class="col-md-6">
               <label for="name" class="form-label">Họ và tên:</label>
-              <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nguyễn Văn A" >
+              <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="" >
+              <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
             </div>
             <div class="col-md-6">
               <label for="phone" class="form-label">Số điện thoại</label>
-              <input type="text" class="form-control" id="phone" placeholder="0900000123">
+              <input type="text" class="form-control" id="phone" th:field="*{phone}" placeholder="">
+               <span class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
             </div>
             <div class="col-md-6">
               <label for="address" class="form-label">Địa chỉ</label>
-              <input type="text" class="form-control" id="address" th:field="*{address}" placeholder="Ninh Kiều, Cần Thơ">
+              <input type="text" class="form-control" id="address" th:field="*{address}" placeholder="">
+              <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
             </div>
             
             <div class="col-md-6">
                 <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Anguyenvan@gmail.com">
+                <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="">
+                <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
               </div>   
             <div class="col-12">
               <div class="form-checkk">
@@ -54,11 +58,21 @@
             <div class="col-12">
               <button type="submit" style="background-color: #232946 ;color: #fffffe;" class="btn ">Xác nhận thông tin thanh toán</button>
              <!-- <a href="./giohang.html"> </a> -->
-             <a th:href="@{/shoeshop/giohang}"><button style="background-color: #232946 ;color: #fffffe;" type="button" class="btn"> &#8592; Trở lại  </button></a>   
+             <a th:href="@{/shoeshop/cart/view}"><button style="background-color: #232946 ;color: #fffffe;" type="button" class="btn"> &#8592; Trở lại  </button></a>   
             </div>
           </form>
     </div> 
-
+ <div th:if="${successMessage}" id="successDialog"
+				class="dialog-overlay">
+				<div class="dialog-content">
+					<p th:text="${successMessage}"></p>
+				</div>
+			</div>
+			<div th:if="${failed}" id="successDialog" class="dialog-overlay">
+				<div class="dialog-content-failed">
+					<p th:text="${failed}"></p>
+				</div>
+			</div>
     <div class="col-lg-6">
       <div class="row">
 
@@ -67,7 +81,7 @@
           <br>
          
         
-            <div class="card-body">
+            <div class="card-body" >
               <div class="card-title">
                 <h4>Đơn hàng: HD04438</h4>
               </div>
@@ -89,9 +103,9 @@
               </div>
               <div class="col-sm-7">
 
-                  <p id="price">998000 VND</p>
+                  <p id="subtotal">0 VND</p>
                   <hr>
-                  <p id="price">998000 VND</p>
+                  <p id="totalPrice">0 VND</p>
               </div>
 
               <div></div>
@@ -134,23 +148,11 @@
 </div>
 </div>
 	  <div th:replace="layout/footer ::  footer"></div>
-		<div th:replace="modal/modalCart.html :: #GioHang"></div>
-
-		<!-- ModalLogin -->
-		<div th:replace="modal/modalLogin.html :: #modalLogin"></div>
-
-		<!-- The Modal signup -->
-		<div th:replace="modal/modalSignUp.html :: #modalSignUp"></div>
-		<!-- Quên mật khẩu -->
-		<div th:replace="modal/modalForget.html :: #modalForget"></div>
-		<!-- Quên mật khẩu ->> nhập mật khẩu mới -->
-		<div th:replace="modal/modalRePass.html :: #modalRePass"></div>
-
-
-		<!-- Đổi mật khẩu-->
-		<div th:replace="modal/modalChangePass.html :: #modalChangePass"></div>
-		<!-- Đổi mật khẩu ->> nhập mật khẩu mới -->
-		<div th:replace="modal/modalChangeRePass.html :: #modalChangeRePass"></div>   
+		 <script th:inline="javascript">
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 1000); // 5000 milliseconds = 5 seconds
+	</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 </html>
