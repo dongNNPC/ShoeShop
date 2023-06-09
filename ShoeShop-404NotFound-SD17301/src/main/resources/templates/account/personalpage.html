@@ -20,24 +20,26 @@
     <link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}" href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" type="text/css" media="all" />
 <body>
 <div th:replace="layout/nav ::  nav"></div>
+		<div th:replace="modal/modalCart.html :: #GioHang"></div>
   <div class="container-xl px-4 mt-4" style="max-width: 1000px; max-height: 800px;">
     
     <div class="row">
-        <div class="col-xl-4">
-            <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
-                <div class="card-header">Ảnh đại diện</div>
-                <div class="card-body text-center">
-                    <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" th:src = "@{/images/hinhCN.jpg}"  alt="">
-                    <!-- Profile picture help block-->
-                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                    <!-- Profile picture upload button-->
-                    
-                    <button class="btn btn" type="button" style="background-color: #232946; color: white;">Upload new image</button>
-                </div>
-            </div>
-        </div>
+    		<div class="col-8 col-lg-4">
+							<div class="card" style="height: 410px">
+								<div class="card-header">
+									<h5 class="card-title">Hình ảnh của user :</h5>
+								</div>
+								<div class="container" style="text-align: center;">
+									<div class="square" id="imageSquare"
+										style="border: 3px solid; display: inline-block; margin: 0 auto;">
+										<img th:if="${selectedImage != null}"
+											th:src="${selectedImage}" class="selected-image" /> <img
+											th:src="@{/images/avatars/__${img}__}" alt="Image">
+									</div>
+									<br>
+								</div>
+							</div>
+						</div>
         <div class="col-xl-8">
             <!-- Account details card-->
             <div class="card mb-4">
@@ -50,6 +52,8 @@
                             <input class="form-control" type="text" id="id" th:field="*{iD}" placeholder="">
                         <span class="text-danger" th:if="${#fields.hasErrors('iD')}" th:errors="*{iD}"></span>
                         </div>
+                        			<input type="file" id="imageInput" th:field="*{image}"
+												style="display: none" />
                         <!-- Form Group (name)-->
                         <div class="mb-3"> <!-- name -->
                             <label class="small mb-1" for="name">Họ và tên:</label>
@@ -67,7 +71,7 @@
                             <!-- Form Group (last name)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="password">Mật khẩu tài khoản:</label>
-                                <input class="form-control" id="password" th:field="*{password}" type="text" placeholder="">
+                                <input class="form-control" id="password" th:field="*{password}" type="password" placeholder="">
                            <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                             </div>
                         </div>
@@ -106,6 +110,59 @@
 			</div>
 </div>
  <div th:replace="layout/footer ::  footer"></div>
+ 
+ <script th:inline="javascript">
+		/*<![CDATA[*/
+		const square = document.getElementById('imageSquare');
+		const imageInput = document.getElementById('imageInput');
+
+		square.addEventListener('click', function() {
+			// Trigger the file selection dialog
+			imageInput.click();
+		});
+
+		imageInput.addEventListener('change', function(event) {
+			const file = event.target.files[0];
+
+			// Check if a file was selected
+			if (file) {
+				const reader = new FileReader();
+
+				// Read the contents of the file
+				reader.onload = function() {
+					const imageUrl = reader.result;
+
+					// Create an image element and set the source
+					const image = document.createElement('img');
+					image.src = imageUrl;
+					image.classList.add('selected-image');
+
+					// Clear the square and append the image
+					square.innerHTML = '';
+					square.appendChild(image);
+
+					// Send the image to the server via AJAX
+					const formData = new FormData();
+					formData.append('file', file);
+
+					const xhr = new XMLHttpRequest();
+					xhr.open('POST', '/upload', true);
+					xhr.onload = function() {
+						if (xhr.status === 200) {
+							console.log('Image uploaded successfully');
+						} else {
+							console.error('Error uploading image');
+						}
+					};
+					xhr.send(formData);
+				};
+
+				// Read the file as data URL
+				reader.readAsDataURL(file);
+			}
+		});
+		/*]]>*/
+	</script>
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">

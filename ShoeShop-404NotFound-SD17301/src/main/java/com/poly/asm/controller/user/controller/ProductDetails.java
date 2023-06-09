@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.poly.asm.controller.IndexController;
 import com.poly.asm.dao.CategoryRepository;
 import com.poly.asm.dao.DetailedImageRepository;
 import com.poly.asm.dao.ProductRepository;
@@ -36,23 +37,17 @@ public class ProductDetails {
 
 	@Autowired
 	SessionService session;
-	
+
 	@Autowired
 	private ShoppingCartService cart;
+
+	@Autowired
+	private IndexController indexController;
 
 	@GetMapping("/details/{id}")
 	public String details(@PathVariable("id") String id, Model model, @ModelAttribute("product") Product product,
 			@ModelAttribute("user") User user) {
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 
 		List<Product> products = daoProductRepository.findAll();
 		List<DetailedImage> detailedImages = daoDetailedImageRepository.findAll();
@@ -75,21 +70,21 @@ public class ProductDetails {
 				}
 			}
 		}
-		
+
 		List<Product> products1 = new ArrayList<>(cart.getItems());
 		List<Product> products2 = daoProductRepository.findAll();
 		List<Product> products3 = new ArrayList<>();
-		 double totalAmount = 0.0;
+		double totalAmount = 0.0;
 		for (Product p1 : products1) {
 			for (Product p2 : products2) {
 				if (p1.getId().equalsIgnoreCase(p2.getId())) {
 					products3.add(p2);
-					 totalAmount += p2.getPrice();
+					totalAmount += p2.getPrice();
 				}
 			}
 		}
 		model.addAttribute("cart", products3);
-		//tạo biến Tổng ti lưu  tạm trong modal
+		// tạo biến Tổng ti lưu tạm trong modal
 		model.addAttribute("totalAmount", totalAmount);
 
 		return "/views/details";

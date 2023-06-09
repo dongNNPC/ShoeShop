@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.poly.asm.controller.IndexController;
 import com.poly.asm.dao.BrandRepository;
 import com.poly.asm.model.Brand;
 import com.poly.asm.model.User;
@@ -24,6 +25,9 @@ public class BrandController {
 
 	@Autowired
 	BrandRepository dao; // làm việc với bảng brand
+
+	@Autowired
+	private IndexController indexController;
 
 //	@RequestMapping("/index")
 //	public String index(Model model) {
@@ -39,16 +43,7 @@ public class BrandController {
 	@GetMapping("/edit/{id}")
 	public String edit(Model model, @PathVariable("id") String id, @ModelAttribute("user") User user) {
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 
 		Brand brand = dao.findById(id).get();
 		model.addAttribute("brand", brand);
@@ -62,16 +57,8 @@ public class BrandController {
 	@RequestMapping("/create")
 	public String create(Model model, @Valid @ModelAttribute("brand") Brand brand, BindingResult rs,
 			@ModelAttribute("user") User user) {
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
+
 		if (rs.hasErrors()) {
 			String successMessage = "create failed";
 			model.addAttribute("failed", successMessage);
@@ -96,16 +83,7 @@ public class BrandController {
 	public String update(Model model, @Valid @ModelAttribute("brand") Brand brand, BindingResult rs,
 			@ModelAttribute("user") User user) {
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 
 		if (rs.hasErrors()) {
 			String successMessage = "Update failed";
@@ -127,17 +105,7 @@ public class BrandController {
 
 	@RequestMapping("/edit-update/{id}")
 	public String editUpdate(Model model, @PathVariable("id") String id, @ModelAttribute("user") User user) {
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
-
+		indexController.checkUser(model);
 		String successMessage = "Cập nhật thành công";
 		model.addAttribute("successMessage", successMessage);
 		Brand brand = dao.findById(id).get();

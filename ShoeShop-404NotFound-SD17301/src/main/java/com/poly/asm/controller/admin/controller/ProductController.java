@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.poly.asm.controller.IndexController;
 import com.poly.asm.dao.BrandRepository;
 import com.poly.asm.dao.CategoryRepository;
 import com.poly.asm.dao.DetailedImageRepository;
@@ -48,19 +49,13 @@ public class ProductController {
 	@Autowired
 	SessionService session;
 
+	@Autowired
+	private IndexController indexController;
+
 	@RequestMapping("/edit/{id}")
 	public String edit(Model model, @PathVariable("id") String id, @ModelAttribute("user") User user) {
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 		// product
 		Product product = dao.findById(id).get();
 		model.addAttribute("product", product);
@@ -115,13 +110,7 @@ public class ProductController {
 	public String create(Model model, @Valid @ModelAttribute("product") Product product, BindingResult rs,
 			@ModelAttribute("detailedImage") @Valid DetailedImage detailedImage, @ModelAttribute("user") User user) {
 		Date currentDate = new Date();
-		if (session.get("user") == null) {
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 //		Danh mục
 		Category itemCategory = new Category();
 		model.addAttribute("category", itemCategory);
@@ -157,16 +146,7 @@ public class ProductController {
 	@RequestMapping("/update")
 	public String update(Model model, @Valid @ModelAttribute("product") Product product, BindingResult rs,
 			@Valid @ModelAttribute("detailedImage") DetailedImage detailedImage, @ModelAttribute("user") User user) {
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 //		Danh mục
 		Category itemCategory = new Category();
 		model.addAttribute("category", itemCategory);
@@ -189,16 +169,7 @@ public class ProductController {
 
 	@RequestMapping("/edit-update/{id}")
 	public String editUpdate(Model model, @PathVariable("id") String id, @ModelAttribute("user") User user) {
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 		String successMessage = "Successful";
 		model.addAttribute("successMessage", successMessage);
 		// product

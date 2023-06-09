@@ -1,5 +1,6 @@
 package com.poly.asm.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +21,14 @@ import com.poly.asm.dao.BrandRepository;
 import com.poly.asm.dao.CategoryRepository;
 import com.poly.asm.dao.DetailedImageRepository;
 import com.poly.asm.dao.DetailedInvoiceRepository;
+import com.poly.asm.dao.InvoiceRepository;
 import com.poly.asm.dao.ProductRepository;
 import com.poly.asm.dao.StockReceiptRepository;
 import com.poly.asm.dao.UserRepository;
 import com.poly.asm.model.Brand;
 import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
+import com.poly.asm.model.MonthlySalesStatistics;
 import com.poly.asm.model.Product;
 import com.poly.asm.model.Report;
 import com.poly.asm.model.StockReceipt;
@@ -62,20 +65,17 @@ public class IndexAdminController {
 	@Autowired
 	DetailedInvoiceRepository daodetailedInvoiceRepository;
 
+	@Autowired
+	InvoiceRepository invoiceRepository;
+
+	@Autowired
+	private IndexController indexController;
+
 	@RequestMapping("/index")
 	public String indexAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("index", "active");
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			model.addAttribute("user", user);
-		}
-//		System.out.println(user.getImage() + "admin");
+		indexController.checkUser(model);
 
 		// tổng số lượng sản phẩm
 		List<Report> reports = daoProduct.getTotalQuantity();
@@ -94,7 +94,14 @@ public class IndexAdminController {
 		model.addAttribute("TotalODer", TotalODer);
 
 //		Biểu đồ sales
-		List<Integer> salesData = Arrays.asList(2115, 1562, 1584, 1892, 1587, 1923, 2566, 2448, 2805, 3438, 2917, 3327);
+//		List<Integer> salesData = Arrays.asList(2115, 1562, 1584, 1892, 1587, 1923, 2566, 2448, 2805, 3438, 2917, 3327);
+		List<MonthlySalesStatistics> ListSave = invoiceRepository.getMonthlySalesStatistics();
+		List<Integer> salesData = new ArrayList<>();
+
+		for (MonthlySalesStatistics monthlySalesStatistics : ListSave) {
+			salesData.add((int) monthlySalesStatistics.getCount());
+		}
+
 		model.addAttribute("salesData", salesData);
 
 //		Biểu đồ tròn
@@ -114,16 +121,7 @@ public class IndexAdminController {
 	public String listUIUsetAdmin(@ModelAttribute("user") User user, Model model) {
 		model.addAttribute("ui_user", "active");
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 		return "/admin/views/ui-user";
 	}
 
@@ -138,16 +136,7 @@ public class IndexAdminController {
 	public String listUIBrandAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("ui_brand", "active");
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 		Brand item = new Brand();
 		model.addAttribute("brand", item);
 		return "/admin/views/ui-brand";
@@ -156,17 +145,7 @@ public class IndexAdminController {
 	@RequestMapping("/ui-category")
 	public String listUICategoryAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("ui_category", "active");
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
-
+		indexController.checkUser(model);
 		Category item = new Category();
 		model.addAttribute("category", item);
 
@@ -178,16 +157,7 @@ public class IndexAdminController {
 			@ModelAttribute("user") User user) {
 		model.addAttribute("ui_product", "active");
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 
 		DetailedImage detailedImage = new DetailedImage();
 		model.addAttribute("detailedImage", detailedImage);
@@ -211,16 +181,7 @@ public class IndexAdminController {
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
 		model.addAttribute("list_brand", "active");
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 
 		String order = request.getParameter("sortOrder");
 
@@ -261,15 +222,7 @@ public class IndexAdminController {
 
 		model.addAttribute("list_category", "active");
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 
 		String order = request.getParameter("sortOrder");
 
@@ -308,15 +261,7 @@ public class IndexAdminController {
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
 		model.addAttribute("list_product", "active");
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 		String order = request.getParameter("sortOrder");
 
 		Sort sort = Sort.by(Direction.ASC, field.orElse("price"));
@@ -347,16 +292,7 @@ public class IndexAdminController {
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
 		model.addAttribute("list_user", "active");
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 
 		String order = request.getParameter("sortOrder");
 
@@ -395,17 +331,7 @@ public class IndexAdminController {
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
 
 		model.addAttribute("list_stock", "active");
-
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			model.addAttribute("user", user);
-		}
-
+		indexController.checkUser(model);
 		String order = request.getParameter("sortOrder");
 
 		Sort sort = Sort.by(Direction.ASC, field.orElse("price"));

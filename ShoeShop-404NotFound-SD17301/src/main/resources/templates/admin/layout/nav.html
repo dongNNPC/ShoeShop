@@ -152,12 +152,12 @@
 					class="text-dark" th:text="*{name}"></span>
 			</a>
 				<div class="dropdown-menu dropdown-menu-end">
-					<a class="dropdown-item" href="pages-profile.html"><i
+					<a class="dropdown-item" th:href="@{/shoeshop/personal-page}"><i
 						class="align-middle me-1" data-feather="user"></i> Profile</a> <a
-						class="dropdown-item" href="#"><i class="align-middle me-1"
+						class="dropdown-item" th:href="@{/shoeshop/admin/index}"><i class="align-middle me-1"
 						data-feather="pie-chart"></i> Analytics</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="index.html"><i
+					<a class="dropdown-item" th:href="@{/shoeshop/admin/list-user}"><i
 						class="align-middle me-1" data-feather="settings"></i> Settings &
 						Privacy</a> <a class="dropdown-item" href="#"><i
 						class="align-middle me-1" data-feather="help-circle"></i> Help

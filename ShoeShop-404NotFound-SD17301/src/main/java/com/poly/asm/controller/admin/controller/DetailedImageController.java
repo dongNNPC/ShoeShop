@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.poly.asm.controller.IndexController;
 import com.poly.asm.dao.DetailedImageRepository;
 import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.User;
@@ -24,20 +25,14 @@ public class DetailedImageController {
 	@Autowired
 	SessionService session;
 
+	@Autowired
+	private IndexController indexController;
+
 	@RequestMapping("/updateImage")
 	public String updateImage(Model model, @Valid @ModelAttribute("detailedImage") DetailedImage detailedImage,
 			BindingResult rs, @ModelAttribute("user") User user) {
 
-		if (session.get("user") == null) {
-			// Xử lý khi session là null
-			// Ví dụ: Tạo một đối tượng User mặc định
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
-		} else {
-			user = session.get("user");
-			// System.out.println(user.getImage() + "ssssssssssssssssssssssssssss");
-			model.addAttribute("user", user);
-		}
+		indexController.checkUser(model);
 		daoDetailedImage.save(detailedImage);
 
 		return "redirect:/shoeshop/admin/list-product/edit/" + detailedImage.getProduct().getId();
