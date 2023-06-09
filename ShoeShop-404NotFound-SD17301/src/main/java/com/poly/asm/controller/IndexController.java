@@ -65,14 +65,18 @@ public class IndexController {
 		List<Product> products = new ArrayList<>(cart.getItems());
 		List<Product> products2 = daoPro.findAll();
 		List<Product> products3 = new ArrayList<>();
+		 double totalAmount = 0.0;
 		for (Product p1 : products) {
 			for (Product p2 : products2) {
 				if (p1.getId().equalsIgnoreCase(p2.getId())) {
 					products3.add(p2);
+					 totalAmount += p2.getPrice();
 				}
 			}
 		}
 		model.addAttribute("cart", products3);
+		//tạo biến Tổng ti lưu  tạm trong modal
+		model.addAttribute("totalAmount", totalAmount);
 
 		
 		//đổ tất cả sản phẩm

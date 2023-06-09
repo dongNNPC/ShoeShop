@@ -14,16 +14,16 @@
 
 
 		<i class="fa-solid fa-minus fa-2xl text-center mb-2"></i>
-		<div class="offcanvas-body text-center text-secondary">
-
-			<table class="table table-responsivetable-primary text-start col-lg-12 col-sm-12" style="max-width: 400px">
-				<thead>
+		<div class="offcanvas-body text-center text-secondary  " >
+			<div class="table-responsive" style="overflow-x: hidden; max-height: 300px; overflow-y: auto;" >
+			<table class="table  text-start col-lg-12 col-sm-12">
+				<thead >
 					<tr th:each="item, iStat: ${cart}">
 						<td scope="col"><img th:src="@{/images/product-images/__${item.detailedImages[0].mainImage}__}"  alt="Image" height="90px"></td>
 							
 						<td scope="col mx-auto">
 							<h6 class="text-truncate"
-								style="font-weight: bold; max-width: 200px; margin-bottom: -20px;"
+								style="font-weight: bold; max-width: 150px; margin-bottom: -20px;"
 								th:text="${item.name}"></h6>
 								 <br> 
 								 <i>Màu sắc: cam</i> | <i>Size:
@@ -45,10 +45,12 @@
 
 				</thead>
 			</table>
+			</div>
 			<!-- Tạm tính  -->
 			<div class="">
 			    <h6 class="text-dark fw-bold">
-			        Tạm Tính : <i id="totalPrice" class="toalPrice text-danger"></i>
+			        Tổng tiền  : <span class="text-danger" th:text="${totalAmount}"></span> <label class="text-danger">VND</label>
+
 			    </h6>
 			</div>
 			<hr>

@@ -1,5 +1,6 @@
 package com.poly.asm.controller.user.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.poly.asm.model.DetailedImage;
 import com.poly.asm.model.Product;
 import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
+import com.poly.asm.service.ShoppingCartService;
 
 @Controller
 @RequestMapping("/shoeshop")
@@ -34,6 +36,9 @@ public class ProductDetails {
 
 	@Autowired
 	SessionService session;
+	
+	@Autowired
+	private ShoppingCartService cart;
 
 	@GetMapping("/details/{id}")
 	public String details(@PathVariable("id") String id, Model model, @ModelAttribute("product") Product product,
@@ -70,6 +75,22 @@ public class ProductDetails {
 				}
 			}
 		}
+		
+		List<Product> products1 = new ArrayList<>(cart.getItems());
+		List<Product> products2 = daoProductRepository.findAll();
+		List<Product> products3 = new ArrayList<>();
+		 double totalAmount = 0.0;
+		for (Product p1 : products1) {
+			for (Product p2 : products2) {
+				if (p1.getId().equalsIgnoreCase(p2.getId())) {
+					products3.add(p2);
+					 totalAmount += p2.getPrice();
+				}
+			}
+		}
+		model.addAttribute("cart", products3);
+		//tạo biến Tổng ti lưu  tạm trong modal
+		model.addAttribute("totalAmount", totalAmount);
 
 		return "/views/details";
 	}
