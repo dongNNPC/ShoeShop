@@ -16,12 +16,12 @@
 				<li class="nav-item  "><a class="nav-link text-dark"
 					th:href="@{/shoeshop/index}" aria-current="page">Trang chủ</a></li>
 				<li class="nav-item dropdown ative"><a
-					class="nav-link text-dark" data-bs-toggle="dropdown" href="#">Sản
-						phẩm <i class="fa-solid fa-angle-down fa-xs"></i>
+					class="nav-link text-dark" data-bs-toggle="dropdown" href="#">Danh mục
+						 <i class="fa-solid fa-angle-down fa-xs"></i>
 				</a>
 					<ul class="dropdown-menu fade-up bg-light">
 						<li th:each="category : ${categories}"><a
-							class="dropdown-item" style="color: #686868" href=""
+							class="dropdown-item" style="color: #686868" th:href="@{/shoeshop/danhmuc-sanpham/{id}(id=${category.id})}"
 							th:text="${category.getName()}"> </a></li>
 					</ul></li>
 				<li class="nav-item"><a class="nav-link text-dark" href="">
