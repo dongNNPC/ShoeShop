@@ -33,6 +33,7 @@ import com.poly.asm.model.Product;
 import com.poly.asm.model.Report;
 import com.poly.asm.model.StockReceipt;
 import com.poly.asm.model.User;
+import com.poly.asm.model.reportPieChart;
 import com.poly.asm.service.SessionService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -103,9 +104,31 @@ public class IndexAdminController {
 		}
 
 		model.addAttribute("salesData", salesData);
+		
+		reportPieChart rpPieChart = new reportPieChart();
+		
+		List<reportPieChart> itemGetAdiDas = daoBrandRepository.getAdiDas();
+		List<reportPieChart> itemGetGucci = daoBrandRepository.getGucci();
+		List<reportPieChart> itemGetNike = daoBrandRepository.getNike();
+		
+		model.addAttribute("itemGetAdiDas", itemGetAdiDas );
+		model.addAttribute("itemGetGucci", itemGetGucci );
+		model.addAttribute("itemGetNike", itemGetNike );
+		
+		List<Integer> pieData = new ArrayList<>();
 
-//		Biểu đồ tròn
-		List<Integer> pieData = Arrays.asList(4306, 3801, 1689);
+		for (reportPieChart item : itemGetAdiDas) {
+		    pieData.add((int) item.getTotalQuantityAdidas());
+		}
+
+		for (reportPieChart item : itemGetGucci) {
+		    pieData.add((int) item.getTotalQuantityGucci());
+		}
+
+		for (reportPieChart item : itemGetNike) {
+		    pieData.add((int) item.getTotalQuantityNike());
+		}
+
 
 		model.addAttribute("pieData", pieData);
 
