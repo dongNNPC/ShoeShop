@@ -81,31 +81,25 @@
           <br>
          
         
-            <div class="card-body" >
+            <div class="card-body" th:each="item, index : ${cart}">
               <div class="card-title">
                 <h4>Đơn hàng: HD04438</h4>
               </div>
-            <h5>Sản phẩm: Biti's Hunter Core - Midnight Black Inverted DSMH01203DEN – CTY BITI'S CAMBODIA</h5>
+              
+            <h5 >Sản phẩm: <span class="${item-name}" th:text="${item.name}" >Bit hunter</span></h5>
            
-            <h5>Số lượng: 2</h5>
-            <h5>Đơn giá: 499000 <span>VND</span></h5>
+            <h5>Số lượng: <span class="item-quantity" th:text="${item.quantity}">2</span></h5>
+            <h5>Đơn giá: <span class="item-price" th:text="${item.price}">499000</span> <span>VND</span></h5>
            
             <hr>
-
             <div class="row">
-
               <div class="col-sm-5">
-
-
-                  <h5 class="card-title">Tạm tính:</h5> 
-                  <hr>
-                  <h5 class="card-title">Tổng:</h5>
+             
+                  <h5 class="card-title" >Tổng:</h5>
               </div>
-              <div class="col-sm-7">
-
-                  <p id="subtotal">0 VND</p>
-                  <hr>
-                  <p id="totalPrice">0 VND</p>
+              <div class="col-sm-7">          
+                  <p id="totalPrice" th:if="${totalAmount != null}" th:text="${totalAmount} + ' VND'">0 VND</p>
+              <p id="totalPrice"> </p>
               </div>
 
               <div></div>
@@ -152,6 +146,17 @@
 		setTimeout(function() {
 			document.getElementById("successDialog").style.display = "none";
 		}, 1000); // 5000 milliseconds = 5 seconds
+		
+		// Lấy giá trị từ sessionStorage
+	    var totalPrice = sessionStorage.getItem('totalPrice');
+
+	    // Kiểm tra nếu giá trị tổng giá là null hoặc undefined, gán giá trị mặc định là 0 VND
+	    if (!totalPrice) {
+	        totalPrice = '0 VND';
+	    }
+
+	    // Gán giá trị vào phần tử HTML
+	    document.getElementById('totalPrice').textContent = totalPrice.toLocaleString() + ' VND'
 	</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>

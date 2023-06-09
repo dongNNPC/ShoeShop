@@ -55,6 +55,8 @@ public class PersonalpageController {
 		}
 //		a = dao.findById(id).get();
 		dao.save(user);
+		model.addAttribute("message", "cập nhật thành công");
+		
 	return "/account/personalpage";
 		
 		

@@ -167,6 +167,9 @@
 			// Cập nhật phần tử tổng và phần tử tổng cộng với giá trị tính toán, làm tròn 2 chữ số thập phân
 			subtotalElement.textContent = subtotal.toFixed(2);
 			totalElement.textContent = subtotal.toFixed(2) + " VND";
+			
+			
+			sessionStorage.setItem('totalPrice', subtotal.toFixed(2));
 		}
 	</script>
 
