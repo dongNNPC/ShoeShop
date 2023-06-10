@@ -268,15 +268,17 @@ public class AccountController {
 	@PostMapping("/ChangeRePass-Change")
 	public String PassCheck(@ModelAttribute("user") User user, @RequestParam("confirmpassword") String confirmpassword,
 			Model model, BindingResult result) {
+		
 		if (result.hasErrors()) {
+			System.out.println(result.toString());
 			return "/account/ChangeRePass-Change";
 		}
 		if (!user.getPassword().equalsIgnoreCase(confirmpassword)) {
-			String successMessage = "Mật khẩu không trùng nhau!";
+			String successMessage = "Mật khẩu không trùng nhau! hoặc mật khẩu đã để trống!!";
 			model.addAttribute("failed", successMessage);
 			return "/account/ChangeRePass";
 		}
-
+		
 		User defaultUser = new User();
 		model.addAttribute("user", defaultUser);
 		User a = session.get("user");
