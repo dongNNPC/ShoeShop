@@ -12,7 +12,9 @@
 <meta name="author" content="AdminKit">
 <meta name="keywords"
 	content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-
+<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}"
+	href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet"
+	type="text/css" media="all" />
 <link rel="preconnect" href="https://fonts.gstatic.com"
 	th:href="@{https://fonts.gstatic.com}">
 <link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
@@ -55,7 +57,7 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="truck"></i>
+															 <a 	th:href="@{/shoeshop/admin/report/detailTotalQuantity}"><i class="align-middle" data-feather="truck"></i></a>
 														</div>
 													</div>
 												</div>
@@ -65,7 +67,8 @@
 												</h1>
 												<div class="mb-0">
 													<span class="text-danger"> <span class="text-muted">Tổng
-															Số Lượng Kho</span>
+															Số Lượng Kho</span> 
+															
 												</div>
 											</div>
 										</div>
@@ -78,7 +81,7 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="users"></i>
+															<a th:href="@{/shoeshop/admin/report/productDetail}"><i class="align-middle" data-feather="box"></i></a>
 														</div>
 													</div>
 												</div>
@@ -88,7 +91,9 @@
 												</h1>
 												<div class="mb-0">
 													<span class="text-success"> <span class="text-muted">Tổng
-															số lượng sản phẩm</span>
+															 sản phẩm</span>
+															
+													
 												</div>
 											</div>
 										</div>
@@ -103,7 +108,7 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="dollar-sign"></i>
+														 <a 	th:href="@{/shoeshop/admin/report/TotalRevenue}">	<i class="align-middle" data-feather="dollar-sign"></i></a>
 														</div>
 													</div>
 												</div>
@@ -126,7 +131,7 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="shopping-cart"></i>
+														 <a th:href="@{/shoeshop/admin/report/totalOderQuantity}"><i class="align-middle" data-feather="shopping-cart"></i></a>	
 														</div>
 													</div>
 												</div>

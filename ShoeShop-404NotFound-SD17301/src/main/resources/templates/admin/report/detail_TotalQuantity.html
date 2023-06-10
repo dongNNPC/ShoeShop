@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -40,65 +40,70 @@
 				<div class="container-fluid p-0">
 
 					<div class="mb-3">
-						<h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO PRODUCT</h3>
+						<h3 class="fw-bold">DANH SÁCH CHI TIẾT TỔNG NHẬP KHO</h3>
 					</div>
 					<div class="row">
 
 						<div class="col-md-12 col-xl-12">
 							<div class="card">
-								<form th:action="@{/shoeshop/admin/users/order-counts}"
+								<form th:action="@{/shoeshop/admin/report/detailTotalQuantity}"
 									method="get">
 									<div class="input-group rounded col-2 mt-3"
 										style="width: 500px; margin-left: 400px">
 										<input type="search" class="form-control rounded col-2"
-											name="name" th:value="${searchName}" /> <span
-											class="input-group-text border-0 bg-white" id="search-addon">
-											<button type="submit" class="btn btn-basic col-2">
-												<i class="fas fa-search"></i>
-											</button>
+											name="name" th:value="${searchName}" />
+										<button type="submit" class="btn btn-basic col-2">
+											<i class="fas fa-search"></i>
+										</button>
 
 										</span>
 									</div>
 								</form>
 
-								<table class="table mt-3 table-striped">
+								<table class="table mt-3 table-striped container">
 									<thead>
 										<tr>
-											<th>User ID</th>
-											<th>User Name</th>
-											<th>Total Orders</th>
-										</tr>
+								            <th>ID</th>
+								            <th>Name</th>
+								            <th>Quantity</th>
+								            <th>Price</th>
+								        </tr>
 									</thead>
 									<tbody>
-										<!-- Loop through the user order counts -->
-										<tr th:each="order : ${orderCounts}">
-											<td th:text="${order.id}"></td>
-											<td th:text="${order.name}"></td>
-											<td th:text="${order.totalOrders}"></td>
-										</tr>
+										<tr th:each="product : ${productInventory}">
+								            <td th:text="${product.id}"></td>
+								            <td th:text="${product.name}"></td>
+								            <td th:text="${product.quantity}"></td>
+								            <td th:text="${product.price}"></td>
+								        </tr>
 									</tbody>
 								</table>
 								<!-- 4 nút điều hướng -->
-								
-									<div class="row" style="width: 500px; margin-left: 500px" >
-									<a class="col-2 btn btn-primary m-1"  th:unless="${currentPage == 0}" th:href="@{/shoeshop/admin/users/order-counts(page=${currentPage - 1}, name=${searchName})}">
-										<i class="fa-solid fa-backward-fast"></i>
-									</a>
-								
-									<a class="col-2 btn btn-primary m-1" th:href="@{/shoeshop/admin/users/order-counts(page=0, name=${searchName})}">
-											<i class="fa-solid fa-backward"></i>
-									</a>
-								
-									<a  class="col-2 btn btn-primary m-1" th:unless="${currentPage == totalPages - 1}" th:href="@{/shoeshop/admin/users/order-counts(page=${currentPage + 1}, name=${searchName})}">
-										<i class="fa-solid fa-forward"></i>
-									</a>
-														
-									<a class="col-2 btn btn-primary m-1"  th:href="@{/shoeshop/admin/users/order-counts(page=${totalPages - 1}, name=${searchName})}">
-										<i class="fa-solid fa-forward-fast"></i>
+								<div class="row justify-content-end" style="margin-right: 5px" >
+									<a class="col-1 btn btn-primary m-1" th:if="${currentPage > 0}"
+										th:href="@{/shoeshop/admin/report/detailTotalQuantity(page=0)}">
+									<i class="fa-solid fa-backward-fast"></i>
 									</a>
 									
-									</div>
-								
+									<a class="col-1 btn btn-primary m-1" th:if="${currentPage > 0}"
+										th:href="@{/shoeshop/admin/report/detailTotalQuantity(page=__${currentPage - 1}__)}">
+									<i class="fa-solid fa-backward"></i>
+									</a>
+									
+									<a class="col-1 btn btn-primary m-1"
+										th:if="${currentPage < totalPages - 1}"
+										th:href="@{/shoeshop/admin/report/detailTotalQuantity(page=__${currentPage + 1}__)}">
+									<i class="fa-solid fa-forward"></i>
+									</a>
+									
+									<a class="col-1 btn btn-primary m-1"
+										th:if="${currentPage < totalPages - 1}"
+										th:href="@{/shoeshop/admin/report/detailTotalQuantity(page=__${totalPages - 1}__)}">
+									<i class="fa-solid fa-forward-fast"></i>
+									</a>
+								</div>
+
+
 
 							</div>
 						</div>
