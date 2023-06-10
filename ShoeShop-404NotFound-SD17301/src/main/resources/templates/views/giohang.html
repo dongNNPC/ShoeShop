@@ -37,9 +37,13 @@
 
 <body>
 	<div th:replace="~{layout/nav ::  nav}"></div>
-
+	
 	<div class="container" style="min-width: 1200px; padding: 10px;">
-		<div class="row giohangmain">
+
+	<i th:utext="${decoratedUri}" style="margin-top: -30px" ></i>
+	<hr>
+		<div class="row giohangmain" style="margin-top: 32px">
+	
 			<h3>GIỎ HÀNG</h3>
 			<div class="col-lg-8" style="min-width: 250px;">
 				<table class="table">

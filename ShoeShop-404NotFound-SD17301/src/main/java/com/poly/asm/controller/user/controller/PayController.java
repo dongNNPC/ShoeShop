@@ -25,6 +25,9 @@ import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
 import com.poly.asm.service.ShoppingCartService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.websocket.server.PathParam;
+
 @Controller
 @RequestMapping("/shoeshop")
 public class PayController {
@@ -131,5 +134,39 @@ public class PayController {
 		return "/views/thanhtoan";
 
 	}
+	
+	 @GetMapping("/thanhtoan1")
+	    public String thanhToan(HttpServletRequest request, Model model) {
+	        String referer = request.getHeader("Referer");
+	        
+	        if (referer != null) {
+	            if (referer.contains("/shoeshop/modalCart")) {
+	            	List<Product> products = new ArrayList<>(cart.getItems());
+	        		List<Product> products2 = Pdao.findAll();
+	        		List<Product> products3 = new ArrayList<>();
+	            	double modalCartTotalPrice = 0.0;
+	        		for (Product p1 : products) {
+	        			for (Product p2 : products2) {
+	        				if (p1.getId().equalsIgnoreCase(p2.getId())) {
+	        					
+	        					modalCartTotalPrice += p2.getPrice();
+	        				}
+	        			}
+	        		}
+	        	
+	        		// tạo biến Tổng ti lưu tạm trong modal
+	        		// Giá trị tổng tiền từ modalCart
+	                model.addAttribute("totalAmount", modalCartTotalPrice);
+	            } else if (referer.contains("/shoeshop/cart/view")) {
+	                // Xử lý khi từ cart/view qua trang thanh toán
+	                // Lấy giá trị tổng tiền từ cart/view
+	                // Ví dụ:
+	                int cartTotalPrice = 1000000; // Giá trị tổng tiền từ cart/view
+	                model.addAttribute("totalAmount", cartTotalPrice);
+	            }
+	        }
+	        
+	        return "thanhToan"; // Trả về tên của view template thanh toán
+	    }
 
 }

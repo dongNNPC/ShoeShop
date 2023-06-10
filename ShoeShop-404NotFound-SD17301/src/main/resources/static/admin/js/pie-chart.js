@@ -9,7 +9,7 @@
             new Chart(document.getElementById("chartjs-dashboard-pie"), {
                 type: "pie",
                 data: {
-                    labels: ["Chrome", "Firefox", "IE"],
+                    labels: ["Adidas", "Gucci", "Nike"],
                     datasets: [{
                         data: pieData,
                         backgroundColor: [

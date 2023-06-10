@@ -12,7 +12,9 @@
 <meta name="author" content="AdminKit">
 <meta name="keywords"
 	content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-
+<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}"
+	href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet"
+	type="text/css" media="all" />
 <link rel="preconnect" href="https://fonts.gstatic.com"
 	th:href="@{https://fonts.gstatic.com}">
 <link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
@@ -55,17 +57,18 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="truck"></i>
+															 <a 	th:href="@{/shoeshop/admin/report/detailTotalQuantity}"><i class="align-middle" data-feather="truck"></i></a>
 														</div>
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3" th:each="rp : ${totalInventory}">
 													<label th:text="${rp.totalInventory}"></label> <i
-														class="text-end text-secondary"> SP</i>
+														class="text-end text-secondary"style="font-size: 10px"> SP</i>
 												</h1>
 												<div class="mb-0">
 													<span class="text-danger"> <span class="text-muted">Tổng
-															Số Lượng Kho</span>
+															Số Lượng Kho</span> 
+															
 												</div>
 											</div>
 										</div>
@@ -78,17 +81,19 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="users"></i>
+															<a th:href="@{/shoeshop/admin/report/productDetail}"><i class="align-middle" data-feather="box"></i></a>
 														</div>
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3" th:each="rp : ${rpIndex}">
 													<label th:text="${rp.totalQuantity}"> </label> <i
-														class="text-end text-secondary"> SP</i>
+														class="text-end text-secondary" style="font-size: 10px"> SP</i>
 												</h1>
 												<div class="mb-0">
 													<span class="text-success"> <span class="text-muted">Tổng
-															số lượng sản phẩm</span>
+															 sản phẩm</span>
+															
+													
 												</div>
 											</div>
 										</div>
@@ -103,13 +108,13 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="dollar-sign"></i>
+														 <a 	th:href="@{/shoeshop/admin/report/TotalRevenue}">	<i class="align-middle" data-feather="dollar-sign"></i></a>
 														</div>
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3" th:each="rp : ${TotalRevenue}">
 													$ <label th:text="${rp.totalRevenue}"></label> <i
-														class="small text-secondary">VND</i>
+														class="small text-secondary" style="font-size: 10px">VND</i>
 												</h1>
 												<div class="mb-0">
 													<span class="text-success"> <span
@@ -126,13 +131,13 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="shopping-cart"></i>
+														 <a th:href="@{/shoeshop/admin/report/totalOderQuantity}"><i class="align-middle" data-feather="shopping-cart"></i></a>	
 														</div>
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3" th:each="rp : ${TotalODer}">
 													<label th:text="${rp.totalODer}"></label> <i
-														class="text-end text-secondary"> SP</i>
+														class="text-end text-secondary" style="font-size: 10px"> SP</i>
 												</h1>
 												<div class="mb-0">
 													<span class="text-danger"> <span class="text-muted">Tổng
@@ -165,7 +170,7 @@
 							<div class="card flex-fill w-100">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Browser Usage</h5>
+									<h5 class="card-title mb-0">Top Brand</h5>
 								</div>
 								<div class="card-body d-flex">
 									<div class="align-self-center w-100">
@@ -175,19 +180,19 @@
 											</div>
 										</div>
 
-										<table class="table mb-0">
+										<table class="table mb-0" >
 											<tbody>
-												<tr>
-													<td>Chrome</td>
-													<td class="text-end">4306</td>
+												<tr th:each="item : ${itemGetAdiDas}" class="text-primary fw-bold">
+												 <td th:text="${item.brandNameAdidas}"></td>
+													<td class="text-end" th:text="${item.TotalQuantityAdidas}"></td>
 												</tr>
-												<tr>
-													<td>Firefox</td>
-													<td class="text-end">3801</td>
+												<tr th:each="item1 : ${itemGetNike}" class="text-danger fw-bold">
+													<td th:text="${item1.BrandNameNike}"></td>
+													<td th:text="${item1.TotalQuantityNike}" class="text-end"></td>
 												</tr>
-												<tr>
-													<td>IE</td>
-													<td class="text-end">1689</td>
+												<tr th:each="item2 : ${itemGetGucci}" class="text-warning fw-bold">
+													<td th:text="${item2.BrandNameGucci}"></td>
+													<td th:text="${item2.TotalQuantityGucci}" class="text-end"></td>
 												</tr>
 											</tbody>
 										</table>

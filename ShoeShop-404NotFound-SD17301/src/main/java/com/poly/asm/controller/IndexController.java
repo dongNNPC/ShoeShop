@@ -83,7 +83,7 @@ public class IndexController {
 		List<Category> categories = daoCategoryRepository.findAll();
 		model.addAttribute("categories", categories);
 
-		Pageable pageable = PageRequest.of(p.orElse(0), 8);
+		Pageable pageable = PageRequest.of(p.orElse(0), 8, Sort.by(Sort.Direction.DESC, "id"));
 		Page<Product> page = daoPro.findAll(pageable);
 		List<Product> items = page.getContent();
 		model.addAttribute("items", items);
