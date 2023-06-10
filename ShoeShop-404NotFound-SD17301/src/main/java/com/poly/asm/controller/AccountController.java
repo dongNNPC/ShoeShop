@@ -271,6 +271,12 @@ public class AccountController {
 		if (result.hasErrors()) {
 			return "/account/ChangeRePass-Change";
 		}
+		if (!user.getPassword().equalsIgnoreCase(confirmpassword)) {
+			String successMessage = "Mật khẩu không trùng nhau!";
+			model.addAttribute("failed", successMessage);
+			return "/account/ChangeRePass";
+		}
+
 		User defaultUser = new User();
 		model.addAttribute("user", defaultUser);
 		User a = session.get("user");
