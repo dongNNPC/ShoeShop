@@ -52,6 +52,7 @@ public class IndexController {
 			user = session.get("user");
 			model.addAttribute("loggedIn", true);
 			model.addAttribute("user", user);
+			model.addAttribute("image", user.getImage());
 
 		}
 		return user;

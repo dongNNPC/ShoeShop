@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,7 @@ import com.poly.asm.dao.UserRepository;
 import com.poly.asm.model.Brand;
 import com.poly.asm.model.Category;
 import com.poly.asm.model.DetailedImage;
+import com.poly.asm.model.Invoice;
 import com.poly.asm.model.MonthlySalesStatistics;
 import com.poly.asm.model.Product;
 import com.poly.asm.model.Report;
@@ -117,6 +119,148 @@ public class IndexAdminController {
 
 	}
 
+//Phần invoice Manager 
+	@GetMapping("/pending")
+	public String invoicePending(Model model, @ModelAttribute("user") User user,
+			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
+			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
+		model.addAttribute("pending", "active");
+
+		indexController.checkUser(model);
+		String order = request.getParameter("sortOrder");
+
+		Sort sort = Sort.by(Direction.ASC, field.orElse("id"));
+		if (order != null) {
+			if (order.equals("desc")) {
+				sort = Sort.by(Direction.DESC, field.orElse("id"));
+			}
+		}
+
+		session.remove("keywords");
+		String kwords = kw.orElse(session.get("keywords"));
+		session.set("keywords", kwords, 30);
+		model.addAttribute("keywords", session.get("keywords"));
+		Pageable pageable = PageRequest.of(p.orElse(0), 5, sort);
+
+		if (kw.isPresent()) {
+			Page<Invoice> page = invoiceRepository.findByStatusAndIdContaining("pending", "%" + kwords + "%", pageable);
+			model.addAttribute("invoices", page);
+		} else {
+			Page<Invoice> items = invoiceRepository.findByStatus("pending", pageable);
+			model.addAttribute("invoices", items);
+		}
+		return "/admin/views/manager-invoice-pending";
+	}
+
+	@RequestMapping("/pending-update")
+	public String iinvoicePending(Model model, @ModelAttribute("user") User user,
+			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
+			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
+		model.addAttribute("pending", "active");
+
+		indexController.checkUser(model);
+		String order = request.getParameter("sortOrder");
+
+		Sort sort = Sort.by(Direction.ASC, field.orElse("id"));
+		if (order != null) {
+			if (order.equals("desc")) {
+				sort = Sort.by(Direction.DESC, field.orElse("id"));
+			}
+		}
+
+		session.remove("keywords");
+		String kwords = kw.orElse(session.get("keywords"));
+		session.set("keywords", kwords, 30);
+		model.addAttribute("keywords", session.get("keywords"));
+		Pageable pageable = PageRequest.of(p.orElse(0), 5, sort);
+
+		if (kw.isPresent()) {
+			Page<Invoice> page = invoiceRepository.findByStatusAndIdContaining("pending", "%" + kwords + "%", pageable);
+			model.addAttribute("invoices", page);
+		} else {
+			Page<Invoice> items = invoiceRepository.findByStatus("pending", pageable);
+			model.addAttribute("invoices", items);
+		}
+		String successMessage = "Đơn hàng đã được xác nhận!";
+		model.addAttribute("successMessage", successMessage);
+		return "/admin/views/manager-invoice-pending";
+	}
+
+	@RequestMapping("/delivered")
+	public String invoicedeliveredg(Model model, @ModelAttribute("user") User user,
+			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
+			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
+		model.addAttribute("delivered", "active");
+		indexController.checkUser(model);
+		String order = request.getParameter("sortOrder");
+
+		Sort sort = Sort.by(Direction.ASC, field.orElse("id"));
+		if (order != null) {
+			if (order.equals("desc")) {
+				sort = Sort.by(Direction.DESC, field.orElse("id"));
+			}
+		}
+
+		session.remove("keywords");
+		String kwords = kw.orElse(session.get("keywords"));
+		session.set("keywords", kwords, 30);
+		model.addAttribute("keywords", session.get("keywords"));
+		Pageable pageable = PageRequest.of(p.orElse(0), 5, sort);
+
+		if (kw.isPresent()) {
+			Page<Invoice> page = invoiceRepository.findByStatusAndIdContaining("delivered", "%" + kwords + "%",
+					pageable);
+			model.addAttribute("invoices", page);
+		} else {
+			Page<Invoice> items = invoiceRepository.findByStatus("delivered", pageable);
+			model.addAttribute("invoices", items);
+		}
+
+		indexController.checkUser(model);
+		return "/admin/views/manager-invoice-delivered";
+	}
+
+	@RequestMapping("/cancelled")
+	public String invoiceCancelled(Model model, @ModelAttribute("user") User user,
+			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
+			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
+		model.addAttribute("cancelled", "active");
+
+		indexController.checkUser(model);
+		String order = request.getParameter("sortOrder");
+
+		Sort sort = Sort.by(Direction.ASC, field.orElse("id"));
+		if (order != null) {
+			if (order.equals("desc")) {
+				sort = Sort.by(Direction.DESC, field.orElse("id"));
+			}
+		}
+
+		session.remove("keywords");
+		String kwords = kw.orElse(session.get("keywords"));
+		session.set("keywords", kwords, 30);
+		model.addAttribute("keywords", session.get("keywords"));
+		Pageable pageable = PageRequest.of(p.orElse(0), 5, sort);
+
+		if (kw.isPresent()) {
+			Page<Invoice> page = invoiceRepository.findByStatusAndIdContaining("cancelled", "%" + kwords + "%",
+					pageable);
+			model.addAttribute("invoices", page);
+		} else {
+			Page<Invoice> items = invoiceRepository.findByStatus("cancelled", pageable);
+			model.addAttribute("invoices", items);
+		}
+		return "/admin/views/manager-invoice-cancelled";
+	}
+
+//	@PostMapping("/ui-user")
+//	public String PostUIUsetAdmin(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
+//
+//		model.addAttribute("ui_user", "active");
+//		return "/admin/views/ui-user";
+//	}
+
+//Phần list
 	@RequestMapping("/ui-user")
 	public String listUIUsetAdmin(@ModelAttribute("user") User user, Model model) {
 		model.addAttribute("ui_user", "active");

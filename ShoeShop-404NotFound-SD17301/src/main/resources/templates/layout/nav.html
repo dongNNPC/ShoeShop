@@ -50,9 +50,7 @@
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							style="color: #686868" th:href="@{/shoeshop/ChangePass}"> Đổi
 								mật khẩu </a></li>
-						<li th:if="${loggedIn}"><a class="dropdown-item"
-							style="color: #686868" th:href="@{/shoeshop/Forget}"> quên
-								mật khẩu </a></li>
+						
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							style="color: #686868" th:href="@{/shoeshop/personal-page}">
 								tài khoản </a></li>
@@ -65,6 +63,9 @@
 						<li th:unless="${loggedIn}"><a class="dropdown-item"
 							style="color: #686868" th:href="@{/shoeshop/signUp}"> Đăng kí
 						</a></li>
+						<li th:unless="${loggedIn}"><a class="dropdown-item"
+							style="color: #686868" th:href="@{/shoeshop/Forget}"> quên
+								mật khẩu </a></li>
 					</ul></li>
 
 				<li class="nav-item"><a class="nav-link" aria-current="page"

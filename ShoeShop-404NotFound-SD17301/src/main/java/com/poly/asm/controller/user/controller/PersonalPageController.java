@@ -50,6 +50,9 @@ public class PersonalPageController {
 	public String Personal(@ModelAttribute("user") User user, Model model) {
 		indexController.checkUser(model);
 //		Giỏ hàng
+//		user = session.get("user");
+//		model.addAttribute("image", user.getImage());
+		System.out.println("Image" + user.getImage());
 		List<Product> products = new ArrayList<>(cart.getItems());
 		List<Product> products2 = daoPro.findAll();
 		List<Product> products3 = new ArrayList<>();

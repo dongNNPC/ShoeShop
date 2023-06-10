@@ -20,7 +20,7 @@
 
 <link rel="canonical" th:href="@{https://demo-basic.adminkit.io/}" />
 
-<title>List - stocks</title>
+<title>List - invoices</title>
 <link th:href="@{/admin/css/admin.css}" rel="stylesheet" type="text/css"
 	media="all">
 <link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css"
@@ -45,17 +45,16 @@
 						<h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO PRODUCT</h3>
 					</div>
 
-					<form th:action="@{/shoeshop/admin/list-stock}"
-						class="form-inline" method="post" style="max-width: 400px">
-						<label for="inputName" class="form-label">Tìm kiếm theo ID</label>
+					<form th:action="@{/shoeshop/admin/delivered}" class="form-inline"
+						method="post" style="max-width: 400px">
+						<label for="inputName" class="form-label">Tìm kiếm bằng ID</label>
 						<div class="row mb-3 justify-content-end">
 							<div class="col-8">
 								<input class="form-control" name="keywords"
 									th:value="${keywords}">
 							</div>
 							<div class="col-4">
-								<button class="btn btn-primary" type="submit">Tìm
-									kiếm</button>
+								<button class="btn btn-primary" type="submit">Tìm kiếm</button>
 							</div>
 						</div>
 					</form>
@@ -74,57 +73,56 @@
 												<tr class="tr-color text-light">
 													<th>TT</th>
 													<th>ID</th>
-													<th>BRAND_ID</th>
-													<th>PRODUCT_ID</th>
+													<th><a href="#" th:id="'sortLink_orderDate'"
+														th:onclick="toggleSortOrder('orderDate')">ORDER DATE <i
+															class="fas fa-sort"></i></a></th>
+													<th>STATUS</th>
 													<th>QUANTITY</th>
-													<th>PRICE</th>
-													<th>ORDER DATE</th>
+													<th>OPTION</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr class="text-dark"
-													th:each="item, index : ${stocks}">
+												<tr class="text-dark" th:each="item, index : ${invoices}">
 													<td th:text="${index.index + 1}"></td>
 													<td th:text="${item.id}"></td>
-													<td th:text="${item.brand.id}"></td>
-													<td th:text="${item.product.id}"></td>
-													<td th:text="${item.quantity}"></td>
-													<td th:text="${item.price}"></td>
 													<td th:text="${item.orderDate}"></td>
+													<td th:text="${item.status}" style="color: green;"></td>
+													<td th:text="${item.user.iD}"></td>
+													<td><a
+														th:href="@{/shoeshop/admin/manager/{id}(id=*{item.id})}"
+														class="btn btn-primary">XEM CHI TIẾT</a></td>
 												</tr>
 											</tbody>
 										</table>
 
 										<div>
 											<!-- Nút First -->
-											<a th:if="${stocks.hasPrevious()}"
-												th:href="@{/shoeshop/admin/list-stock(p=0, keywords=${session.keywords})}"
+											<a th:if="${invoices.hasPrevious()}"
+												th:href="@{/shoeshop/admin/delivered(p=0, keywords=${session.keywords})}"
 												class="btn btn-primary"
-												th:disabled="${!stocks.hasPrevious()}"> <i
+												th:disabled="${!invoices.hasPrevious()}"> <i
 												class="fa-solid fa-backward-fast"></i>
 											</a>
 
 											<!-- Nút Previous -->
-											<a th:if="${stocks.hasPrevious()}"
-												th:href="@{/shoeshop/admin/list-stock(p=${stocks.number - 1}, keywords=${session.keywords})}"
+											<a th:if="${invoices.hasPrevious()}"
+												th:href="@{/shoeshop/admin/delivered(p=${invoices.number - 1}, keywords=${session.keywords})}"
 												class="btn btn-primary"
-												th:disabled="${!stocks.hasPrevious()}"><i
+												th:disabled="${!invoices.hasPrevious()}"><i
 												class="fa-solid fa-backward"></i> </a>
 
 											<!-- Nút Next -->
-											<a th:if="${stocks.hasNext()}"
-												th:href="@{/shoeshop/admin/list-stock(p=${stocks.number + 1}, keywords=${session.keywords})}"
-												class="btn btn-primary"
-												th:disabled="${!stocks.hasNext()}"> <i
-												class="fa-solid fa-forward"></i>
+											<a th:if="${invoices.hasNext()}"
+												th:href="@{/shoeshop/admin/delivered(p=${invoices.number + 1}, keywords=${session.keywords})}"
+												class="btn btn-primary" th:disabled="${!invoices.hasNext()}">
+												<i class="fa-solid fa-forward"></i>
 											</a>
 
 											<!-- Nút Last -->
-											<a th:if="${stocks.hasNext()}"
-												th:href="@{/shoeshop/admin/list-stock(p=${stocks.totalPages - 1}, keywords=${session.keywords})}"
-												class="btn btn-primary"
-												th:disabled="${!stocks.hasNext()}"> <i
-												class="fa-solid fa-forward-fast"></i>
+											<a th:if="${invoices.hasNext()}"
+												th:href="@{/shoeshop/admin/delivered(p=${invoices.totalPages - 1}, keywords=${session.keywords})}"
+												class="btn btn-primary" th:disabled="${!invoices.hasNext()}">
+												<i class="fa-solid fa-forward-fast"></i>
 											</a>
 										</div>
 									</div>
@@ -135,11 +133,28 @@
 
 				</div>
 			</main>
-
+   	<div th:if="${successMessage}" id="successDialog"
+		class="dialog-overlay">
+		<div class="dialog-content">
+			<p th:text="${successMessage}"></p>
+		</div>
+	</div>
+	<div th:if="${failed}" id="successDialog" class="dialog-overlay">
+		<div class="dialog-content-failed">
+			<p th:text="${failed}"></p>
+		</div>
+	</div>
 
 			<div th:replace="~{./admin/layout/footer :: #footer-admin}"></div>
 		</div>
 	</div>
+	  
+  	<script th:inline="javascript">
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 2000); // 5000 milliseconds = 5 seconds
+	</script>
+	
 	<script th:inline="javascript">
 		function toggleSortOrder(columnName) {
 			var currentUrl = new URL(window.location.href);

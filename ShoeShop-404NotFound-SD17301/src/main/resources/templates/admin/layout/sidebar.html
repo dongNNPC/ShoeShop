@@ -12,6 +12,23 @@
 					data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
 					
 			</a></li>
+					<li class="sidebar-header">Invoice Manager</li>
+
+			<li class="sidebar-item" th:classappend="${pending} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/pending}"> <i class="align-middle"
+					data-feather="sliders"></i> <span class="align-middle">Pending</span>
+					
+			</a></li>
+				<li class="sidebar-item" th:classappend="${delivered} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/delivered}"> <i class="align-middle"
+					data-feather="sliders"></i> <span class="align-middle">Delivered</span>
+					
+			</a></li>
+				<li class="sidebar-item" th:classappend="${cancelled} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/cancelled}"> <i class="align-middle"
+					data-feather="sliders"></i> <span class="align-middle">Cancelled</span>
+					
+			</a></li>
 			<li class="sidebar-header">Tools & Components</li>
 
 			<li class="sidebar-item" th:classappend="${ui_user} ? 'active'"><a class="sidebar-link"

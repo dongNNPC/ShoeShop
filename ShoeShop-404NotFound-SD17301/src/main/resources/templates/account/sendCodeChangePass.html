@@ -16,6 +16,50 @@
 	
 </head>
 
+<style>
+
+/* Bắt lỗi*/
+.dialog-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	z-index: 9999;
+}
+
+.dialog-content {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #429A43;
+	margin: 20px;
+	padding: 10px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+
+.dialog-content-failed {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #FF0000;
+	margin: 20px;
+	padding: 10px;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+</style>
+
 <body style="background-color: #232946 ;">
   <header>
     <!-- place navbar here -->
@@ -41,10 +85,27 @@
               </form>
         </div>
     </div>
+    	<div th:if="${successMessage}" id="successDialog"
+		class="dialog-overlay">
+		<div class="dialog-content">
+			<p th:text="${successMessage}"></p>
+		</div>
+	</div>
+	<div th:if="${failed}" id="successDialog" class="dialog-overlay">
+		<div class="dialog-content-failed">
+			<p th:text="${failed}"></p>
+		</div>
+	</div>
   </main>
   <footer>
     <!-- place footer here -->
   </footer>
+  	<script th:inline="javascript">
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 2000); // 5000 milliseconds = 5 seconds
+	</script>
+  
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">

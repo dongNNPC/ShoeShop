@@ -97,9 +97,9 @@ public class AccountController {
 		String input = recaptchaResponse;
 		String searchTerm = ",your_test_value";
 		String result = input.replace(searchTerm, "");
-		System.out.println("Khóa trang web" + recaptchaResponse);
-		System.out.println("Khóa rs" + result);
-		System.out.println("Khóa bảo mật" + recaptchaSecretKey);
+//		System.out.println("Khóa trang web" + recaptchaResponse);
+//		System.out.println("Khóa rs" + result);
+//		System.out.println("Khóa bảo mật" + recaptchaSecretKey);
 
 		// Kiểm tra reCAPTCHA
 //		if (!verifyRecaptcha(result)) {
@@ -308,20 +308,22 @@ public class AccountController {
 	@PostMapping("/Forget")
 	public String ForgetCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model)
 			throws MessagingException {
-		User u = session.get("user");
-
-		if (user.getEmail().equalsIgnoreCase(u.getEmail())) {
-			MailInfo2 mailInfo2 = new MailInfo2();
-			sendCodeString = generateRandomNumber();
-			mailInfo2.setFrom("khanhttpc03027@fpt.edu.vn");
-			mailInfo2.setTo("khanhttpc03027@fpt.edu.vn");
-			mailInfo2.setSubject("SHOE SHOP CODE");
-			mailInfo2.setBody("Đây là mã xác nhận của bạn: " + sendCodeString);
-
-			mailerService2.queue(mailInfo2);
+//		User u = session.get("user");
+		List<User> user2 = dao.findAll();
+		for (User u : user2) {
+			if (user.getEmail().equalsIgnoreCase(u.getEmail())) {
+				MailInfo2 mailInfo2 = new MailInfo2();
+				sendCodeString = generateRandomNumber();
+				mailInfo2.setFrom("khanhttpc03027@fpt.edu.vn");
+				mailInfo2.setTo("khanhttpc03027@fpt.edu.vn");
+				mailInfo2.setSubject("SHOE SHOP CODE");
+				mailInfo2.setBody("Đây là mã xác nhận của bạn: " + sendCodeString);
+				mailerService2.queue(mailInfo2);
+				session.set("userForger", u, 30);
 
 //			mailerService2.send("khanhttpc03027@fpt.edu.vn", "Subjectt", "123");
-			return "redirect:/shoeshop/sendcode";
+				return "redirect:/shoeshop/sendcode";
+			}
 		}
 
 		String errorMessage = ("Email bạn nhập không đúng");
@@ -347,11 +349,16 @@ public class AccountController {
 	}
 
 	@RequestMapping("/sendcode-change")
-	public String sendCodeChange(@ModelAttribute("user") User user) {
-		User u = session.get("user");
+	public String sendCodeChange(@ModelAttribute("user") User user, Model model) {
+
+		if (user.getPassword().equals("")) {
+			return "/account/sendCodeChangePass";
+		}
+		User u = session.get("userForger");
+
 		u.setPassword(user.getPassword());
 		dao.save(u);
-		return "redirect:/shoeshop/index";
+		return "redirect:/shoeshop/login";
 
 	}
 }

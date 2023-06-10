@@ -99,6 +99,7 @@ public class PayController {
 		User user = session.get("user");
 		Invoice invoice = new Invoice();
 
+// invoice
 		invoice.setId(generateRandomNumber());
 		invoice.setStatus("pending");
 		invoice.setOrderDate(currentDate);
