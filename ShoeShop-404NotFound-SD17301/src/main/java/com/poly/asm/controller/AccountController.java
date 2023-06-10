@@ -27,7 +27,6 @@ import com.poly.asm.service.MailerService2;
 import com.poly.asm.service.ParamService;
 import com.poly.asm.service.SessionService;
 
-import io.micrometer.common.util.StringUtils;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -60,7 +59,7 @@ public class AccountController {
 	@Autowired
 	private MailerService2 mailerService2;
 
-	@RequestMapping("/login")
+	@GetMapping("/login")
 	public String login(@ModelAttribute("user") User user, Model model) {
 		model.addAttribute("failed", session.getString("mess"));
 		user.setEmail(cookieService.getValue("email"));
@@ -111,6 +110,7 @@ public class AccountController {
 //		} else {
 //
 //		}
+
 		if (result.equals("")) {
 			String errorMessage = "Vui lòng xác nhận bạn không phải là robot.";
 			System.out.println(errorMessage);
@@ -224,14 +224,14 @@ public class AccountController {
 	@RequestMapping("/ChangePass")
 	public String ChangePass(@ModelAttribute("user") User user, Model model) {
 		model.addAttribute("ui_user", "active");
-		
-		
+
 		return "/account/ChangePass";
 	}
 
 	// trang nhập mật khẩu mới confrimPassword
 	@PostMapping("/ChangePass")
-	public String ChangePassCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model, @RequestParam("password") String password) {
+	public String ChangePassCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model,
+			@RequestParam("password") String password) {
 		User a = session.get("user");
 		if (a.getPassword().equals(user.getPassword())) {
 			System.out.println(user.getPassword());
@@ -259,22 +259,24 @@ public class AccountController {
 	public String ChangeRePass(@ModelAttribute("user") User user, Model model) {
 		User a = session.get("user");
 		model.addAttribute("user", a);
-		System.out.println("get"+"Sssssssssssssssssssssssssss");
-		System.out.println(a.getEmail()+"email");
+		System.out.println("get" + "Sssssssssssssssssssssssssss");
+		System.out.println(a.getEmail() + "email");
 		return "/account/ChangeRePass";
 	}
+
 	// phương thức thay đổi mật khẩu mới
 	@PostMapping("/ChangeRePass-Change")
-	public String PassCheck(@ModelAttribute("user") User user,@RequestParam("confirmpassword") String confirmpassword,Model model, BindingResult result) {
-if(result.hasErrors()) {
-	return "/account/ChangeRePass-Change";
-}
-			User defaultUser = new User();
-			model.addAttribute("user", defaultUser);
+	public String PassCheck(@ModelAttribute("user") User user, @RequestParam("confirmpassword") String confirmpassword,
+			Model model, BindingResult result) {
+		if (result.hasErrors()) {
+			return "/account/ChangeRePass-Change";
+		}
+		User defaultUser = new User();
+		model.addAttribute("user", defaultUser);
 		User a = session.get("user");
-		
-		System.out.println(user.getPassword()+"old");
-		
+
+		System.out.println(user.getPassword() + "old");
+
 		a.setPassword(user.getPassword());
 		System.out.println(a.getID());
 		System.out.println(a.getEmail());
@@ -282,10 +284,9 @@ if(result.hasErrors()) {
 		System.out.println(a.getPassword());
 		System.out.println(a.getPhone());
 		dao.save(a);
-		System.out.println("post"+"saveeeeeeeeeee");
+		System.out.println("post" + "saveeeeeeeeeee");
 
-
-		 return "redirect:/shoeshop/index";
+		return "redirect:/shoeshop/index";
 	}
 
 	// trang nhập mật khẩu mới

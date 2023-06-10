@@ -33,8 +33,8 @@
 									<div class="square" id="imageSquare"
 										style="border: 3px solid; display: inline-block; margin: 0 auto;">
 										<img th:if="${selectedImage != null}"
-											th:src="${selectedImage}" class="selected-image" /> <img
-											th:src="@{/images/avatars/__${img}__}" alt="Image">
+											class="selected-image" /> <img
+											th:src="@{/images/avatars/__*{image}__}" alt="Image">
 									</div>
 									<br>
 								</div>
