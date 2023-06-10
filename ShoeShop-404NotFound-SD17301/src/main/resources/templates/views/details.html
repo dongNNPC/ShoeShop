@@ -27,6 +27,11 @@
 </head>
 <body>
 	<div th:replace="./layout/nav ::  #nav"></div>
+	
+	<div class="mt-2 m-2">
+	 <i th:utext="${decoratedUri}" style="margin-top: -25px" ></i>
+	</div>
+	<hr>
 	<main class="container main-details">
 		<div class="container">
 			<div class="row">

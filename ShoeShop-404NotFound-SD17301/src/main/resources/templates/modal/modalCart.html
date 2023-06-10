@@ -59,18 +59,13 @@
     <button th:if="${not #lists.isEmpty(cart)}" 
             style="background-color: #232946; color: white;" 
             type="button" class="btn col-md-12 text-center">Giỏ hàng</button> <br>
-    <button th:unless="${not #lists.isEmpty(cart)}" 
-            style="background-color: #232946; color: white;" 
-            type="button" class="btn col-md-12 text-center" disabled>Giỏ hàng</button>
 </a>
 <br>
 			<a th:href="@{/shoeshop/thanhtoan}">
     <button th:if="${not #lists.isEmpty(cart)}" 
             style="background-color: #232946; color: white;" 
             type="button" class="btn col-md-12 text-center">Thanh toán</button> <br>
-    <button th:unless="${not #lists.isEmpty(cart)}" 
-            style="background-color: #232946; color: white;" 
-            type="button" class="btn col-md-12 text-center" disabled>Thanh toán</button>
+
 </a>
 		</div>
 	</div>
