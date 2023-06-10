@@ -215,7 +215,7 @@ public class AccountController {
 
 	// trang logout
 	@RequestMapping("/log-out")
-	public String logOut(@ModelAttribute("user") User user) {
+	public String logOut() {
 		session.remove("user");
 		return "redirect:/shoeshop/index";
 	}
