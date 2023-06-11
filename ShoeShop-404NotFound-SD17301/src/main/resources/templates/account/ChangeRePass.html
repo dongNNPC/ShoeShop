@@ -12,7 +12,48 @@
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
 </head>
+<style>
+@charset "UTF-8";
+.dialog-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	z-index: 9999;
+}
 
+.dialog-content {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #429A43;
+	margin: 20px;
+	padding: 10px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+
+.dialog-content-failed {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #FF0000;
+	margin: 20px;
+	padding: 10px;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+</style>
 <body style="background-color: #232946 ;">
   <header>
     <!-- place navbar here -->
@@ -28,7 +69,7 @@
                 
                 <div class="mb-3 col-md-9 mx-auto">
                     <label for="name" class="form-label">Password <i class="text-danger">*</i> : </label>
-                   <input type="password" class="form-control" id="password"  th:field="*{password}" >
+                   <input type="password" class="form-control" id="password" name="password"  th:field="*{password}" >
                      <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></span>
                
                     <div class="invalid-feedback" ></div>
@@ -36,7 +77,7 @@
                 <div class="mb-3 col-md-9 mx-auto">
                     <label for="confirmpassword" class="form-label">Confirm password <i class="text-danger">*</i> : </label>
                     <input type="password" class="form-control" name="confirmpassword" id="confirmpassword">
-                    
+                    <span th:if="${message}" class="alert-success" style="color: green;" role="alert" th:text="${message}">Không được để trống nhập lại mật khẩu!!</span> 
                     <div class="invalid-feedback" ></div>
                 </div>
                <div class="d-grid gap-2 col-md-9  mx-auto mb-3" style="margin-right: 80px;">

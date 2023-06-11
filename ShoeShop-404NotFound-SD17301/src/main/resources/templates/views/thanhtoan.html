@@ -56,9 +56,12 @@
               </div>
             </div>
             <div class="col-12">
-              <button type="submit" style="background-color: #232946 ;color: #fffffe;" class="btn ">Xác nhận thông tin thanh toán</button>
+            
+             <a th:href="@{/shoeshop/viewpay}" style="background-color: #232946 ;color: #fffffe;" type="submit" class="btn">Xác nhận thông tin thanh toán</a>   
+            
+             <!--  <button  type="submit" style="background-color: #232946 ;color: #fffffe;" class="btn "></button> -->
              <!-- <a href="./giohang.html"> </a> -->
-             <a th:href="@{/shoeshop/cart/view}"><button style="background-color: #232946 ;color: #fffffe;" type="button" class="btn"> &#8592; Trở lại  </button></a>   
+             <a th:href="@{/shoeshop/cart/view}" style="background-color: #232946 ;color: #fffffe;" type="button" class="btn"> &#8592; Trở lại</a>   
             </div>
           </form>
     </div> 
@@ -82,8 +85,8 @@
          
         
             <div class="card-body" >
-              <div class="card-title">
-                <h6>Đơn hàng: HD04438</h6>
+              <div class="card-title" th:each="Invoice : ${invoice}">
+                <h6>Đơn hàng: <span th:text="${invoice.id}"></span></h6>
               </div>
               <div th:each="item, index : ${cart}">
               <h7 >Sản phẩm: <span class="${item-name}" style="font-weight: bolder;" th:text="${item.name}" >Bit hunter</span></7>
