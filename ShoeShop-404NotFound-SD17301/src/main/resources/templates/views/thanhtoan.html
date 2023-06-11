@@ -75,7 +75,7 @@
 					<p th:text="${failed}"></p>
 				</div>
 			</div>
-    <div class="col-lg-6">
+   <div class="col-lg-6">
       <div class="row">
 
         <h2>Hóa đơn</h2>
@@ -83,7 +83,7 @@
           <br>
          
         
-            <div class="card-body" th:each="item, index : ${cart}">
+            <div class="card-body" >
               <div class="card-title">
                 <h6>Đơn hàng: HD04438</h6>
               </div>
@@ -103,7 +103,7 @@
                   <h5 class="card-title" >Tổng:</h5>
               </div>
               <div class="col-sm-7">          
-                <!--   <p th:if="${totalAmount != null}" th:text="${totalAmount} + ' VND'">0 VND</p> -->
+                  <p id="totalPrice" th:if="${totalAmount != null}" th:text="${totalAmount} + ' VND'">0 VND</p>
               <p id="totalPrice"> </p>
               </div>
 
@@ -129,11 +129,7 @@
               </label>
               <h6>Thanh toán trực tiệp tại quầy giao dịch và nhận hàng </h6>
             </div>
-            <div class="d-grid gap-2">
-              <button class="btn" style="background-color: #232946 ;color: #fffffe;" type="button">Thanh toán</button>
-             
-            </div>
-
+            
              </div>
       
          
