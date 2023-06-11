@@ -15,7 +15,7 @@ public class InterConfigLogin implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(login)
 				.addPathPatterns("/shoeshop/log-out", "/shoeshop/ChangePass", "/shoeshop/thanhtoan",
-						"/shoeshop/personal-page", "/shoeshop/ChangeRePass-Change")
+						"/shoeshop/invoices/**", "/shoeshop/personal-page", "/shoeshop/ChangeRePass-Change")
 				.excludePathPatterns("/shoeshop/index");
 	}
 

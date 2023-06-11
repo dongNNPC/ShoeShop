@@ -46,11 +46,17 @@ public class IndexController {
 		User user = new User();
 		if (session.get("user") == null) {
 			User defaultUser = new User();
+			List<Category> categories = daoCategoryRepository.findAll();
+			model.addAttribute("categories", categories);
+
 			model.addAttribute("user", defaultUser);
 			model.addAttribute("loggedIn", false);
 		} else {
 			user = session.get("user");
 			model.addAttribute("loggedIn", true);
+			List<Category> categories = daoCategoryRepository.findAll();
+			model.addAttribute("categories", categories);
+
 			model.addAttribute("user", user);
 			model.addAttribute("image", user.getImage());
 

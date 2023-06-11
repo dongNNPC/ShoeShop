@@ -54,6 +54,9 @@
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							style="color: #686868" th:href="@{/shoeshop/personal-page}">
 								tài khoản </a></li>
+								<li th:if="${loggedIn}"><a class="dropdown-item"
+							th:href="@{/shoeshop/invoices/list_invoices}" style="color: #686868" href="">
+								Xem Đơn Hàng </a></li>
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							th:href="@{/shoeshop/log-out}" style="color: #686868" href="">
 								Đăng xuất </a></li>

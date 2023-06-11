@@ -268,7 +268,7 @@ public class AccountController {
 	@PostMapping("/ChangeRePass-Change")
 	public String PassCheck(@ModelAttribute("user") User user, @RequestParam("confirmpassword") String confirmpassword,
 			Model model, BindingResult result) {
-		
+
 		if (result.hasErrors()) {
 			System.out.println(result.toString());
 			return "/account/ChangeRePass-Change";
@@ -278,7 +278,7 @@ public class AccountController {
 			model.addAttribute("failed", successMessage);
 			return "/account/ChangeRePass";
 		}
-		
+
 		User defaultUser = new User();
 		model.addAttribute("user", defaultUser);
 		User a = session.get("user");
@@ -316,8 +316,8 @@ public class AccountController {
 			if (user.getEmail().equalsIgnoreCase(u.getEmail())) {
 				MailInfo2 mailInfo2 = new MailInfo2();
 				sendCodeString = generateRandomNumber();
-				mailInfo2.setFrom("khanhttpc03027@fpt.edu.vn");
-				mailInfo2.setTo("khanhttpc03027@fpt.edu.vn");
+				mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
+				mailInfo2.setTo("trantankhanh31102003@gmail.com");
 				mailInfo2.setSubject("SHOE SHOP CODE");
 				mailInfo2.setBody("Đây là mã xác nhận của bạn: " + sendCodeString);
 				mailerService2.queue(mailInfo2);

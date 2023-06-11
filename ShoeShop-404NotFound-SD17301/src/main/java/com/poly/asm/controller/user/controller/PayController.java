@@ -3,6 +3,7 @@ package com.poly.asm.controller.user.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,8 +26,6 @@ import com.poly.asm.model.Product;
 import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
 import com.poly.asm.service.ShoppingCartService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/shoeshop")
@@ -44,6 +44,9 @@ public class PayController {
 	private ShoppingCartService cart;// gio hang
 	@Autowired
 	private InvoiceRepository invoiceRepository;
+
+	@Autowired
+	private ProductRepository productRepository;
 
 	@Autowired
 	private DetailedInvoiceRepository DetailedInvoiceRepository;
@@ -89,8 +92,6 @@ public class PayController {
 		return sb.toString();
 	}
 
-	private String iDinvoice = "";
-
 	@PostMapping("/thanhtoan")
 	public String createPay(Model model, @ModelAttribute("product") Product product) {
 		indexController.checkUser(model);
@@ -102,9 +103,9 @@ public class PayController {
 		Date currentDate = new Date();
 		User user = session.get("user");
 		Invoice invoice = new Invoice();
-		iDinvoice = generateRandomNumber();
+
 // invoice
-		invoice.setId(iDinvoice);
+		invoice.setId(generateRandomNumber());
 		invoice.setStatus("pending");
 		invoice.setOrderDate(currentDate);
 		invoice.setUser(user);
@@ -132,70 +133,26 @@ public class PayController {
 			DetailedInvoiceRepository.save(detailedInvoice);
 		}
 
-		return "redirect:/shoeshop/viewpay";
-	}
-
-//Thông báo
-	@GetMapping("/thanhtoan1")
-	public String thanhToan(HttpServletRequest request, Model model) {
-		String referer = request.getHeader("Referer");
-
-		if (referer != null) {
-			if (referer.contains("/shoeshop/modalCart")) {
-				List<Product> products = new ArrayList<>(cart.getItems());
-				List<Product> products2 = Pdao.findAll();
-				List<Product> products3 = new ArrayList<>();
-				double modalCartTotalPrice = 0.0;
-				for (Product p1 : products) {
-					for (Product p2 : products2) {
-						if (p1.getId().equalsIgnoreCase(p2.getId())) {
-
-							modalCartTotalPrice += p2.getPrice();
-						}
-					}
-				}
-
-				// tạo biến Tổng ti lưu tạm trong modal
-				// Giá trị tổng tiền từ modalCart
-				model.addAttribute("totalAmount", modalCartTotalPrice);
-			} else if (referer.contains("/shoeshop/cart/view")) {
-				// Xử lý khi từ cart/view qua trang thanh toán
-				// Lấy giá trị tổng tiền từ cart/view
-				// Ví dụ:
-				int cartTotalPrice = 1000000; // Giá trị tổng tiền từ cart/view
-				model.addAttribute("totalAmount", cartTotalPrice);
-			}
-		}
-
-		return "thanhToan"; // Trả về tên của view template thanh toán
+		return "redirect:/shoeshop/viewpay/" + invoice.getId();
 	}
 
 //	 Hóa đơn
-	@GetMapping("/viewpay")
-	public String viewpay(@ModelAttribute("user") User user, Model model, @ModelAttribute("product") Product product) {
-
+	@GetMapping("/viewpay/{id}")
+	public String viewpay(@ModelAttribute("user") User user, Model model, @ModelAttribute("product") Product product,
+			@PathVariable("id") String iDInvoice) {
 		indexController.checkUser(model);
-
-		List<Product> products = new ArrayList<>(cart.getItems());
-		List<Product> products2 = Pdao.findAll();
-		List<Product> products3 = new ArrayList<>();
 		double totalAmount = 0.0;
+		Optional<Invoice> invoice = invoiceRepository.findById(iDInvoice);
+		List<Product> products = productRepository.findByInvoiceId(iDInvoice);
 		for (Product p1 : products) {
-			for (Product p2 : products2) {
-				if (p1.getId().equalsIgnoreCase(p2.getId())) {
-					p2.setQuantity(p1.getQuantity());
-					products3.add(p2);
-					totalAmount += p2.getPrice();
-				}
-			}
+			totalAmount += p1.getPrice();
 		}
-		model.addAttribute("iDinvoice", iDinvoice);
+		model.addAttribute("iDinvoice", iDInvoice);
 
-		model.addAttribute("cart", products3);
+		model.addAttribute("cart", products);
 
 		// tạo biến Tổng ti lưu tạm trong modal
 		model.addAttribute("totalAmount", totalAmount);
-		model.addAttribute("name", products);
 		return "views/viewPay";
 	}
 
