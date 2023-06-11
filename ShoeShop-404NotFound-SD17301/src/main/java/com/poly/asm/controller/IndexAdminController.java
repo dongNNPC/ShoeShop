@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -106,31 +105,30 @@ public class IndexAdminController {
 		}
 
 		model.addAttribute("salesData", salesData);
-		
+
 		reportPieChart rpPieChart = new reportPieChart();
-		
+
 		List<reportPieChart> itemGetAdiDas = daoBrandRepository.getAdiDas();
 		List<reportPieChart> itemGetGucci = daoBrandRepository.getGucci();
 		List<reportPieChart> itemGetNike = daoBrandRepository.getNike();
-		
-		model.addAttribute("itemGetAdiDas", itemGetAdiDas );
-		model.addAttribute("itemGetGucci", itemGetGucci );
-		model.addAttribute("itemGetNike", itemGetNike );
-		
+
+		model.addAttribute("itemGetAdiDas", itemGetAdiDas);
+		model.addAttribute("itemGetGucci", itemGetGucci);
+		model.addAttribute("itemGetNike", itemGetNike);
+
 		List<Integer> pieData = new ArrayList<>();
 
 		for (reportPieChart item : itemGetAdiDas) {
-		    pieData.add((int) item.getTotalQuantityAdidas());
+			pieData.add((int) item.getTotalQuantityAdidas());
 		}
 
 		for (reportPieChart item : itemGetGucci) {
-		    pieData.add((int) item.getTotalQuantityGucci());
+			pieData.add((int) item.getTotalQuantityGucci());
 		}
 
 		for (reportPieChart item : itemGetNike) {
-		    pieData.add((int) item.getTotalQuantityNike());
+			pieData.add((int) item.getTotalQuantityNike());
 		}
-
 
 		model.addAttribute("pieData", pieData);
 
@@ -143,7 +141,7 @@ public class IndexAdminController {
 	}
 
 //Phần invoice Manager 
-	@GetMapping("/pending")
+	@RequestMapping("/pending")
 	public String invoicePending(Model model, @ModelAttribute("user") User user,
 			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
