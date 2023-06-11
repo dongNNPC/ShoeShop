@@ -34,6 +34,7 @@ import com.poly.asm.model.Product;
 import com.poly.asm.model.Report;
 import com.poly.asm.model.StockReceipt;
 import com.poly.asm.model.User;
+import com.poly.asm.model.UserOderPayment;
 import com.poly.asm.model.reportPieChart;
 import com.poly.asm.service.SessionService;
 
@@ -74,7 +75,7 @@ public class IndexAdminController {
 	private IndexController indexController;
 
 	@RequestMapping("/index")
-	public String indexAdmin(Model model, @ModelAttribute("user") User user) {
+	public String indexAdmin(Model model, @ModelAttribute("user") User user , @RequestParam(defaultValue = "0") int page) {
 		model.addAttribute("index", "active");
 
 		indexController.checkUser(model);
@@ -136,9 +137,22 @@ public class IndexAdminController {
 		List<Integer> barData = Arrays.asList(54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79);
 
 		model.addAttribute("barData", barData);
+		
+		
+			//đổ dữ liệu cho userOderPayment
+		 	int pageSize = 5; // Số lượng kết quả hiển thị trên mỗi trang
+	        Pageable pageable = PageRequest.of(page, pageSize);
+	        Page<UserOderPayment> UserOderPayment = daodetailedInvoiceRepository.getUserOderPay( pageable);
+	        model.addAttribute("UserOderPayment", UserOderPayment.getContent());
+	        model.addAttribute("pageoder", page);
+	        model.addAttribute("UserOderPayment	", UserOderPayment.getTotalPages());
+		
+		
 		return "/admin/index";
 
 	}
+	
+	
 
 //Phần invoice Manager 
 	@RequestMapping("/pending")
