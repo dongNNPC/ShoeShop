@@ -64,7 +64,7 @@ public class PayController {
 		for (Product p1 : products) {
 			for (Product p2 : products2) {
 				if (p1.getId().equalsIgnoreCase(p2.getId())) {
-					p2.setQuantity(p1.getQuantity());
+					p2.setQuantity(1);
 					products3.add(p2);
 					totalAmount += p2.getPrice();
 
