@@ -1,6 +1,7 @@
 package com.poly.asm.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.poly.asm.dao.CartRepository;
 import com.poly.asm.dao.CategoryRepository;
 import com.poly.asm.dao.ProductRepository;
+import com.poly.asm.model.Cart;
 import com.poly.asm.model.Category;
 import com.poly.asm.model.NewProductTop10;
 import com.poly.asm.model.Product;
@@ -38,6 +41,9 @@ public class IndexController {
 
 	@Autowired
 	CategoryRepository daoCategoryRepository;
+	
+	@Autowired 
+	CartRepository daoCart;
 
 	@Autowired
 	SessionService session;
@@ -104,6 +110,23 @@ public class IndexController {
 		Page<NewProductTop10> pageResult = daoPro.getNewProductTop10(pageableTop10);
 		List<NewProductTop10> newProductTop10 = pageResult.getContent();
 		model.addAttribute("newProductTop10", newProductTop10);
+		
+		
+		//xử lý thêm dữ liệu cart khi người dùng đăng nhập 
+		Date currentDate = new Date();
+		if (session.get("user") == null) {
+		} else {
+			for (Product p3 : products3) {
+				Cart cart = new Cart();
+				cart.setUser(checkUser(model));
+				cart.setProduct(p3);
+				cart.setQuantity(1);
+				cart.setOrderDate(currentDate);
+				cart.setStatus("Chờ người dùng xác nhận");
+				daoCart.save(cart);
+			}
+		}
+		
 		// trả về view
 		return "/index";
 	}

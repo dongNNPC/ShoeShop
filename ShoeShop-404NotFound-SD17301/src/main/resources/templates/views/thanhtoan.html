@@ -99,18 +99,18 @@
             
             <hr>
             <div class="row">
-              <div class="col-sm-5">
+              <div class="col-sm-2">
              
                   <h5 class="card-title" >Tổng:</h5>
               </div>
-              <div class="col-sm-7">          
-                  <p id="totalPrice" th:if="${totalAmount != null}" th:text="${totalAmount} + ' VND'">0 VND</p>
-              <p id="totalPrice"> </p>
+              <div class="col-sm-10">          
+                  <p style="color: red;font-weight: bolder;"  th:if="${totalAmount != null}" th:text="${totalAmount} + ' VND'">0 VND</p>
+            <!--   <p id="totalPrice"> </p> -->
               </div>
 
               <div></div>
 
-          <div class="col-lg-7">
+          <div class="col-lg-12">
             <h4>Hình thức thanh toán</h4>
             <div class="form-check">
               <input class="form-check-input" type="radio" id="gridCheck">
@@ -139,7 +139,7 @@
     
     </div>
 </div>
-		<div th:replace="modal/modalCart.html :: #GioHang"></div>a
+		<div th:replace="modal/modalCart.html :: #GioHang"></div>
 </div>
 </div>
 </div>

@@ -57,18 +57,20 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															 <a 	th:href="@{/shoeshop/admin/report/detailTotalQuantity}"><i class="align-middle" data-feather="truck"></i></a>
+															<a
+																th:href="@{/shoeshop/admin/report/detailTotalQuantity}"><i
+																class="align-middle" data-feather="truck"></i></a>
 														</div>
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3" th:each="rp : ${totalInventory}">
 													<label th:text="${rp.totalInventory}"></label> <i
-														class="text-end text-secondary"style="font-size: 10px"> SP</i>
+														class="text-end text-secondary" style="font-size: 10px">
+														SP</i>
 												</h1>
 												<div class="mb-0">
 													<span class="text-danger"> <span class="text-muted">Tổng
-															Số Lượng Kho</span> 
-															
+															Số Lượng Kho</span>
 												</div>
 											</div>
 										</div>
@@ -81,19 +83,19 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<a th:href="@{/shoeshop/admin/report/productDetail}"><i class="align-middle" data-feather="box"></i></a>
+															<a th:href="@{/shoeshop/admin/report/productDetail}"><i
+																class="align-middle" data-feather="box"></i></a>
 														</div>
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3" th:each="rp : ${rpIndex}">
 													<label th:text="${rp.totalQuantity}"> </label> <i
-														class="text-end text-secondary" style="font-size: 10px"> SP</i>
+														class="text-end text-secondary" style="font-size: 10px">
+														SP</i>
 												</h1>
 												<div class="mb-0">
 													<span class="text-success"> <span class="text-muted">Tổng
-															 sản phẩm</span>
-															
-													
+															sản phẩm</span>
 												</div>
 											</div>
 										</div>
@@ -108,7 +110,9 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-														 <a 	th:href="@{/shoeshop/admin/report/TotalRevenue}">	<i class="align-middle" data-feather="dollar-sign"></i></a>
+															<a th:href="@{/shoeshop/admin/report/TotalRevenue}">
+																<i class="align-middle" data-feather="dollar-sign"></i>
+															</a>
 														</div>
 													</div>
 												</div>
@@ -131,13 +135,15 @@
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-														 <a th:href="@{/shoeshop/admin/report/totalOderQuantity}"><i class="align-middle" data-feather="shopping-cart"></i></a>	
+															<a th:href="@{/shoeshop/admin/report/totalOderQuantity}"><i
+																class="align-middle" data-feather="shopping-cart"></i></a>
 														</div>
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3" th:each="rp : ${TotalODer}">
 													<label th:text="${rp.totalODer}"></label> <i
-														class="text-end text-secondary" style="font-size: 10px"> SP</i>
+														class="text-end text-secondary" style="font-size: 10px">
+														SP</i>
 												</h1>
 												<div class="mb-0">
 													<span class="text-danger"> <span class="text-muted">Tổng
@@ -154,7 +160,8 @@
 							<div class="card flex-fill w-100">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Biểu Đồ Thống Kê Doanh Số Hàng Đã Bán Được</h5>
+									<h5 class="card-title mb-0">Biểu Đồ Thống Kê Doanh Số Hàng
+										Đã Bán Được</h5>
 								</div>
 								<div class="card-body py-3">
 									<div class="chart chart-sm">
@@ -180,17 +187,20 @@
 											</div>
 										</div>
 
-										<table class="table mb-0" >
+										<table class="table mb-0">
 											<tbody>
-												<tr th:each="item : ${itemGetAdiDas}" class="text-primary fw-bold">
-												 <td th:text="${item.brandNameAdidas}"></td>
+												<tr th:each="item : ${itemGetAdiDas}"
+													class="text-primary fw-bold">
+													<td th:text="${item.brandNameAdidas}"></td>
 													<td class="text-end" th:text="${item.TotalQuantityAdidas}"></td>
 												</tr>
-												<tr th:each="item1 : ${itemGetNike}" class="text-danger fw-bold">
+												<tr th:each="item1 : ${itemGetNike}"
+													class="text-danger fw-bold">
 													<td th:text="${item1.BrandNameNike}"></td>
 													<td th:text="${item1.TotalQuantityNike}" class="text-end"></td>
 												</tr>
-												<tr th:each="item2 : ${itemGetGucci}" class="text-warning fw-bold">
+												<tr th:each="item2 : ${itemGetGucci}"
+													class="text-warning fw-bold">
 													<td th:text="${item2.BrandNameGucci}"></td>
 													<td th:text="${item2.TotalQuantityGucci}" class="text-end"></td>
 												</tr>
@@ -229,84 +239,65 @@
 					</div>
 
 					<div class="row">
-						<div class="col-12 col-lg-8 col-xxl-9 d-flex">
-							<div class="card flex-fill">
-								<div class="card-header">
+						<div class="col-12 col-lg-12 col-xxl-9 d-flex ">
+							<div class="card flex-fill ">
+								<div class="card-header row">
 
 									<h5 class="card-title mb-0">Latest Projects</h5>
+									<div class="mb-3 col-2">
+										<label for="" class="form-label">Purchase Date :</label> <input
+											type="text" class="form-control" name="" id=""
+											aria-describedby="helpId" placeholder="">
+									</div>
+									<div class="mb-3 col-2">
+										<label for="" class="form-label">Delivery Date :</label> <input
+											type="text" class="form-control" name="" id=""
+											aria-describedby="helpId" placeholder="">
+									</div>
+									<div class=" mb-3 mt-4 col-2">
+									<a  class="btn btn-primary" href="#" role="button" style="margin-top:4px">Tìm</a>
+									</div>
+									<div class="col-3"></div>
+									<div class="mb-3 col-3 mt-4 justify-content-end">
+									    <select class="form-select form-select-lg" name="" id="">
+									        <option selected>Select status</option>
+									        <option value="">Pending</option>
+									        <option value="">Delivered</option>
+									        <option value="">Cancelled</option>
+									    </select>
+									</div>
+
 								</div>
 								<table class="table table-hover my-0">
 									<thead>
 										<tr>
-											<th>Name</th>
-											<th class="d-none d-xl-table-cell">Start Date</th>
-											<th class="d-none d-xl-table-cell">End Date</th>
+											<th>User Name</th>
+											<th class="d-none d-xl-table-cell">Purchase Date</th>
+											<th class="d-none d-xl-table-cell">Delivery Date</th>
 											<th>Status</th>
-											<th class="d-none d-md-table-cell">Assignee</th>
+											<th class="d-none d-md-table-cell">Payment</th>
+
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>Project Apollo</td>
-											<td class="d-none d-xl-table-cell">01/01/2021</td>
-											<td class="d-none d-xl-table-cell">31/06/2021</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Vanessa Tucker</td>
-										</tr>
-										<tr>
-											<td>Project Fireball</td>
-											<td class="d-none d-xl-table-cell">01/01/2021</td>
-											<td class="d-none d-xl-table-cell">31/06/2021</td>
-											<td><span class="badge bg-danger">Cancelled</span></td>
-											<td class="d-none d-md-table-cell">William Harris</td>
-										</tr>
-										<tr>
-											<td>Project Hades</td>
-											<td class="d-none d-xl-table-cell">01/01/2021</td>
-											<td class="d-none d-xl-table-cell">31/06/2021</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Sharon Lessman</td>
-										</tr>
-										<tr>
-											<td>Project Nitro</td>
-											<td class="d-none d-xl-table-cell">01/01/2021</td>
-											<td class="d-none d-xl-table-cell">31/06/2021</td>
-											<td><span class="badge bg-warning">In progress</span></td>
-											<td class="d-none d-md-table-cell">Vanessa Tucker</td>
-										</tr>
-										<tr>
-											<td>Project Phoenix</td>
-											<td class="d-none d-xl-table-cell">01/01/2021</td>
-											<td class="d-none d-xl-table-cell">31/06/2021</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">William Harris</td>
-										</tr>
-										<tr>
-											<td>Project X</td>
-											<td class="d-none d-xl-table-cell">01/01/2021</td>
-											<td class="d-none d-xl-table-cell">31/06/2021</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Sharon Lessman</td>
-										</tr>
-										<tr>
-											<td>Project Romeo</td>
-											<td class="d-none d-xl-table-cell">01/01/2021</td>
-											<td class="d-none d-xl-table-cell">31/06/2021</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Christina Mason</td>
-										</tr>
-										<tr>
-											<td>Project Wombat</td>
-											<td class="d-none d-xl-table-cell">01/01/2021</td>
-											<td class="d-none d-xl-table-cell">31/06/2021</td>
-											<td><span class="badge bg-warning">In progress</span></td>
-											<td class="d-none d-md-table-cell">William Harris</td>
+										<tr th:each="u : ${UserOderPayment}">
+											<td th:text="${u.name}"></td>
+											<td th:text="${#dates.format(u.purchaseDate, 'dd/MM/yyyy')}"
+												class="d-none d-xl-table-cell"></td>
+											<td th:text="${#dates.format(u.deliveryDate, 'dd/MM/yyyy')}"
+												class="d-none d-xl-table-cell"></td>
+											<td><span th:text="${u.status}" class="badge bg-success"></span></td>
+											<td th:text="${u.payment}" class="d-none d-md-table-cell"></td>
+
 										</tr>
 									</tbody>
 								</table>
+
 							</div>
+
 						</div>
-						<div class="col-12 col-lg-4 col-xxl-3 d-flex">
+
+						<div class="col-12 col-lg-12 col-xxl-3 d-flex">
 							<div class="card flex-fill w-100">
 								<div class="card-header">
 
@@ -335,29 +326,29 @@
 	<script th:src="@{/admin/js/horizontal-chart.js}"></script>
 
 	<script th:inline="javascript">
-    var salesData = /*[[${salesData}]]*/ [];
-</script>
+		var salesData = /*[[${salesData}]]*/[];
+	</script>
 
 
 	<!-- Đồ thị tròn-->
 
 	<script th:src="@{/admin/js/pie-chart.js}"></script>
 	<script th:inline="javascript">
-    var pieData = /*[[${pieData}]]*/ [];
-</script>
+		var pieData = /*[[${pieData}]]*/[];
+	</script>
 
 
 	<!-- Đồ thị cột -->
-		<script th:src="@{/admin/js/column-chart.js}"></script>
+	<script th:src="@{/admin/js/column-chart.js}"></script>
 	<script th:inline="javascript">
-	 var barData = /*[[${barData}]]*/ [];
-    </script>
+		var barData = /*[[${barData}]]*/[];
+	</script>
 
 
-<!--Map -->
+	<!--Map -->
 	<script th:src="@{/admin/js/map.js}"></script>
 
-<!-- calendar -->
+	<!-- calendar -->
 	<script th:src="@{/admin/js/calendar.js}"></script>
 
 </body>
