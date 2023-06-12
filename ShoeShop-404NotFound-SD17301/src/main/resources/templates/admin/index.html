@@ -121,8 +121,8 @@
 														class="small text-secondary" style="font-size: 10px">VND</i>
 												</h1>
 												<div class="mb-0">
-													<span class="text-success"> <span
-														class="text-muted text-center">Tổng Doanh Thu </span>
+													<span class="text-muted text-center">Tổng Doanh Thu
+													</span>
 												</div>
 											</div>
 										</div>
@@ -255,16 +255,17 @@
 											aria-describedby="helpId" placeholder="">
 									</div>
 									<div class=" mb-3 mt-4 col-2">
-									<a  class="btn btn-primary" href="#" role="button" style="margin-top:4px">Tìm</a>
+										<a class="btn btn-primary" href="#" role="button"
+											style="margin-top: 4px">Tìm</a>
 									</div>
 									<div class="col-3"></div>
 									<div class="mb-3 col-3 mt-4 justify-content-end">
-									    <select class="form-select form-select-lg" name="" id="">
-									        <option selected>Select status</option>
-									        <option value="">Pending</option>
-									        <option value="">Delivered</option>
-									        <option value="">Cancelled</option>
-									    </select>
+										<select class="form-select form-select-lg" name="" id="">
+											<option selected>Select status</option>
+											<option value="">Pending</option>
+											<option value="">Delivered</option>
+											<option value="">Cancelled</option>
+										</select>
 									</div>
 
 								</div>
@@ -286,7 +287,13 @@
 												class="d-none d-xl-table-cell"></td>
 											<td th:text="${#dates.format(u.deliveryDate, 'dd/MM/yyyy')}"
 												class="d-none d-xl-table-cell"></td>
-											<td><span th:text="${u.status}" class="badge bg-success"></span></td>
+											<td><span th:text="${u.status}"
+												th:classappend=" 
+    ${u.status eq 'delivered' ? 'badge bg-success' : 
+    (u.status eq 'pending' ? 'badge bg-warning' : 
+    (u.status eq 'cancelled' ? 'badge bg-danger' : ''))}">
+											</span></td>
+
 											<td th:text="${u.payment}" class="d-none d-md-table-cell"></td>
 
 										</tr>

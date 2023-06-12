@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -86,7 +86,7 @@
 													<td th:text="${index.index + 1}"></td>
 													<td th:text="${item.id}"></td>
 													<td th:text="${item.orderDate}"></td>
-													<td th:text="${item.status}" style="color: #df6c0c;"></td>
+													<td><span th:text="${item.status}" class="badge bg-warning"></span></td>
 													<td th:text="${item.user.iD}"></td>
 													<td><a
 														th:href="@{/shoeshop/admin/pending/update/{id}(id=*{item.id})}"

@@ -2,136 +2,147 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
-          crossorigin="anonymous">
-    <title>Thanh toán</title>
-    <!-- link css local -->
-    <link th:href="@{/css/giohang.css}" href="/css/giohang.css" rel="stylesheet" type="text/css" media="all"/>
-    <link th:href="@{/css/index.css}" href="/css/index.css" rel="stylesheet" type="text/css" media="all"/>
-    <!-- link fonts local -->
-    <link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}" href="/fonts/fontawesome-free-6.4.0-web/css/all.css"
-          rel="stylesheet" type="text/css" media="all"/>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+	crossorigin="anonymous">
+<title>Thanh toán</title>
+<!-- link css local -->
+<link th:href="@{/css/giohang.css}" href="/css/giohang.css"
+	rel="stylesheet" type="text/css" media="all" />
+<link th:href="@{/css/index.css}" href="/css/index.css" rel="stylesheet"
+	type="text/css" media="all" />
+<!-- link fonts local -->
+<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}"
+	href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet"
+	type="text/css" media="all" />
 </head>
 
 <body>
-<div th:replace="./layout/nav ::  #nav"></div>
-<div class=" container row" >
- 
-    <i th:utext="${decoratedUri}" style="margin-top: -30px"></i>
-    <hr>
+	<div th:replace="./layout/nav ::  #nav"></div>
+	<div class=" container row">
 
-    <div class="row">
-       <div class="col-lg-3">
+		<i th:utext="${decoratedUri}" style="margin-top: -30px"></i>
+		<hr>
 
-    </div>
-        <main class="content d-flex justify-content-center align-items-center col-lg-9">
-            <div class=" p-0">
-                <div class="mb-3">
-                    <h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO SẢN PHẨM BẠN ĐÃ MUA</h3>
-                </div>
-              <form th:action="@{/shoeshop/invoices/list_invoices}" class="form-inline" method="post" style="max-width: 400px">
-            <label for="inputName" class="form-label">Tìm kiếm bằng ID</label>
-            <div class="row mb-3 justify-content-end">
-                <div class="col-8">
-                    <input class="form-control" name="keywords" th:value="${keywords}">
-                </div>
-                <div class="col-4">
-                    <button class="btn btn-primary" type="submit">Tìm kiếm</button>
-                </div>
-            </div>
-        </form>
-        <div class="row">
-            <div class="col-md-12 col-xl-12">
-                <div class="card">
-                    <div class="card-body h-100">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped table-bordered table-condensed">
-                                <thead>
-                                    <tr class="tr-color text-light bg-dark">
-                                        <th>TT</th>
-                                        <th>ID</th>
-                                        <th>
-                                            <a href="#" th:id="'sortLink_orderDate'" th:onclick="toggleSortOrder('orderDate')">ORDER DATE <i class="fas fa-sort"></i></a>
-                                        </th>
-                                        <th>STATUS</th>
-                                        <th>NAME USER</th>
-                                        <th>OPTION</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="text-dark" th:each="item, index : ${invoices}">
-                                        <td th:text="${index.index + 1}"></td>
-                                        <td th:text="${item.id}"></td>
-                                        <td th:text="${item.orderDate}"></td>
-                                        <td th:text="${item.status}" style="color: green;"></td>
-                                        <td th:text="${item.user.name}"></td>
-                                        <td>
-                                            <a th:href="@{/shoeshop/invoices/invoice/manager/{id}(id=*{item.id})}" class="btn btn-primary">Chi tiết sản phẩm</a>
-                                             <a th:href="@{/shoeshop/viewpay/{id}(id=*{item.id})}" class="btn btn-warning text-light">Chi tiết hóa đơn</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div>
-                                <!-- Pagination buttons -->
-                                <a th:if="${invoices.hasPrevious()}"
-                                   th:href="@{/shoeshop/invoices/list_invoices(p=0, keywords=${session.keywords})}"
-                                   class="btn btn-primary"
-                                   th:disabled="${!invoices.hasPrevious()}">
-                                    <i class="fa-solid fa-backward-fast"></i>
-                                </a>
-                                <a th:if="${invoices.hasPrevious()}"
-                                   th:href="@{/shoeshop/invoices/list_invoices(p=${invoices.number - 1}, keywords=${session.keywords})}"
-                                   class="btn btn-primary"
-                                   th:disabled="${!invoices.hasPrevious()}">
-                                    <i class="fa-solid fa-backward"></i>
-                                </a>
-                                <a th:if="${invoices.hasNext()}"
-                                   th:href="@{/shoeshop/invoices/list_invoices(p=${invoices.number + 1}, keywords=${session.keywords})}"
-                                   class="btn btn-primary"
-                                   th:disabled="${!invoices.hasNext()}">
-                                    <i class="fa-solid fa-forward"></i>
-                                </a>
-                                <a th:if="${invoices.hasNext()}"
-                                   th:href="@{/shoeshop/invoices/list_invoices(p=${invoices.totalPages - 1}, keywords=${session.keywords})}"
-                                   class="btn btn-primary"
-                                   th:disabled="${!invoices.hasNext()}">
-                                    <i class="fa-solid fa-forward-fast"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-            </div>
-        </main>
-    </div>
-    <div>
-        <div th:replace="modal/modalCart.html :: #GioHang"></div>
-    </div>
-</div>
-<div th:replace="layout/footer ::  footer"></div>
-<script th:inline="javascript">
-    setTimeout(function () {
-        document.getElementById("successDialog").style.display = "none";
-    }, 1000); // 5000 milliseconds = 5 seconds
+		<div class="row">
+			<div class="col-lg-3"></div>
+			<main
+				class="content d-flex justify-content-center align-items-center col-lg-9">
+				<div class=" p-0">
+					<div class="mb-3">
+						<h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO SẢN PHẨM BẠN ĐÃ
+							MUA</h3>
+							<br>
+					</div>
+					<form th:action="@{/shoeshop/invoices/list_invoices}"
+						class="form-inline" method="post" style="max-width: 400px">
+						<label for="inputName" class="form-label">Tìm kiếm bằng mã hóa đơn</label>
+						<div class="row mb-3 justify-content-end">
+							<div class="col-8">
+								<input class="form-control" name="keywords"
+									th:value="${keywords}">
+							</div>
+							<div class="col-4">
+								<button class="btn btn-primary" type="submit">Tìm kiếm</button>
+							</div>
+						</div>
+					</form>
+					<div class="row">
+						<div class="col-md-12 col-xl-12">
+							<div class="card">
+								<div class="card-body h-100">
+									<div class="table-responsive">
+										<table
+											class="table table-hover table-striped table-bordered table-condensed">
+											<thead>
+												<tr class="tr-color text-light bg-dark">
+													<th>TT</th>
+													<th>MÃ HÓA ĐƠN</th>
+													<th><a href="#" th:id="'sortLink_orderDate'"
+														th:onclick="toggleSortOrder('orderDate')">ORDER DATE <i
+															class="fas fa-sort"></i></a></th>
+													<th>STATUS</th>
+													<th>NAME USER</th>
+													<th>OPTION</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="text-dark" th:each="item, index : ${invoices}">
+													<td th:text="${index.index + 1}"></td>
+													<td th:text="${item.id}"></td>
+													<td th:text="${item.orderDate}"></td>
+													<td><span th:text="${item.status}"
+														th:classappend="${item.status eq 'delivered'} ? 'badge bg-success' : (${item.status eq 'pending'} ? 'badge bg-warning' : (${item.status eq 'cancelled'} ? 'badge bg-danger' : ''))"></span>
+													</td>
 
-    // Lấy giá trị từ sessionStorage
-    var totalPrice = sessionStorage.getItem('totalPrice');
 
-    // Kiểm tra nếu giá trị tổng giá là null hoặc undefined, gán giá trị mặc định là 0 VND
-    if (!totalPrice) {
-        totalPrice = '0 VND';
-    }
-    
+													<td th:text="${item.user.name}"></td>
+													<td><a
+														th:href="@{/shoeshop/invoices/invoice/manager/{id}(id=*{item.id})}"
+														class="btn btn-primary">Chi tiết sản phẩm</a> <a
+														th:href="@{/shoeshop/viewpay/{id}(id=*{item.id})}"
+														class="btn btn-secondary text-light">Chi tiết hóa đơn</a></td>
+												</tr>
+											</tbody>
+										</table>
+										<div>
+											<!-- Pagination buttons -->
+											<a th:if="${invoices.hasPrevious()}"
+												th:href="@{/shoeshop/invoices/list_invoices(p=0, keywords=${session.keywords})}"
+												class="btn btn-primary"
+												th:disabled="${!invoices.hasPrevious()}"> <i
+												class="fa-solid fa-backward-fast"></i>
+											</a> <a th:if="${invoices.hasPrevious()}"
+												th:href="@{/shoeshop/invoices/list_invoices(p=${invoices.number - 1}, keywords=${session.keywords})}"
+												class="btn btn-primary"
+												th:disabled="${!invoices.hasPrevious()}"> <i
+												class="fa-solid fa-backward"></i>
+											</a> <a th:if="${invoices.hasNext()}"
+												th:href="@{/shoeshop/invoices/list_invoices(p=${invoices.number + 1}, keywords=${session.keywords})}"
+												class="btn btn-primary" th:disabled="${!invoices.hasNext()}">
+												<i class="fa-solid fa-forward"></i>
+											</a> <a th:if="${invoices.hasNext()}"
+												th:href="@{/shoeshop/invoices/list_invoices(p=${invoices.totalPages - 1}, keywords=${session.keywords})}"
+												class="btn btn-primary" th:disabled="${!invoices.hasNext()}">
+												<i class="fa-solid fa-forward-fast"></i>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+		<div>
+			<div th:replace="modal/modalCart.html :: #GioHang"></div>
+		</div>
+	</div>
+	<div th:replace="layout/footer ::  footer"></div>
+	<script th:inline="javascript">
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 1000); // 5000 milliseconds = 5 seconds
 
-    // Gán giá trị vào phần tử HTML
-    document.getElementById('totalPrice').textContent = totalPrice.toLocaleString() + ' VND'
-</script>
+		// Lấy giá trị từ sessionStorage
+		var totalPrice = sessionStorage.getItem('totalPrice');
+
+		// Kiểm tra nếu giá trị tổng giá là null hoặc undefined, gán giá trị mặc định là 0 VND
+		if (!totalPrice) {
+			totalPrice = '0 VND';
+		}
+
+		// Gán giá trị vào phần tử HTML
+		document.getElementById('totalPrice').textContent = totalPrice
+				.toLocaleString()
+				+ ' VND'
+	</script>
 	<script th:inline="javascript">
 		function toggleSortOrder(columnName) {
 			var currentUrl = new URL(window.location.href);
@@ -153,9 +164,10 @@
 			window.location.href = currentUrl.href;
 		}
 	</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>
