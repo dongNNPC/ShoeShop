@@ -110,8 +110,7 @@ public class Controller_Invoices {
 //	xem chi tiết
 
 	@RequestMapping("/invoice/manager/{id}")
-	public String listinvoice(@ModelAttribute("detailedInvoice") DetailedInvoice detailedInvoice, Model model,
-			@PathVariable("id") String id) {
+	public String listinvoice(Model model, @PathVariable("id") String id) {
 		indexController.checkUser(model);
 		Invoice invoice = invoiceRepository.findById(id).get();
 		System.out.println(invoice.getId());

@@ -87,7 +87,7 @@ public class PayController {
 		Random random = new Random();
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			int digit = random.nextInt(10); // Sinh số ngẫu nhiên từ 0 đến 9
 			sb.append(digit);
 		}

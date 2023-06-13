@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -33,8 +32,7 @@ public class Manager_Invoice_Detailed {
 	private IndexController indexController;
 
 	@RequestMapping("/manager/{id}")
-	public String listUIUsetAdmin(@ModelAttribute("detailedInvoice") DetailedInvoice detailedInvoice, Model model,
-			@PathVariable("id") String id) {
+	public String listUIUsetAdmin(Model model, @PathVariable("id") String id) {
 		indexController.checkUser(model);
 		Invoice invoice = invoiceRepository.findById(id).get();
 		System.out.println(invoice.getId());

@@ -104,6 +104,7 @@ public class IndexAdminController {
 
 		for (MonthlySalesStatistics monthlySalesStatistics : ListSave) {
 			salesData.add((int) monthlySalesStatistics.getCount());
+			System.out.println(salesData.add((int) monthlySalesStatistics.getCount()));
 		}
 
 		model.addAttribute("salesData", salesData);
