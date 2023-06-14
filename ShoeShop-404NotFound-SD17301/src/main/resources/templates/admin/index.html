@@ -158,12 +158,36 @@
 
 						<div class="col-xl-6 col-xxl-7">
 							<div class="card flex-fill w-100">
-								<div class="card-header">
+								<div class="card-header row">
 
-									<h5 class="card-title mb-0">Biểu Đồ Thống Kê Doanh Số Hàng
-										Đã Bán Được</h5>
+									<h5 class="card-title mb-0 col-lg-6">Biểu Đồ Thống Kê
+										Doanh Số Hàng Đã Bán Được</h5>
+									<div class="form-floating col-lg-6">
+										<form class="container" action="/shoeshop/admin/index"
+											method="post">
+											<div class="row">
+												<label for="exampleFormControlSelect2" class="mb-2">Danh
+													sách số đã kinh doanh</label>
+												<div class="col-8 d-flex align-items-center">
+													<select class="form-select" id="exampleFormControlSelect2"
+														name="year" aria-label="Chọn một lựa chọn">
+														<option th:each="year : ${years}" th:value="${year}"
+															th:selected="${year == yearUpdate}" th:text="${year}"></option>
+													</select>
+												</div>
+												<div class="col-lg-4 d-flex align-items-center">
+													<button class="btn btn-success">Lọc</button>
+												</div>
+											</div>
+
+
+
+										</form>
+									</div>
 								</div>
+
 								<div class="card-body py-3">
+
 									<div class="chart chart-sm">
 										<canvas id="chartjs-dashboard-line"></canvas>
 									</div>
