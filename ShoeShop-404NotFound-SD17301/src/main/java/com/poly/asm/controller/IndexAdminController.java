@@ -74,12 +74,19 @@ public class IndexAdminController {
 	@Autowired
 	private IndexController indexController;
 
+	public void notification(Model model) {
+		long quantityPending = invoiceRepository.countByStatus("pending");
+		model.addAttribute("quantityPending", quantityPending);
+	}
+
 	@RequestMapping("/index")
-	public String indexAdmin(Model model, @ModelAttribute("user") User user , @RequestParam(defaultValue = "0") int page) {
+	public String indexAdmin(Model model, @ModelAttribute("user") User user, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(name = "year", required = false) Integer selectedYear) {
 		model.addAttribute("index", "active");
 
 		indexController.checkUser(model);
 
+		notification(model);
 		// tổng số lượng sản phẩm
 		List<Report> reports = daoProduct.getTotalQuantity();
 		model.addAttribute("rpIndex", reports);
@@ -98,15 +105,27 @@ public class IndexAdminController {
 
 //		Biểu đồ sales
 //		List<Integer> salesData = Arrays.asList(2115, 1562, 1584, 1892, 1587, 1923, 2566, 2448, 2805, 3438, 2917, 3327);
-		List<MonthlySalesStatistics> ListSave = invoiceRepository.getMonthlySalesStatistics();
+		List<Integer> yearIntegers = invoiceRepository.getAllYears();
+		model.addAttribute("years", yearIntegers);
+		List<MonthlySalesStatistics> ListSave = new ArrayList<>();
+		if (selectedYear != null) {
+			ListSave = invoiceRepository.getMonthlySalesStatistics(selectedYear);
+
+		} else {
+			ListSave = invoiceRepository.getMonthlySalesStatistics(2023);
+		}
+		model.addAttribute("yearUpdate", selectedYear);
+
 		List<Integer> salesData = new ArrayList<>();
 
 		for (MonthlySalesStatistics monthlySalesStatistics : ListSave) {
 			salesData.add((int) monthlySalesStatistics.getCount());
+			System.out.println(salesData.add((int) monthlySalesStatistics.getCount()));
 		}
 
 		model.addAttribute("salesData", salesData);
 
+//		Biều đồ tròn
 		reportPieChart rpPieChart = new reportPieChart();
 
 		List<reportPieChart> itemGetAdiDas = daoBrandRepository.getAdiDas();
@@ -137,22 +156,18 @@ public class IndexAdminController {
 		List<Integer> barData = Arrays.asList(54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79);
 
 		model.addAttribute("barData", barData);
-		
-		
-			//đổ dữ liệu cho userOderPayment
-		 	int pageSize = 5; // Số lượng kết quả hiển thị trên mỗi trang
-	        Pageable pageable = PageRequest.of(page, pageSize);
-	        Page<UserOderPayment> UserOderPayment = daodetailedInvoiceRepository.getUserOderPay( pageable);
-	        model.addAttribute("UserOderPayment", UserOderPayment.getContent());
-	        model.addAttribute("pageoder", page);
-	        model.addAttribute("UserOderPayment	", UserOderPayment.getTotalPages());
-		
-		
+
+		// đổ dữ liệu cho userOderPayment
+		int pageSize = 5; // Số lượng kết quả hiển thị trên mỗi trang
+		Pageable pageable = PageRequest.of(page, pageSize);
+		Page<UserOderPayment> UserOderPayment = daodetailedInvoiceRepository.getUserOderPay(pageable);
+		model.addAttribute("UserOderPayment", UserOderPayment.getContent());
+		model.addAttribute("pageoder", page);
+		model.addAttribute("UserOderPayment	", UserOderPayment.getTotalPages());
+
 		return "/admin/index";
 
 	}
-	
-	
 
 //Phần invoice Manager 
 	@RequestMapping("/pending")
@@ -160,6 +175,7 @@ public class IndexAdminController {
 			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
 		model.addAttribute("pending", "active");
+		notification(model);
 
 		indexController.checkUser(model);
 		String order = request.getParameter("sortOrder");
@@ -184,6 +200,7 @@ public class IndexAdminController {
 			Page<Invoice> items = invoiceRepository.findByStatus("pending", pageable);
 			model.addAttribute("invoices", items);
 		}
+
 		return "/admin/views/manager-invoice-pending";
 	}
 
@@ -192,7 +209,7 @@ public class IndexAdminController {
 			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
 		model.addAttribute("pending", "active");
-
+		notification(model);
 		indexController.checkUser(model);
 		String order = request.getParameter("sortOrder");
 
@@ -226,6 +243,7 @@ public class IndexAdminController {
 			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
 		model.addAttribute("delivered", "active");
+		notification(model);
 		indexController.checkUser(model);
 		String order = request.getParameter("sortOrder");
 
@@ -259,6 +277,7 @@ public class IndexAdminController {
 	public String invoiceCancelled(Model model, @ModelAttribute("user") User user,
 			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
+		notification(model);
 		model.addAttribute("cancelled", "active");
 
 		indexController.checkUser(model);
@@ -299,7 +318,7 @@ public class IndexAdminController {
 	@RequestMapping("/ui-user")
 	public String listUIUsetAdmin(@ModelAttribute("user") User user, Model model) {
 		model.addAttribute("ui_user", "active");
-
+		notification(model);
 		indexController.checkUser(model);
 		return "/admin/views/ui-user";
 	}
@@ -314,7 +333,7 @@ public class IndexAdminController {
 	@RequestMapping("/ui-brand")
 	public String listUIBrandAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("ui_brand", "active");
-
+		notification(model);
 		indexController.checkUser(model);
 		Brand item = new Brand();
 		model.addAttribute("brand", item);
@@ -325,6 +344,7 @@ public class IndexAdminController {
 	public String listUICategoryAdmin(Model model, @ModelAttribute("user") User user) {
 		model.addAttribute("ui_category", "active");
 		indexController.checkUser(model);
+		notification(model);
 		Category item = new Category();
 		model.addAttribute("category", item);
 
@@ -337,7 +357,7 @@ public class IndexAdminController {
 		model.addAttribute("ui_product", "active");
 
 		indexController.checkUser(model);
-
+		notification(model);
 		DetailedImage detailedImage = new DetailedImage();
 		model.addAttribute("detailedImage", detailedImage);
 //		Danh mục
@@ -359,7 +379,7 @@ public class IndexAdminController {
 			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
 		model.addAttribute("list_brand", "active");
-
+		notification(model);
 		indexController.checkUser(model);
 
 		String order = request.getParameter("sortOrder");
@@ -402,7 +422,7 @@ public class IndexAdminController {
 		model.addAttribute("list_category", "active");
 
 		indexController.checkUser(model);
-
+		notification(model);
 		String order = request.getParameter("sortOrder");
 
 		Sort sort = Sort.by(Direction.ASC, field.orElse("name"));
@@ -439,7 +459,7 @@ public class IndexAdminController {
 			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
 		model.addAttribute("list_product", "active");
-
+		notification(model);
 		indexController.checkUser(model);
 		String order = request.getParameter("sortOrder");
 
@@ -472,7 +492,7 @@ public class IndexAdminController {
 		model.addAttribute("list_user", "active");
 
 		indexController.checkUser(model);
-
+		notification(model);
 		String order = request.getParameter("sortOrder");
 
 		Sort sort = Sort.by(Direction.ASC, field.orElse("name"));
@@ -508,7 +528,7 @@ public class IndexAdminController {
 	public String listStockAdmin(Model model, @ModelAttribute("user") User user,
 			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
-
+		notification(model);
 		model.addAttribute("list_stock", "active");
 		indexController.checkUser(model);
 		String order = request.getParameter("sortOrder");
@@ -519,7 +539,6 @@ public class IndexAdminController {
 				sort = Sort.by(Direction.DESC, field.orElse("price"));
 			}
 		}
-
 		session.remove("keywords");
 		String kwords = kw.orElse(session.get("keywords"));
 		session.set("keywords", kwords, 30);

@@ -314,12 +314,31 @@ public class AccountController {
 		List<User> user2 = dao.findAll();
 		for (User u : user2) {
 			if (user.getEmail().equalsIgnoreCase(u.getEmail())) {
+
 				MailInfo2 mailInfo2 = new MailInfo2();
 				sendCodeString = generateRandomNumber();
+				String body = "<html>" + "<head>" + "<style>" + "body { font-family: Arial, sans-serif; }"
+						+ ".container { max-width: 600px; margin: 0 auto; padding: 20px; }"
+						+ ".header { background-color: #FF5722; padding: 20px; text-align: center; }"
+						+ ".header h2 { margin: 0; color: #FFF; }"
+						+ ".content { background-color: #FFFFFF; padding: 20px; }" + ".content p { color: #333; }"
+						+ ".content h3 { color: #FFF; text-align: center; background-color: #000; padding: 10px; font-size: 24px; }"
+						+ ".footer { background-color: #FF5722; padding: 20px; text-align: center; }"
+						+ ".footer p { color: #FFF; }" + "</style>" + "</head>" + "<body>" + "<div class='container'>"
+						+ "<div class='header'>" + "<h2>SHOE SHOP CODE</h2>" + "</div>" + "<div class='content'>"
+						+ "<p>Đây là mã xác nhận của bạn:</p>"
+						+ "<h3 style='background-color: #000; color: #FFF; text-align: center; font-size: 24px; padding: 10px;'>"
+						+ sendCodeString + "</h3>" + "</div>" + "<div class='footer'>"
+						+ "<p>Hãy nhập mã code để có thể lấy lại được mật khẩu.</p>" + "</div>" + "</div>" + "</body>"
+						+ "</html>";
+				;
+				;
+
 				mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
-				mailInfo2.setTo("trantankhanh31102003@gmail.com");
+				mailInfo2.setTo(u.getEmail());
 				mailInfo2.setSubject("SHOE SHOP CODE");
-				mailInfo2.setBody("Đây là mã xác nhận của bạn: " + sendCodeString);
+//				mailInfo2.setBody("Đây là mã xác nhận của bạn: " + sendCodeString);
+				mailInfo2.setBody(body);
 				mailerService2.queue(mailInfo2);
 				session.set("userForger", u, 30);
 

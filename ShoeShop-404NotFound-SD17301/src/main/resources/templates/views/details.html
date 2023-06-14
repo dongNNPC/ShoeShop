@@ -135,16 +135,17 @@
 
 						<div class="btn col-sm-6"
 							style="max-width: 100px; background-color: #232946; color: #fffffe;">
-							<a th:href="@{/shoeshop/giohang}">Mua hàng</a>
+							<a th:href="@{/cart/add/P004}">Mua hàng</a>
 						</div>
 					</div>
+					
 
 					<hr class="dotted mt-5  " />
 					<h5 class="masp-details">Mã sản phẩm:</h5>
 					<h5 class="masp-details" th:text="${p.getId()}"></h5>
 					<hr class="dotted" />
 					<h5 class="masp-details">Danh mục:</h5>
-					<h5 class="masp-details" th:text="${c.getName()}"></h5>
+					<h5 class="math:href="@{/cart/add/__${item.id}__}"sp-details" th:text="${c.getName()}"></h5>
 					<hr class="dotted" />
 					<div class="row" style="max-width: 150px;">
 						<a href="" class="col-sm-3 col-md-3 col-lg-3">
@@ -234,6 +235,8 @@
 
 				</div>
 			</div>
+					
+		<div th:replace="modal/modalCart.html :: #GioHang"></div>
 
 		</section>
 				<!-- Sản phẩm mới về -->

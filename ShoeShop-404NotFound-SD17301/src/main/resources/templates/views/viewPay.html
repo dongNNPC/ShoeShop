@@ -80,9 +80,9 @@
 							<th class=" custom-heading">Sản phẩm :</th>
 							<th class="custom-heading" th:text="${item.quantity + 'sp'}"></th>
 							<th class="text-end custom-heading"
-								th:text="${item.price + 'VND'}"></th>
+								th:text="${item.product.price + 'VND'}"></th>
 							<th style="max-width: 100px" class="text-end  text-truncate"
-								th:text="${item.name}"></th>
+								th:text="${item.product.name}"></th>
 						</tr>
 
 
@@ -113,7 +113,7 @@
 		<div style="margin-right: 150px" class="mt-1">
 			<a th:href="@{/shoeshop/invoices/cancelled/{id}(id=${iDinvoice})}"
 				class="btn btn-danger float-end m-1" type="button">HỦY ĐƠN</a> <a
-				th:href="@{/shoeshop/thanhtoan}"
+				th:href="@{/shoeshop/invoices/list_invoices}"
 				class="btn btn-secondary float-end m-1" type="button">TRỞ LẠI</a>
 
 		</div>

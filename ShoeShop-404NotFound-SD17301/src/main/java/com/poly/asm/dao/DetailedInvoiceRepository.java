@@ -20,15 +20,12 @@ public interface DetailedInvoiceRepository extends JpaRepository<DetailedInvoice
 	List<Report> getTotalODer();
 
 	List<DetailedInvoice> findByInvoiceId(String invoiceId);
-	
-	
-	//tổng hợp các user - oder - trạng thái - phương thức thanh toán
+
+	// tổng hợp các user - oder - trạng thái - phương thức thanh toán
 	@Query("SELECT new com.poly.asm.model.UserOderPayment"
 			+ "(u.name AS name,c.orderDate AS purchaseDate, i.orderDate AS deliveryDate , i.status AS status ,d.paymentMethod AS payment  ) "
-			+ "FROM DetailedInvoice d "
-			+ "JOIN Invoice i ON i.id = d.invoice.id "
-			+ "JOIN User u ON u.id = i.user.id "
-			+ "JOIN Cart c ON c.user.id = u.id" )
+			+ "FROM DetailedInvoice d " + "JOIN Invoice i ON i.id = d.invoice.id " + "JOIN User u ON u.id = i.user.id "
+			+ "JOIN Cart c ON c.user.id = u.id")
 	Page<UserOderPayment> getUserOderPay(Pageable pageable);
-	
+
 }
