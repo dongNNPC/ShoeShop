@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light sticky-top" id="nav">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top"  id="nav">
 	<div class="container-fluid">
 		<button class="navbar-toggler d-lg-none fa-solid bg-dark "
 			type="button" data-bs-toggle="collapse"
@@ -27,9 +27,9 @@
 					</ul></li>
 				<li class="nav-item"><a class="nav-link text-dark" href="">
 						Khuyến mãi</a></li>
-				<li class="nav-item"><a class="nav-link text-dark" href="">Tin
-						tức</a></li>
-				<li></li>
+				<li class="nav-item" th:if="${hasAdminPermission}"><a
+					class="nav-link text-dark" th:href="@{/shoeshop/admin/index}">Admin</a>
+				</li>
 
 			</ul>
 
@@ -50,13 +50,13 @@
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							style="color: #686868" th:href="@{/shoeshop/ChangePass}"> Đổi
 								mật khẩu </a></li>
-						
+
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							style="color: #686868" th:href="@{/shoeshop/personal-page}">
 								tài khoản </a></li>
-								<li th:if="${loggedIn}"><a class="dropdown-item"
-							th:href="@{/shoeshop/invoices/list_invoices}" style="color: #686868" href="">
-								Xem Đơn Hàng </a></li>
+						<li th:if="${loggedIn}"><a class="dropdown-item"
+							th:href="@{/shoeshop/invoices/list_invoices}"
+							style="color: #686868" href=""> Xem Đơn Hàng </a></li>
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							th:href="@{/shoeshop/log-out}" style="color: #686868" href="">
 								Đăng xuất </a></li>

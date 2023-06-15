@@ -52,7 +52,6 @@ public class PersonalPageController {
 //		Giỏ hàng
 //		user = session.get("user");
 //		model.addAttribute("image", user.getImage());
-		System.out.println("Image" + user.getImage());
 		List<Product> products = new ArrayList<>(cart.getItems());
 		List<Product> products2 = daoPro.findAll();
 		List<Product> products3 = new ArrayList<>();
@@ -76,10 +75,14 @@ public class PersonalPageController {
 
 	@PostMapping("/personal-page")
 	public String PersonalCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
+		indexController.checkUser(model);
 		if (rs.hasErrors()) {
 			System.out.println(rs.toString());
 			return "/account/personalpage";
 		}
+		session.remove("user");
+		session.set("user", user, 30);
+		model.addAttribute("image", user.getImage());
 		dao.save(user);
 		model.addAttribute("message", "cập nhật thành công");
 		return "/account/personalpage";

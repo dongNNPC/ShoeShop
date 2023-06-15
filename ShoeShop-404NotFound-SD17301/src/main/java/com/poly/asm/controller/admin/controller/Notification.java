@@ -46,11 +46,11 @@ public class Notification {
 						+ ".footer { background-color: #f8f8f8; padding: 20px; text-align: center; }"
 						+ ".footer p { color: #777; }" + "</style>" + "</head>" + "<body>" + "<div class='container'>"
 						+ "<div class='header'>" + "<h2>SHOE SHOP CODE</h2>" + "</div>" + "<div class='content'>"
-						+ "<p>Cảm ơn bạn đã mua hàng!</p>" + "<p class='invoice-info'>Xin chào: <strong>"
-						+ user.getName() + "</strong></p>" + "<p class='invoice-info'>Thông báo: <strong>" + info
-						+ "</strong></p>" + "<p>Phương thức thanh toán: <strong>Thanh toán khi nhận hàng</strong></p>"
-						+ "</div>" + "<div class='footer'>" + "<p>Chi tiết lên hệ: 0829xxxxxxx.</p>" + "</div>"
-						+ "</div>" + "</body>" + "</html>";
+						+ "<p><strong>Thông tin đến tất cả khách hàng</strong></p>"
+						+ "<p class='invoice-info'>Xin chào: <strong>" + user.getName() + "</strong></p>"
+						+ "<p class='invoice-info'>Thông báo: <strong>" + info + "</strong></p>" + "" + "</div>"
+						+ "<div class='footer'>" + "<p>Chi tiết lên hệ: 0829xxxxxxx.</p>" + "</div>" + "</div>"
+						+ "</body>" + "</html>";
 				mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
 				mailInfo2.setTo(user.getEmail());
 				mailInfo2.setSubject("SHOE SHOP CODE");

@@ -208,9 +208,52 @@ public class AccountController {
 			model.addAttribute("failed", successMessage);
 			return "/account/signUp";
 		}
-		dao.save(user);
+		MailInfo2 mailInfo2 = new MailInfo2();
+		sendCodeString = generateRandomNumber();
+		String body = "<html>" + "<head>" + "<style>" + "body { font-family: Arial, sans-serif; }"
+				+ ".container { max-width: 600px; margin: 0 auto; padding: 20px; }"
+				+ ".header { background-color: #FF5722; padding: 20px; text-align: center; }"
+				+ ".header h2 { margin: 0; color: #FFF; }" + ".content { background-color: #FFFFFF; padding: 20px; }"
+				+ ".content p { color: #333; }"
+				+ ".content h3 { color: #FFF; text-align: center; background-color: #000; padding: 10px; font-size: 24px; }"
+				+ ".footer { background-color: #FF5722; padding: 20px; text-align: center; }"
+				+ ".footer p { color: #FFF; }" + "</style>" + "</head>" + "<body>" + "<div class='container'>"
+				+ "<div class='header'>" + "<h2>SHOE SHOP CODE</h2>" + "</div>" + "<div class='content'>"
+				+ "<p>Đây là mã xác nhận của bạn:</p>"
+				+ "<h3 style='background-color: #000; color: #FFF; text-align: center; font-size: 24px; padding: 10px;'>"
+				+ sendCodeString + "</h3>" + "</div>" + "<div class='footer'>"
+				+ "<p>Hãy nhập mã code để có thể lấy lại được mật khẩu.</p>" + "</div>" + "</div>" + "</body>"
+				+ "</html>";
+		;
+		;
 
-		return "redirect:/shoeshop/login";
+		mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
+		mailInfo2.setTo(user.getEmail());
+		mailInfo2.setSubject("SHOE SHOP CODE");
+		mailInfo2.setBody(body);
+		mailerService2.queue(mailInfo2);
+		session.set("userSignUp", user, 5);
+//		dao.save(user);
+
+		return "redirect:/shoeshop/sendcodeSignUp";
+	}
+
+	@GetMapping("/sendcodeSignUp")
+	public String sendCodeSignUp() {
+
+		return "/account/send-code-signUp";
+	}
+
+	@PostMapping("/sendcodeSignUp")
+	public String sendCodeSignUp(@RequestParam("code") String code, Model model) {
+		if (sendCodeString.equals(code)) {
+			User user = session.get("userSignUp");
+			dao.save(user);
+			return "redirect:/shoeshop/login";
+		}
+		String errorMessage = ("Code bạn nhập không chính xác");
+		model.addAttribute("failed", errorMessage);
+		return "/account/send-code-signUp";
 	}
 
 	// trang logout
