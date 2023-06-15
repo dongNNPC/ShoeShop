@@ -194,7 +194,24 @@ public class PayController {
 		for (Product p1 : products) {
 			totalAmount += p1.getPrice();
 		}
+		
+		List<Product> products1 = new ArrayList<>(cart.getItems());
+		List<Product> products2 = Pdao.findAll();
+		List<Product> products3 = new ArrayList<>();
+		
+		for (Product p1 : products1) {
+			for (Product p2 : products2) {
+				if (p1.getId().equalsIgnoreCase(p2.getId())) {
+					p2.setQuantity(1);
+					products3.add(p2);
+					
 
+				}
+			}
+		}
+
+		model.addAttribute("cart1", products3);
+		
 		model.addAttribute("iDinvoice", iDInvoice);
 
 		model.addAttribute("cart", detailedInvoices2);

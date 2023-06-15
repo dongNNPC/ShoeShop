@@ -167,6 +167,7 @@ public class IndexAdminController {
 		// đổ dữ liệu cho userOderPayment
 
 		model.addAttribute("startDate", startDate);
+		model.addAttribute("status", status);
 		model.addAttribute("endDate", endDate);
 
 		int pageSize = 100;

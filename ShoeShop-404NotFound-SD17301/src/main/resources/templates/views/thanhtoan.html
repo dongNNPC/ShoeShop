@@ -91,9 +91,8 @@
               <div th:each="item, index : ${cart}">
               <h7 >Sản phẩm: <span class="${item-name}" style="font-weight: bolder;" th:text="${item.name}" >Bit hunter</span></7>
               <br>
-            <h7>Số lượng: <span class="item-quantity" th:text="${item.quantity}">2</span></h5>
-            <h5>Đơn giá: <span style="color: red;font-weight: bolder;" class="item-price" th:text="${item.price}">499000</span> <span>VND</span></h5>
-           
+            <h7>Số lượng: <span class="item-quantity" >2</span></h7> |
+            <h7>Đơn giá: <span style="color: red;font-weight: bolder;" class="item-price" th:text="${item.price}">499000</span> <span style="color: red;font-weight: bolder;">VND</span></h7>
            <hr class="border-primary" style="height: 3px">
               </div>
             
@@ -104,8 +103,8 @@
                   <h5 class="card-title" >Tổng:</h5>
               </div>
               <div class="col-sm-10">          
-                  <p style="color: red;font-weight: bolder;"  th:if="${totalAmount != null}" th:text="${totalAmount} + ' VND'">0 VND</p>
-            <!--   <p id="totalPrice"> </p> -->
+                 <!--  <p style="color: red;font-weight: bolder;"  th:if="${totalAmount != null}" th:text="${totalAmount} + ' VND'">0 VND</p> -->
+            <h5 style="color: red;font-weight: bolder;" id="totalPrice"> </h5>
               </div>
 
               <div></div>
@@ -151,12 +150,21 @@
 		
 		// Lấy giá trị từ sessionStorage
 	    var totalPrice = sessionStorage.getItem('totalPrice');
+		
+		//xử lý truyền số lượng qua
+	    var quantity = sessionStorage.getItem('quantity');
+	    var itemQuantityElement = document.querySelector('.item-quantity');
+	    itemQuantityElement.textContent = quantity;
+
 
 	    // Kiểm tra nếu giá trị tổng giá là null hoặc undefined, gán giá trị mặc định là 0 VND
 	    if (!totalPrice) {
 	        totalPrice = '0 VND';
 	    }
-
+		
+	    if (!quantity) {
+	        totalPrice = '1';
+	    }
 	    // Gán giá trị vào phần tử HTML
 	    document.getElementById('totalPrice').textContent = totalPrice.toLocaleString() + ' VND'
 	</script>

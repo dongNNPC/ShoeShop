@@ -76,13 +76,12 @@
 						</tr>
 
 
-						<tr th:each="item, index : ${cart}">
+						<tr  th:each="item, index : ${cart1}">
 							<th class=" custom-heading">Sản phẩm :</th>
-							<th class="custom-heading" th:text="${item.quantity + 'sp'}"></th>
-							<th class="text-end custom-heading"
-								th:text="${item.product.price + 'VND'}"></th>
-							<th style="max-width: 100px" class="text-end  text-truncate"
-								th:text="${item.product.name}"></th>
+							<th class=" custom-heading" >sl :  <span class="item-quantity" ></span></th>
+							<th class="item-price text-end custom-heading" th:text="${item.price + ' VND'}" > </th>
+							<th style="max-width: 100px" class=" text-end  text-truncate"
+								th:text="${item.name}"></th>
 						</tr>
 
 
@@ -90,9 +89,8 @@
 							<th class=" custom-heading">Tổng tiền:</th>
 							<th></th>
 							<th></th>
-							<th class="text-end" id="totalPrice"
-								th:if="${totalAmount != null}" th:text="${totalAmount} + ' VND'">
-								0 VND</th>
+							<th class="text-end"><span id="totalPrice"></span>
+								</th>
 						</tr>
 						<tr>
 							<td></td>
@@ -119,18 +117,28 @@
 		</div>
 	</main>
 
-	<script th:inline="javascript">
-		//Lấy giá trị từ sessionStorage
-		var totalPrice = sessionStorage.getItem('totalPrice');
+	 <script th:inline="javascript">
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 1000); // 5000 milliseconds = 5 seconds
+		
+		// Lấy giá trị từ sessionStorage
+	    var totalPrice = sessionStorage.getItem('totalPrice');
+		
+		//xử lý truyền số lượng qua
+	    var quantity = sessionStorage.getItem('quantity');
+	    var itemQuantityElement = document.querySelector('.item-quantity');
+	    itemQuantityElement.textContent = quantity;
 
-		// Kiểm tra nếu giá trị tổng giá là null hoặc undefined, gán giá trị mặc định là 0 VND
-		if (!totalPrice) {
-			totalPrice = '0 VND';
-		}
-		//Lấy giá trị số lượng từ trường input
-		var quantity = parseInt(input.value);
+
+	    // Kiểm tra nếu giá trị tổng giá là null hoặc undefined, gán giá trị mặc định là 0 VND
+	    if (!totalPrice) {
+	        totalPrice = '0 VND';
+	    }
+
+	    // Gán giá trị vào phần tử HTML
+	    document.getElementById('totalPrice').textContent = totalPrice.toLocaleString() + ' VND'
 	</script>
-
 	<!-- Bootstrap JavaScript Libraries -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

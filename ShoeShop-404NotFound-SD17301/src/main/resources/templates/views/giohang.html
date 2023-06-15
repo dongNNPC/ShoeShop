@@ -142,7 +142,7 @@
 		
 			// Lấy giá trị số lượng từ trường input
 			var quantity = parseInt(input.value);
-
+			sessionStorage.setItem('quantity', quantity);
 			// Lấy giá trị giá từ phần tử anh em trước của phần tử cha của input
 			var price = parseFloat(input.parentNode.previousElementSibling.textContent);
 
