@@ -9,14 +9,13 @@ import com.poly.asm.service.GlobalInterceptor;
 
 @Configuration
 public class InterConfig implements WebMvcConfigurer {
-	
+
 	@Autowired
 	GlobalInterceptor global;
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-	registry.addInterceptor(global)
-	.addPathPatterns("/**")
-	.excludePathPatterns("/assets/**");
+		registry.addInterceptor(global).addPathPatterns("/**").excludePathPatterns("/assets/**");
 
 	}
 

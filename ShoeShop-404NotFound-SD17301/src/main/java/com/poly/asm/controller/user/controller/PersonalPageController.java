@@ -84,6 +84,7 @@ public class PersonalPageController {
 		session.set("user", user, 30);
 		model.addAttribute("image", user.getImage());
 		dao.save(user);
+		indexController.checkUser(model);
 		model.addAttribute("message", "cập nhật thành công");
 		return "/account/personalpage";
 	}
