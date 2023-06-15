@@ -41,8 +41,8 @@ public class IndexController {
 
 	@Autowired
 	CategoryRepository daoCategoryRepository;
-	
-	@Autowired 
+
+	@Autowired
 	CartRepository daoCart;
 
 	@Autowired
@@ -65,8 +65,15 @@ public class IndexController {
 
 			model.addAttribute("user", user);
 			model.addAttribute("image", user.getImage());
+//Nếu là admin thì admin trên nav sẽ hiện hên
+			if (user.isAdmin()) {
+				model.addAttribute("hasAdminPermission", true);
+			} else {
+				model.addAttribute("hasAdminPermission", false);
+			}
 
 		}
+
 		return user;
 	}
 
@@ -110,9 +117,8 @@ public class IndexController {
 		Page<NewProductTop10> pageResult = daoPro.getNewProductTop10(pageableTop10);
 		List<NewProductTop10> newProductTop10 = pageResult.getContent();
 		model.addAttribute("newProductTop10", newProductTop10);
-		
-		
-		//xử lý thêm dữ liệu cart khi người dùng đăng nhập 
+
+		// xử lý thêm dữ liệu cart khi người dùng đăng nhập
 		Date currentDate = new Date();
 		if (session.get("user") == null) {
 		} else {
@@ -126,7 +132,7 @@ public class IndexController {
 				daoCart.save(cart);
 			}
 		}
-		
+
 		// trả về view
 		return "/index";
 	}
