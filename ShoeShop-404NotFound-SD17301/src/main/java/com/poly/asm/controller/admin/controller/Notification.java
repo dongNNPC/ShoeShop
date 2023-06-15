@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poly.asm.config.short_method.Mail;
 import com.poly.asm.controller.IndexAdminController;
 import com.poly.asm.controller.IndexController;
 import com.poly.asm.dao.UserRepository;
@@ -27,6 +28,9 @@ public class Notification {
 	private MailerService2 mailerService2;
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private Mail mail;
 
 	@RequestMapping("/notification")
 	public String mail(Model model, @RequestParam(name = "body", required = false) String info) {
@@ -51,14 +55,15 @@ public class Notification {
 						+ "<p class='invoice-info'>Thông báo: <strong>" + info + "</strong></p>" + "" + "</div>"
 						+ "<div class='footer'>" + "<p>Chi tiết lên hệ: 0829xxxxxxx.</p>" + "</div>" + "</div>"
 						+ "</body>" + "</html>";
-				mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
-				mailInfo2.setTo(user.getEmail());
-				mailInfo2.setSubject("SHOE SHOP CODE");
-				mailInfo2.setBody(body);
-				mailerService2.queue(mailInfo2);
+				mail.setMail(user, body);
+//				mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
+//				mailInfo2.setTo(user.getEmail());
+//				mailInfo2.setSubject("SHOE SHOP CODE");
+//				mailInfo2.setBody(body);
+//				mailerService2.queue(mailInfo2);
 				// Delay trong 1 giây (1000 milliseconds)
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

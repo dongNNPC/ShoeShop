@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import com.poly.asm.config.short_method.Mail;
 import com.poly.asm.dao.UserRepository;
 import com.poly.asm.model.MailInfo2;
 import com.poly.asm.model.User;
@@ -58,6 +59,9 @@ public class AccountController {
 
 	@Autowired
 	private MailerService2 mailerService2;
+
+	@Autowired
+	private Mail mail;
 
 	@GetMapping("/login")
 	public String login(@ModelAttribute("user") User user, Model model) {
@@ -210,6 +214,7 @@ public class AccountController {
 		}
 		MailInfo2 mailInfo2 = new MailInfo2();
 		sendCodeString = generateRandomNumber();
+
 		String body = "<html>" + "<head>" + "<style>" + "body { font-family: Arial, sans-serif; }"
 				+ ".container { max-width: 600px; margin: 0 auto; padding: 20px; }"
 				+ ".header { background-color: #FF5722; padding: 20px; text-align: center; }"
@@ -224,14 +229,13 @@ public class AccountController {
 				+ sendCodeString + "</h3>" + "</div>" + "<div class='footer'>"
 				+ "<p>Hãy nhập mã code để có thể lấy lại được mật khẩu.</p>" + "</div>" + "</div>" + "</body>"
 				+ "</html>";
-		;
-		;
+		mail.setMail(user, body);
 
-		mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
-		mailInfo2.setTo(user.getEmail());
-		mailInfo2.setSubject("SHOE SHOP CODE");
-		mailInfo2.setBody(body);
-		mailerService2.queue(mailInfo2);
+//		mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
+//		mailInfo2.setTo(user.getEmail());
+//		mailInfo2.setSubject("SHOE SHOP CODE");
+//		mailInfo2.setBody(body);
+//		mailerService2.queue(mailInfo2);
 		session.set("userSignUp", user, 5);
 //		dao.save(user);
 
@@ -249,6 +253,7 @@ public class AccountController {
 		if (sendCodeString.equals(code)) {
 			User user = session.get("userSignUp");
 			dao.save(user);
+			session.remove("email");
 			return "redirect:/shoeshop/login";
 		}
 		String errorMessage = ("Code bạn nhập không chính xác");
@@ -377,12 +382,13 @@ public class AccountController {
 				;
 				;
 
-				mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
-				mailInfo2.setTo(u.getEmail());
-				mailInfo2.setSubject("SHOE SHOP CODE");
-//				mailInfo2.setBody("Đây là mã xác nhận của bạn: " + sendCodeString);
-				mailInfo2.setBody(body);
-				mailerService2.queue(mailInfo2);
+				mail.setMail(user, body);
+//				mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
+//				mailInfo2.setTo(u.getEmail());
+//				mailInfo2.setSubject("SHOE SHOP CODE");
+////				mailInfo2.setBody("Đây là mã xác nhận của bạn: " + sendCodeString);
+//				mailInfo2.setBody(body);
+//				mailerService2.queue(mailInfo2);
 				session.set("userForger", u, 30);
 
 //			mailerService2.send("khanhttpc03027@fpt.edu.vn", "Subjectt", "123");

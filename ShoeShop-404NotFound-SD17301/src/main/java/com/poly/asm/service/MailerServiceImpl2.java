@@ -62,7 +62,7 @@ public class MailerServiceImpl2 implements MailerService2 {
 		send(new MailInfo2(to, subject, body));
 	}
 
-	@Scheduled(fixedDelay = 2000)
+	@Scheduled(fixedDelay = 1000)
 	public void run() {
 		while (!queue.isEmpty()) {
 			MailInfo2 mail = queue.remove(0);
