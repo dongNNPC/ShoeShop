@@ -2,6 +2,7 @@ package com.poly.asm.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -81,7 +83,12 @@ public class IndexAdminController {
 
 	@RequestMapping("/index")
 	public String indexAdmin(Model model, @ModelAttribute("user") User user, @RequestParam(defaultValue = "0") int page,
-			@RequestParam(name = "year", required = false) Integer selectedYear) {
+			@RequestParam(name = "year", required = false) Integer selectedYear,
+			@RequestParam(name = "status", required = false) String status,
+			@RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+			@RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate
+
+	) {
 		model.addAttribute("index", "active");
 
 		indexController.checkUser(model);
@@ -158,12 +165,31 @@ public class IndexAdminController {
 		model.addAttribute("barData", barData);
 
 		// đổ dữ liệu cho userOderPayment
-		int pageSize = 5; // Số lượng kết quả hiển thị trên mỗi trang
+
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+
+		int pageSize = 100;
 		Pageable pageable = PageRequest.of(page, pageSize);
-		Page<UserOderPayment> UserOderPayment = daodetailedInvoiceRepository.getUserOderPay(pageable);
-		model.addAttribute("UserOderPayment", UserOderPayment.getContent());
+		Page<UserOderPayment> userOrderPaymentPage;
+
+		if (status != null && !status.isEmpty()) {
+			if (status != null && !status.isEmpty()) {
+				userOrderPaymentPage = daodetailedInvoiceRepository.getUserOrderByStatus(status, pageable);
+			} else {
+				userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPay(pageable);
+			}
+		} else {
+			if (startDate != null && endDate != null) {
+				userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPayWithDateRange(startDate, endDate,
+						pageable);
+			} else {
+				userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPay(pageable);
+			}
+		}
+		model.addAttribute("userOrderPayment", userOrderPaymentPage.getContent());
 		model.addAttribute("pageoder", page);
-		model.addAttribute("UserOderPayment	", UserOderPayment.getTotalPages());
+		model.addAttribute("userOrderPaymentPage", userOrderPaymentPage.getTotalPages());
 
 		return "/admin/index";
 

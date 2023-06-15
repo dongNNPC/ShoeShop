@@ -117,7 +117,7 @@
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3" th:each="rp : ${TotalRevenue}">
-													$ <label th:text="${rp.totalRevenue}"></label> <i
+													<label th:text="${rp.totalRevenue}"></label> <i
 														class="small text-secondary" style="font-size: 10px">VND</i>
 												</h1>
 												<div class="mb-0">
@@ -158,16 +158,15 @@
 
 						<div class="col-xl-6 col-xxl-7">
 							<div class="card flex-fill w-100">
-								<div class="card-header row">
-
-									<h5 class="card-title mb-0 col-lg-6">Biểu Đồ Thống Kê
+								<div class=" row">
+						
+									<h5 class="card-title mb-0 col-lg-6 mt-2">
 										Doanh Số Hàng Đã Bán Được</h5>
 									<div class="form-floating col-lg-6">
 										<form class="container" action="/shoeshop/admin/index"
 											method="post">
 											<div class="row">
-												<label for="exampleFormControlSelect2" class="mb-2">Danh
-													sách số đã kinh doanh</label>
+												<label for="exampleFormControlSelect2" class="mb-2"></label>
 												<div class="col-8 d-flex align-items-center">
 													<select class="form-select" id="exampleFormControlSelect2"
 														name="year" aria-label="Chọn một lựa chọn">
@@ -263,37 +262,61 @@
 					</div>
 
 					<div class="row">
-						<div class="col-12 col-lg-12 col-xxl-9 d-flex ">
+						<div class="col-12 col-lg-12 col-xxl-9 d-flex " >
+
 							<div class="card flex-fill ">
-								<div class="card-header row">
+								<form action="/shoeshop/admin/index" method="GET">
+									<div class=" row">
 
-									<h5 class="card-title mb-0">Latest Projects</h5>
-									<div class="mb-3 col-2">
-										<label for="" class="form-label">Purchase Date :</label> <input
-											type="date" class="form-control" name="" id=""
-											aria-describedby="helpId" placeholder="">
-									</div>
-									<div class="mb-3 col-2">
-										<label for="" class="form-label">Delivery Date :</label> <input
-											type="date" class="form-control" name="" id=""
-											aria-describedby="helpId" placeholder="">
-									</div>
-									<div class=" mb-3 mt-4 col-2">
-										<a class="btn btn-primary" href="#" role="button"
-											style="margin-top: 4px">Tìm</a>
-									</div>
-									<div class="col-3"></div>
-									<div class="mb-3 col-3 mt-4 justify-content-end">
-										<select class="form-select form-select-lg" name="" id="">
-											<option selected>Select status</option>
-											<option value="">Pending</option>
-											<option value="">Delivered</option>
-											<option value="">Cancelled</option>
-										</select>
-									</div>
+										<h5 class="card-title mb-0 mt-1 ml-2 text-end" >Bảng chi tiết thông tin người dùng đặt hàng &ensp;</h5>
 
-								</div>
-								<table class="table table-hover my-0">
+										<div class="mb-3 col-2" style="margin-left: 5px">
+											<label for="startDate" class="form-label">Purchase
+												Date :</label> <input type="date" class="form-control"
+												name="startDate" id="startDate" aria-describedby="helpId"
+												placeholder=""
+												th:value="${startDate != null ? #dates.format(startDate, 'yyyy-MM-dd') : ''}">
+										</div>
+										<div class="mb-3 col-2">
+											<label for="endDate" class="form-label">Delivery Date
+												:</label> <input type="date" class="form-control" name="endDate"
+												id="endDate" aria-describedby="helpId" placeholder=""
+												th:value="${endDate != null ? #dates.format(endDate, 'yyyy-MM-dd') : ''}">
+										</div>
+										<div class="mb-3 mt-4 col-2">
+											<button class="btn btn-outline-success" type="submit"
+												style="margin-top: 4px">
+												<i class="fa-solid fa-magnifying-glass"></i>
+												</button>
+												<a class="btn btn-outline-secondary" th:href="@{/shoeshop/admin/index}"
+												style="margin-top: 4px">
+												<i class="fa-solid fa-repeat"></i>
+												</a>
+										</div>
+
+										<div class="col-3"></div>
+										<div class="mb-3 col-2 mt-4 justify-content-end">
+
+											<select class="form-select form-select-lg" name="status"
+												id="status">
+												<option selected value="">Select status</option>
+												<option value="Pending">Pending</option>
+												<option value="Delivered">Delivered</option>
+												<option value="Cancelled">Cancelled</option>
+											</select>
+
+											<button type="submit" class="btn btn-outline-primary"
+												style="margin-left: 180px; margin-top: -60px">
+												<i class="fa-solid fa-magnifying-glass"></i>
+											</button>
+
+										</div>
+
+
+									</div>
+								</form>
+								<div class="table-responsive" style="max-height: 500px">
+								<table class="table table-hover my-0" style="max-height: 500px">
 									<thead>
 										<tr>
 											<th>User Name</th>
@@ -305,11 +328,11 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="u : ${UserOderPayment}">
+										<tr th:each="u : ${userOrderPayment}">
 											<td th:text="${u.name}"></td>
-											<td th:text="${#dates.format(u.purchaseDate, 'dd/MM/yyyy')}"
+											<td th:text="${#dates.format(u.purchaseDate, 'dd-MM-yyyy')}"
 												class="d-none d-xl-table-cell"></td>
-											<td th:text="${#dates.format(u.deliveryDate, 'dd/MM/yyyy')}"
+											<td th:text="${#dates.format(u.deliveryDate, 'dd-MM-yyyy')}"
 												class="d-none d-xl-table-cell"></td>
 											<td><span th:text="${u.status}"
 												th:classappend=" 
@@ -323,7 +346,7 @@
 										</tr>
 									</tbody>
 								</table>
-
+								</div>
 							</div>
 
 						</div>
