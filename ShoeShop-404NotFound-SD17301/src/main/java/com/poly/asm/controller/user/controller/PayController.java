@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.poly.asm.config.short_method.Mail;
 import com.poly.asm.controller.IndexController;
 import com.poly.asm.dao.DetailedInvoiceRepository;
 import com.poly.asm.dao.InvoiceRepository;
@@ -54,12 +55,13 @@ public class PayController {
 	@Autowired
 	private MailerService2 mailerService2;
 
+	@Autowired
+	private Mail mail;
+
 	@GetMapping("/thanhtoan")
 	public String thanhtoan(@ModelAttribute("user") User user, Model model,
 			@ModelAttribute("product") Product product) {
-
 		indexController.checkUser(model);
-
 		List<Product> products = new ArrayList<>(cart.getItems());
 		List<Product> products2 = Pdao.findAll();
 		List<Product> products3 = new ArrayList<>();
@@ -166,11 +168,7 @@ public class PayController {
 				+ "<div class='footer'>" + "<p>Chi tiết lên hệ: 0829xxxxxxx.</p>" + "</div>" + "</div>" + "</body>"
 				+ "</html>";
 		;
-		mailInfo2.setFrom("Shoe Shop 404<khanhttpc03027@fpt.edu.vn>");
-		mailInfo2.setTo(user.getEmail());
-		mailInfo2.setSubject("SHOE SHOP CODE");
-		mailInfo2.setBody(body);
-		mailerService2.queue(mailInfo2);
+		mail.setMail(user, body);
 
 		return "redirect:/shoeshop/viewpay/" + invoice.getId();
 	}
@@ -194,24 +192,7 @@ public class PayController {
 		for (Product p1 : products) {
 			totalAmount += p1.getPrice();
 		}
-		
-		List<Product> products1 = new ArrayList<>(cart.getItems());
-		List<Product> products2 = Pdao.findAll();
-		List<Product> products3 = new ArrayList<>();
-		
-		for (Product p1 : products1) {
-			for (Product p2 : products2) {
-				if (p1.getId().equalsIgnoreCase(p2.getId())) {
-					p2.setQuantity(1);
-					products3.add(p2);
-					
 
-				}
-			}
-		}
-
-		model.addAttribute("cart1", products3);
-		
 		model.addAttribute("iDinvoice", iDInvoice);
 
 		model.addAttribute("cart", detailedInvoices2);

@@ -76,12 +76,12 @@
 						</tr>
 
 
-						<tr  th:each="item, index : ${cart1}">
+						<tr  th:each="item, index : ${cart}">
 							<th class=" custom-heading">Sản phẩm :</th>
-							<th class=" custom-heading" >sl :  <span class="item-quantity" ></span></th>
-							<th class="item-price text-end custom-heading" th:text="${item.price + ' VND'}" > </th>
+							<th class=" custom-heading" >sl :  <span th:text="${item.quantity}" ></span></th>
+							<th class="item-price text-end custom-heading" th:text="${item.product.price * item.quantity + ' VND'}" > </th>
 							<th style="max-width: 100px" class=" text-end  text-truncate"
-								th:text="${item.name}"></th>
+								th:text="${item.product.name}"></th>
 						</tr>
 
 
