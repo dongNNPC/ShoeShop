@@ -36,7 +36,12 @@
 			<!--tìm kiếm , User , giỏ hàng-->
 
 			<ul class="navbar-nav m-2 mb-lg-0 ">
-
+			<!-- tìm kiếm -->
+				<li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#myModalSeach" > 
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</a></li>
+				
+				<!-- Đăng nhập -->
 				<li class="nav-item dropdown" style="cursor: pointer;"><a
 					class="nav-link" th:object="${user}" data-bs-toggle="dropdown"
 					href="#"> <i class="fa-solid fa-user"></i> <img
@@ -70,14 +75,13 @@
 							style="color: #686868" th:href="@{/shoeshop/Forget}"> quên
 								mật khẩu </a></li>
 					</ul></li>
-
+				<!-- giỏ hàng -->
 				<li class="nav-item"><a class="nav-link" aria-current="page"
 					href="#" type="button" data-bs-toggle="offcanvas"
-					data-bs-target="#GioHang"> <i
-						class="fa-solid fa-basket-shopping position-relative"> <span
-							style="font-size: 0.6rem"
-							class="position-absolute top-0 start-100  translate-middle badge rounded-pill bg-danger"
-							th:text="${session.cartItemCount != null ? session.cartItemCount : 0}"></span>
+					data-bs-target="#GioHang"> 
+					<i class="fa-solid fa-basket-shopping position-relative"> 
+					<span style="font-size: 0.6rem" class="position-absolute top-0 start-100  translate-middle badge rounded-pill bg-danger"
+					th:text="${session.cartItemCount != null ? session.cartItemCount : 0}"></span>
 					</i>
 				</a></li> &ensp;
 			</ul>

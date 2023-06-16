@@ -134,7 +134,7 @@ public class ShoppingCartController {
 		return "redirect:/shoeshop/cart/view";
 	}
 
-	// button xoá tấy cả
+	// button xoá tất cả
 	@RequestMapping("/cart/clear")
 	public String clearCart(RedirectAttributes redirectAttributes, HttpSession session) {
 		cart.clear();

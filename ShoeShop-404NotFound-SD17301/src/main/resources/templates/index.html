@@ -35,7 +35,8 @@
 		<!-- 	<div   th:replace="_modals :: modal('modalCart')" ></div> -->
 		
 		<div th:replace="modal/modalCart.html :: #GioHang"></div>
-
+		<div th:replace="modal/modalSeach.html :: #myModalSeach"></div>
+		
 		
 
 	</header>
@@ -81,6 +82,13 @@
             $(this).removeClass('fa-basket-shopping').addClass('fa-check');
         });
     });
+    
+    /* hiển thị hộp thoại tìm kiếm */
+    $(document).ready(function() {
+            $('#searchButton').click(function() {
+                $('#searchInput').toggle();
+            });
+        });
   </script>
  
 <script th:inline="javascript">
