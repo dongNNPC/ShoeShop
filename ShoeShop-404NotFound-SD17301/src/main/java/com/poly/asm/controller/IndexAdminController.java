@@ -1,7 +1,6 @@
 package com.poly.asm.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -74,6 +73,9 @@ public class IndexAdminController {
 	InvoiceRepository invoiceRepository;
 
 	@Autowired
+	StockReceiptRepository stockReceiptRepository;
+
+	@Autowired
 	private IndexController indexController;
 
 	public void notification(Model model) {
@@ -127,7 +129,8 @@ public class IndexAdminController {
 
 		for (MonthlySalesStatistics monthlySalesStatistics : ListSave) {
 			salesData.add((int) monthlySalesStatistics.getCount());
-			System.out.println(salesData.add((int) monthlySalesStatistics.getCount()));
+			System.out.println(monthlySalesStatistics.getMonth() + "tháng");
+			System.out.println(salesData + "sssssssssssss");
 		}
 
 		model.addAttribute("salesData", salesData);
@@ -160,8 +163,14 @@ public class IndexAdminController {
 		model.addAttribute("pieData", pieData);
 
 //	Thống kê tháng
-		List<Integer> barData = Arrays.asList(54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79);
 
+		List<MonthlySalesStatistics> stockIntegers = stockReceiptRepository.getMonthlyStockStatistics();
+//		List<Integer> quatityStockIntegers = new ArrayList<>();
+		List<Integer> barData = new ArrayList<>();
+
+		for (MonthlySalesStatistics monthlySalesStatistics : stockIntegers) {
+			barData.add((int) monthlySalesStatistics.getCount());
+		}
 		model.addAttribute("barData", barData);
 
 		// đổ dữ liệu cho userOderPayment
@@ -173,14 +182,15 @@ public class IndexAdminController {
 		int pageSize = 100;
 		Pageable pageable = PageRequest.of(page, pageSize);
 		Page<UserOderPayment> userOrderPaymentPage;
-		
+
 		if (startDate != null && endDate != null) {
-			 userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPayWithDateRange(startDate, endDate, pageable);
+			userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPayWithDateRange(startDate, endDate,
+					pageable);
 		} else if (status != null && !status.isEmpty()) {
-			  userOrderPaymentPage = daodetailedInvoiceRepository.getUserOrderByStatus(status, pageable);
-		   
+			userOrderPaymentPage = daodetailedInvoiceRepository.getUserOrderByStatus(status, pageable);
+
 		} else {
-		    userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPay(pageable);
+			userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPay(pageable);
 		}
 
 		model.addAttribute("userOrderPayment", userOrderPaymentPage.getContent());

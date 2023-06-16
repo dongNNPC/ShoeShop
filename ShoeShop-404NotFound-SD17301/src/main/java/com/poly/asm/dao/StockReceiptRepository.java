@@ -8,12 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.poly.asm.model.MonthlySalesStatistics;
 import com.poly.asm.model.ProductInventory;
 import com.poly.asm.model.Report;
 import com.poly.asm.model.StockReceipt;
 
 public interface StockReceiptRepository extends JpaRepository<StockReceipt, String> {
 	// Các phương thức tùy chọn khác nếu cần thiết
+
 	// tổng giá trị tổng kho mỗi sản phẩm
 
 	@Query("SELECT new com.poly.asm.model.ProductInventory(p.id AS id, p.name AS productName, SUM(sr.quantity * sr.price)) AS totalValue "
@@ -35,4 +37,7 @@ public interface StockReceiptRepository extends JpaRepository<StockReceipt, Stri
 
 	Page<StockReceipt> findAll(Pageable pageable);
 
+//	câu truy vấn in ra số lượng nhập kho theo tháng
+	@Query("SELECT new com.poly.asm.model.MonthlySalesStatistics (MONTH(orderDate), COUNT(*)) FROM StockReceipt GROUP BY MONTH(orderDate)")
+	List<MonthlySalesStatistics> getMonthlyStockStatistics();
 }
