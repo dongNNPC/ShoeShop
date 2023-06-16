@@ -173,21 +173,16 @@ public class IndexAdminController {
 		int pageSize = 100;
 		Pageable pageable = PageRequest.of(page, pageSize);
 		Page<UserOderPayment> userOrderPaymentPage;
-
-		if (status != null && !status.isEmpty()) {
-			if (status != null && !status.isEmpty()) {
-				userOrderPaymentPage = daodetailedInvoiceRepository.getUserOrderByStatus(status, pageable);
-			} else {
-				userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPay(pageable);
-			}
+		
+		if (startDate != null && endDate != null) {
+			 userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPayWithDateRange(startDate, endDate, pageable);
+		} else if (status != null && !status.isEmpty()) {
+			  userOrderPaymentPage = daodetailedInvoiceRepository.getUserOrderByStatus(status, pageable);
+		   
 		} else {
-			if (startDate != null && endDate != null) {
-				userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPayWithDateRange(startDate, endDate,
-						pageable);
-			} else {
-				userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPay(pageable);
-			}
+		    userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPay(pageable);
 		}
+
 		model.addAttribute("userOrderPayment", userOrderPaymentPage.getContent());
 		model.addAttribute("pageoder", page);
 		model.addAttribute("userOrderPaymentPage", userOrderPaymentPage.getTotalPages());

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	
+	<div class="modal fade" id="myModalSeach">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Tìm kiếm</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <!-- Modal body -->
+          <form th:action="@{/shoeshop/index}" method="get">
+            <div class="modal-body row">
+              <div class="mb-3 col-md-10">
+                <input type="text" class="form-control col-md-7" name="seachIndex" id="" aria-describedby="helpId"
+       			placeholder="Nhập tên sản phẩm">
+
+              </div>
+              <div class="mb-3 col-md-2 justify-content-end">
+                <button type="submit" name="" id="" class="btn btn-outline-success">
+                 <i class="fa-solid fa-magnifying-glass fa-2xs"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+	 </div>
+	
+</body>
+</html>
