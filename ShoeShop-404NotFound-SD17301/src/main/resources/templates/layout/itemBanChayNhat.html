@@ -9,7 +9,7 @@
 
 		  <div class="col-12 col-lg-3" th:each="product : ${newProductTop10}">
             <div class="card box-shadow mx-auto my-2" style="width: 17rem;">
-                <a th:href="@{/shoeshop/details/{id}(id=${product.id})}">
+                <a th:if="${product.quantity > 0}" th:href="@{/shoeshop/details/{id}(id=${product.id})}">
                     <img th:src="@{/images/product-images/__${product.image}__}" class="card-img-top" alt="..." width="200px">
                     <div class="card-body">
                         <h5 class="card-title text-truncate text-dark" style="max-width: 230px;">
@@ -21,6 +21,7 @@
                                 <br>ngày:  
                                 <label th:text="${#dates.format(product.orderDate, 'dd/MM/yyyy')}" ></label>
                                 | số lượng: <label th:text="${product.quantity}"></label>
+                                  <br>Trạng thái:<label style="font-weight: bolder;" th:text="${product.quantity > 0 ? 'Đang bán' : 'Ngừng kinh doanh'}"></label>
                             </label>
                         </p>
                         <p class="text-center text-dark">
@@ -37,6 +38,36 @@
                         </p>
                     </div>
                 </a>
+                <div th:unless="${product.quantity > 0}">
+          <img th:src="@{/images/product-images/__${product.image}__}" class="card-img-top" alt="..." width="200px">
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate text-dark" style="max-width: 230px;">
+                            <label th:text="${product.name}"></label>
+                        </h5>
+                        <hr>
+                        <p class="text-center text-secondary" style="text-decoration: none;">
+                            <label class="text-secondary">Thương hiệu: <label th:text="${product.brandName}"></label>,
+                                <br>ngày:  
+                                <label th:text="${#dates.format(product.orderDate, 'dd/MM/yyyy')}" ></label>
+                                | số lượng: <label th:text="${product.quantity}"></label>
+                                 <br>Trạng thái:<label style="font-weight: bolder;" th:text="${product.quantity > 0 ? 'Đang bán' : 'Ngừng kinh doanh'}"></label>
+
+                            </label>
+                        </p>
+                        <p class="text-center text-dark">
+                            <label style="color: black">
+                                Giá: <del class="text-secondary text-decoration-none text-decoration-line-through">1.000.00</del>₫<i
+                                        class="text-danger fw-bold">
+                                    <label th:text="${product.price}"></label>₫
+                                </i>
+                                <a th:href="@{/cart/add/__${product.id}__}" class="IMGItem me-auto text-dark"
+                                   style="text-decoration: none">
+                                    <i id="#GioHang" class="fa-solid fa-basket-shopping"></i>
+                                </a>
+                            </label>
+                        </p>
+                    </div>
+        </div>
             </div>
         </div>
     </div>

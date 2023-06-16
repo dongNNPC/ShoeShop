@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.poly.asm.config.short_method.Mail;
 import com.poly.asm.controller.IndexController;
@@ -28,6 +29,8 @@ import com.poly.asm.model.User;
 import com.poly.asm.service.MailerService2;
 import com.poly.asm.service.SessionService;
 import com.poly.asm.service.ShoppingCartService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/shoeshop")
@@ -98,7 +101,8 @@ public class PayController {
 	}
 
 	@PostMapping("/thanhtoan")
-	public String createPay(Model model, @ModelAttribute("product") Product product) {
+	public String createPay(Model model, @ModelAttribute("product") Product product,
+			@RequestParam(name = "itemQuantity", defaultValue = "false") Integer quantity, HttpSession sessionn) {
 		indexController.checkUser(model);
 		List<Product> products = new ArrayList<>(cart.getItems());
 		List<Product> products2 = Pdao.findAll();
@@ -136,13 +140,19 @@ public class PayController {
 			DetailedInvoice detailedInvoice = new DetailedInvoice();
 			detailedInvoice.setProduct(product3);
 			detailedInvoice.setInvoice(invoice);
-			detailedInvoice.setQuantity(1);
+			detailedInvoice.setQuantity(quantity);
 			detailedInvoice.setPaymentMethod("Thanh toán khi nhận hàng");
 			DetailedInvoiceRepository.save(detailedInvoice);
 //			Cập nhật lại sản phẩm
 			for (Product product4 : products4) {
 				if (product3.getId().equals(product4.getId())) {
-					product4.setQuantity(product4.getQuantity() - 1);
+					product4.setQuantity(product4.getQuantity() - quantity);
+					if (product4.getQuantity() <= 0) {
+						product4.setStatus(false);
+					} else {
+						product4.setStatus(true);
+					}
+
 					Pdao.save(product4);
 				}
 
@@ -169,6 +179,9 @@ public class PayController {
 				+ "</html>";
 		;
 		mail.setMail(user, body);
+//		clear võ hàng
+		cart.clear();
+		sessionn.setAttribute("cartItemCount", 0);
 
 		return "redirect:/shoeshop/viewpay/" + invoice.getId();
 	}

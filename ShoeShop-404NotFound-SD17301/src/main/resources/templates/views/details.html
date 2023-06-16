@@ -127,19 +127,11 @@
 					<span class="price-amount-details" th:text="${p.getPrice()}">&nbsp;<span
 						class="woocommerce-Price-currencySymbol">&#8363;</span></span>
 					<div class="row ">
-						<div class="form-outline col-sm-6" style="max-width: 100px">
-							<input type="number" value="1" id="typeNumber"
-								class="form-control" />
-							<!-- <label class="form-label" for="typeNumber">Number input</label> -->
-						</div>
-
-						<div class="btn col-sm-6"
+						<div class="btn col-sm-6 ms-2"
 							style="max-width: 100px; background-color: #232946; color: #fffffe;">
 							<a th:href="@{/cart/add/P004}">Mua hàng</a>
 						</div>
 					</div>
-					
-
 					<hr class="dotted mt-5  " />
 					<h5 class="masp-details">Mã sản phẩm:</h5>
 					<h5 class="masp-details" th:text="${p.getId()}"></h5>

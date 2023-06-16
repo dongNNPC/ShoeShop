@@ -63,7 +63,7 @@
 								<td class="text-truncate" style="max-width: 200px;" th:text="${item.name}"></td>
 								<td style="max-width: 50px;" th:text="${item.price}"></td>
 								<td><input class="quantity"
-									onchange="updateTotalPrice(this)" type="number" min="1"
+									onchange="updateTotalPrice(this)" type="number" min="1" th:max="${item.quantity}"
 									value="0"></td>
 									
 								<td class="totalPrice">0</td>

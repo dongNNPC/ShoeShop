@@ -44,6 +44,7 @@
             </div>
             
             <div class="col-md-6">
+              <input style="display: none" id="itemQuantityInput" name="itemQuantity" />
                 <label for="email" class="form-label">Email:</label>
                 <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="">
                 <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
@@ -52,13 +53,14 @@
               <div class="form-checkk">
                 <input class="form-check-input" type="checkbox" id="gridCheck">
                 <label class="form-check-label" for="gridCheck">
+                
                  Ghi nhớ thông tin
                 </label>
               </div>
             </div>
             <div class="col-12">
             
-            
+           
              <button  type="submit" style="background-color: #232946 ;color: #fffffe;" class="btn ">Xác nhận thông tin thanh toán</button>
              <!-- <a href="./giohang.html"> </a> -->
              <a th:href="@{/shoeshop/cart/view}" style="background-color: #232946 ;color: #fffffe;" type="button" class="btn"> &#8592; Trở lại</a>   
@@ -91,7 +93,8 @@
               <div th:each="item, index : ${cart}">
               <h7 >Sản phẩm: <span class="${item-name}" style="font-weight: bolder;" th:text="${item.name}" >Bit hunter</span></7>
               <br>
-            <h7>Số lượng: <span class="item-quantity" >2</span></h7> |
+            <h7>Số lượng: <span class="item-quantity" id="itemQuantitySpan" ></span></h7> |
+            
             <h7>Đơn giá: <span style="color: red;font-weight: bolder;" class="item-price" th:text="${item.price}">499000</span> <span style="color: red;font-weight: bolder;">VND</span></h7>
            <hr class="border-primary" style="height: 3px">
               </div>
@@ -167,6 +170,17 @@
 	    }
 	    // Gán giá trị vào phần tử HTML
 	    document.getElementById('totalPrice').textContent = totalPrice.toLocaleString() + ' VND'
+	    
+	    // Lấy giá trị từ sessionStorage
+	    var quantity = sessionStorage.getItem('quantity');
+
+	    // Gán giá trị vào thẻ span
+	    var itemQuantitySpan = document.getElementById('itemQuantitySpan');
+	    itemQuantitySpan.textContent = quantity;
+
+	    // Gán giá trị vào input ẩn
+	    var itemQuantityInput = document.getElementById('itemQuantityInput');
+	    itemQuantityInput.value = quantity;
 	</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
