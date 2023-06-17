@@ -162,8 +162,7 @@ public class IndexAdminController {
 
 		model.addAttribute("pieData", pieData);
 
-//	Thống kê tháng
-
+		
 		List<MonthlySalesStatistics> stockIntegers = stockReceiptRepository.getMonthlyStockStatistics();
 //		List<Integer> quatityStockIntegers = new ArrayList<>();
 		List<Integer> barData = new ArrayList<>();
