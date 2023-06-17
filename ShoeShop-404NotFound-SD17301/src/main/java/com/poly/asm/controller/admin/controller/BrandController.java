@@ -145,7 +145,6 @@ public class BrandController {
 			System.out.println(e);
 			return "/admin/views/ui-brand";
 		}
-
 		return "redirect:/shoeshop/admin/list-brand";
 	}
 

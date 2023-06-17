@@ -1,5 +1,6 @@
 package com.poly.asm.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -51,16 +52,13 @@ public interface InvoiceRepository extends JpaRepository<Invoice, String> {
 	@Query("SELECT i FROM Invoice i WHERE i.user.iD = :userId")
 	Page<Invoice> findByUserId(@Param("userId") String userId, Pageable pageable);
 
-//	Truy vấn hóa đơn theo user tìm kiếm theo keywork
-	@Query("SELECT i FROM Invoice i WHERE i.user.iD = :userId AND i.id LIKE %:keywords%")
-	Page<Invoice> findByUserIdAndIdContaining(@Param("userId") String userId, @Param("keywords") String keywords,
-			Pageable pageable);
-
 //	page cơ bản
 	Page<Invoice> findAllByIdLike(String keywords, Pageable pageable);
 
 	Page<Invoice> findAll(Pageable pageable);
 
-//	
+// Lấy hóa đơn theo ngày hiện tại
+	@Query("SELECT i FROM Invoice i WHERE i.orderDate = :currentDate")
+	List<Invoice> getInvoicesPrintedToday(Date currentDate);
 
 }

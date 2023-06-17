@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poly.asm.dao.CartRepository;
 import com.poly.asm.dao.CategoryRepository;
+import com.poly.asm.dao.InvoiceRepository;
 import com.poly.asm.dao.ProductRepository;
 import com.poly.asm.model.Cart;
 import com.poly.asm.model.Category;
@@ -44,6 +45,9 @@ public class IndexController {
 
 	@Autowired
 	CartRepository daoCart;
+
+	@Autowired
+	InvoiceRepository invoiceRepository;
 
 	@Autowired
 	SessionService session;
@@ -127,6 +131,13 @@ public class IndexController {
 
 		// xử lý thêm dữ liệu cart khi người dùng đăng nhập
 		Date currentDate = new Date();
+//
+//		LocalDate localDate = LocalDate.now();
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		String formattedDate = localDate.format(formatter);
+//		String dateWithoutDash = formattedDate.replace("-", "");
+//		System.out.println(currentDate.get);
+
 		if (session.get("user") == null) {
 		} else {
 			for (Product p3 : products3) {

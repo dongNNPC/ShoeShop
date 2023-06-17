@@ -2,7 +2,7 @@
 
 	Create database shoeshop404
 
---	drop database shoeshop404
+	--drop database shoeshop404
 
 	go
 	use shoeshop404
@@ -82,7 +82,7 @@
 	  quantity INT NOT NULL,
 	  price FLOAT NOT NULL,
 	  order_date Date not null,
-	  ON DELETE CASCADE;
+	
 	);
 	go
 	-- Tạo bảng DetailedImages
@@ -176,7 +176,7 @@
 	go
 
 	-- Thêm liên kết khóa ngoại cho bảng StockReceipts
-	ALTER TABLE stock_receipts ADD CONSTRAINT FK_stock_receipts_Products FOREIGN KEY (product_id) REFERENCES Products(id);
+	ALTER TABLE stock_receipts ADD CONSTRAINT FK_stock_receipts_Products FOREIGN KEY (product_id) REFERENCES Products(id)   ON DELETE CASCADE;;
 
 	-- Thêm liên kết khóa ngoại cho bảng DetailedImages
 	ALTER TABLE DetailedImages

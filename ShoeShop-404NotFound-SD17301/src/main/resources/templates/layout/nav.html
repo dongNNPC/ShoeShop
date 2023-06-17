@@ -43,11 +43,18 @@
 				<!-- Đăng nhập -->
 				<li class="nav-item dropdown" style="cursor: pointer;"><a
 					class="nav-link" th:object="${user}" data-bs-toggle="dropdown"
-					href="#"> <i class="fa-solid fa-user"></i> <img
-						th:src="@{/images/avatars/__${session.user.getImage()}__}"
-						class="avatar img-fluid rounded me-1" alt="Not logged in"
-						onerror="this.style.display = 'none';" /> <span class="text-dark"
-						th:text="${session.user.getName()}"></span>
+					href="#"> <i class="fa-solid fa-user"></i> <img th:if="${session.user != null}" th:src="@{/images/avatars/__${session.user.getImage()}__}"
+     class="avatar img-fluid rounded me-1" alt="Not logged in" />
+
+<img th:unless="${session.user != null}" src="path-to-default-image" class="avatar img-fluid rounded me-1" alt="" />
+<th:block th:if="${session.user != null}">
+    <span class="text-dark" th:text="${session.user.getName()}"></span>
+</th:block>
+
+<th:block th:unless="${session.user != null}">
+    <span class="text-dark">Not logged in</span>
+</th:block>
+
 				</a>
 					<ul class="dropdown-menu fade-up bg-light"
 						style="list-style: none;">
