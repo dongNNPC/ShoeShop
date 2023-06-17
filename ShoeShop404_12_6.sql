@@ -2,7 +2,8 @@
 
 	Create database shoeshop404
 
-	drop database shoeshop404
+--	drop database shoeshop404
+
 	go
 	use shoeshop404
 	go
@@ -16,7 +17,8 @@
 	  email NVARCHAR(100) unique NOT NULL,
 	  address NVARCHAR(200),
 	  image NVARCHAR(200),
-	  admin BIT NOT NULL
+	  admin BIT NOT NULL,
+	  status BIT DEFAULT 1,
 	);
 	go
 	-- Tạo bảng Categories
@@ -79,7 +81,8 @@
 	  product_id VARCHAR(20) NOT NULL,
 	  quantity INT NOT NULL,
 	  price FLOAT NOT NULL,
-	  order_date Date not null
+	  order_date Date not null,
+	  ON DELETE CASCADE;
 	);
 	go
 	-- Tạo bảng DetailedImages
@@ -255,9 +258,6 @@
 	  ('P019', N'Giày Thể Thao Nam Biti’s Hunter Core Z Collection Stone DSMH06400', 30, 280, N'Tính nhất quán là chìa khóa để xây dựng sức mạnh và sức bền. Những đôi giày chạy bộ Reebok dành cho nam này giúp bạn đạt được tiến bộ ổn định với lớp đệm Floatride Energy Foam mang lại cảm giác nhẹ nhàng và một chuyến đi êm ái, nhạy bén. Lưới phía trên thoải mái và thoáng khí.', 1, 'C001', 'B002'),
 	  ('P020', N'Giày Thể Thao Nam Bitis Hunter X Festive Frosty-White DSMH03500', 50, 260, N'Tính nhất quán là chìa khóa để xây dựng sức mạnh và sức bền. Những đôi giày chạy bộ Reebok dành cho nam này giúp bạn đạt được tiến bộ ổn định với lớp đệm Floatride Energy Foam mang lại cảm giác nhẹ nhàng và một chuyến đi êm ái, nhạy bén. Lưới phía trên thoải mái và thoáng khí.', 1, 'C001', 'B002')
  
-
-
-
 	-- Thêm dữ liệu vào bảng Invoices
 	INSERT INTO Invoices (id, order_date, status, user_id)
 	VALUES 
@@ -302,7 +302,7 @@
 	('I039', '2024-02-21', N'pending', 'U002'),
 	('I040', '2024-03-20', N'delivered', 'U002')
 		INSERT INTO Invoices (id, order_date, status, user_id)
-	SELECT 'INV001', '2023-01-01', 'delivered', 'U002'
+	SELECT 'INV001', '2023-01-01', 'pending', 'U002'
 	UNION ALL SELECT 'INV002', '2023-02-01', 'pending', 'U002'
 	UNION ALL SELECT 'INV003', '2023-03-01', 'delivered', 'U002'
 	UNION ALL SELECT 'INV004', '2023-04-01', 'delivered', 'U002'
@@ -353,25 +353,25 @@
 	-- Thêm dữ liệu vào bảng StockReceipts
 	INSERT INTO stock_receipts(id, brand_id, product_id, quantity, price, order_date)
 	VALUES 
-	('R001', 'B001', 'P001', 100, 150, '2023-01-30'),
-	('R002', 'B002', 'P002', 50, 400, '2023-05-29'),
-	('R003', 'B003', 'P003', 120, 200, '2023-02-28'),
-	('R004', 'B004', 'P004', 80, 300, '2023-03-27'),
-	('R005', 'B005', 'P005', 60, 250, '2023-04-26'),
-	('R006', 'B006', 'P006', 90, 350, '2023-05-25'),
+	('R001', 'B001', 'P001', 100, 150, '2023-06-30'),
+	('R002', 'B002', 'P002', 50, 400, '2023-06-29'),
+	('R003', 'B003', 'P003', 120, 200, '2023-06-28'),
+	('R004', 'B004', 'P004', 80, 300, '2023-06-27'),
+	('R005', 'B005', 'P005', 60, 250, '2023-06-26'),
+	('R006', 'B006', 'P006', 90, 350, '2023-06-25'),
 	('R007', 'B007', 'P007', 110, 180, '2023-06-24'),
-	('R008', 'B008', 'P008', 70, 400, '2023-07-23'),
-	('R009', 'B009', 'P009', 95, 220, '2023-08-22'),
-	('R010', 'B010', 'P010', 120, 250, '2023-09-21'),
+	('R008', 'B008', 'P008', 70, 400, '2023-06-23'),
+	('R009', 'B009', 'P009', 95, 220, '2023-6-22'),
+	('R010', 'B010', 'P010', 120, 250, '2023-06-21'),
 	('R011', 'B011', 'P011', 80, 300, '2023-10-20'),
 	('R012', 'B012', 'P012', 65, 350, '2023-11-19'),
 	('R013', 'B013', 'P013', 105, 190, '2023-12-18'),
-	('R014', 'B014', 'P014', 75, 400, '2023-01-17'),
-	('R015', 'B015', 'P015', 100, 230, '2023-02-16'),
-	('R016', 'B016', 'P016', 115, 270, '2023-03-15'),
-	('R017', 'B017', 'P017', 85, 320, '2023-03-14'),
-	('R018', 'B018', 'P018', 55, 400, '2023-07-13'),
-	('R019', 'B019', 'P019', 70, 200, '2023-09-12'),
+	('R014', 'B014', 'P014', 75, 400, '2023-04-17'),
+	('R015', 'B015', 'P015', 100, 230, '2023-06-16'),
+	('R016', 'B016', 'P016', 115, 270, '2023-06-15'),
+	('R017', 'B017', 'P017', 85, 320, '2023-06-14'),
+	('R018', 'B018', 'P018', 55, 400, '2023-06-13'),
+	('R019', 'B019', 'P019', 70, 200, '2023-06-12'),
 	('R020', 'B020', 'P020', 90, 350, '2023-12-11')
 
 

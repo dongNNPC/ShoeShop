@@ -47,6 +47,8 @@ public class User {
 
 	boolean admin;
 
+	boolean status;
+
 	@OneToMany(mappedBy = "user")
 	List<Invoice> invoices;
 

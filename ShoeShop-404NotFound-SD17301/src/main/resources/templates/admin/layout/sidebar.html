@@ -29,6 +29,11 @@
 					data-feather="sliders"></i> <span class="align-middle">Cancelled</span>
 					
 			</a></li>
+				<li class="sidebar-item" th:classappend="${complete} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/complete}"> <i class="align-middle"
+					data-feather="sliders"></i> <span class="align-middle">complete</span>
+					
+			</a></li>
 			<li class="sidebar-header">Tools & Components</li>
 
 			<li class="sidebar-item" th:classappend="${ui_user} ? 'active'"><a class="sidebar-link"

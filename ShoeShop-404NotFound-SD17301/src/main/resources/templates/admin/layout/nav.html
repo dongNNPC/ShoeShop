@@ -146,10 +146,10 @@
 					data-feather="settings"></i>
 			</a> <a class="nav-link dropdown-toggle d-none d-sm-inline-block"
 				th:object="${user}" href="#" data-bs-toggle="dropdown"> <img
-					th:src="@{/admin/img/avatars/__*{image}__}"
+					th:src="@{/admin/img/avatars/__${session.user.getImage()}__}"
 						class="avatar img-fluid rounded me-1" alt="Not logged in"
 						onerror="this.style.display = 'none';" /> <span
-					class="text-dark" th:text="*{name}"></span>
+					class="text-dark" th:text="${session.user.getName()}"></span>
 			</a>
 				<div class="dropdown-menu dropdown-menu-end">
 					<a class="dropdown-item" th:href="@{/shoeshop/personal-page}"><i

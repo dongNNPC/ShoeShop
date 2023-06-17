@@ -40,6 +40,7 @@
 		<div th:replace="~{./admin/layout/sidebar ::  #sidebar}"></div>
 		<div class="main">
 			<div th:replace="~{./admin/layout/nav ::  #nav-admin}"></div>
+			
 
 			<main class="content">
 				<div class="container-fluid p-0">
@@ -93,8 +94,8 @@
 											<div class="mb-3 col-lg-6">
 												<label for="password" class="form-label"><b>Password?</b></label>
 												<input type="password" class="form-control"
-													th:field="*{password}" id="password" placeholder="" /> <span
-													class="text-danger"
+													th:field="*{password}" id="password" placeholder="********" />
+												<span class="text-danger"
 													th:if="${#fields.hasErrors('password')}"
 													th:errors="*{password}"></span>
 											</div>
@@ -130,6 +131,15 @@
 													th:errors="*{phone}"></span>
 											</div>
 										</div>
+										<label for="male"> <input type="radio" id="male"
+											name="status" value="true"
+											th:checked="${user.status == true}" th:field="*{status}" />
+											Still working
+										</label> <label for="female"> <input type="radio" id="female"
+											name="status" value="false"
+											th:checked="${user.status == false}" th:field="*{status}" />
+											Not working
+										</label>
 
 
 										<div class="pull-right">

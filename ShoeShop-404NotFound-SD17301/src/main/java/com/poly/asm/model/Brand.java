@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Brands")
 public class Brand {
 	@Id
-	@NotEmpty(message = "{NotEmpty.Brand.id}")
+//	@NotEmpty(message = "{NotEmpty.Brand.id}")
 	private String id;
 
 	@NotEmpty(message = "{NotEmpty.Brand.name}")

@@ -82,12 +82,17 @@
 												<tr class="text-dark" th:each="item, index : ${invoices}">
 													<td th:text="${index.index + 1}"></td>
 													<td th:text="${item.id}"></td>
-													<td th:text="${item.orderDate}"></td>
+												<td th:text="${#dates.format(item.orderDate, 'yyyy-MM-dd')}"></td>
 											<td><span th:text="${item.status}" class="badge bg-success"></span></td>
 													<td th:text="${item.user.iD}"></td>
 													<td><a
 														th:href="@{/shoeshop/admin/manager/{id}(id=*{item.id})}"
-														class="btn btn-primary">XEM CHI TIẾT</a></td>
+														class="btn btn-primary">XEM CHI TIẾT</a>
+														<a
+														th:href="@{/shoeshop/admin/dilivered/complete/{id}(id=*{item.id})}"
+														class="btn btn-success">HOÀN THÀNH ĐƠN HÀNG</a></td>
+													
+
 												</tr>
 											</tbody>
 										</table>
