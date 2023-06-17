@@ -71,16 +71,16 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr class="text-dark" th:each="item, index : ${invoices}" >
-													<td th:text="${index.index + 1}"  th:style="${index.index + 1} == 1 ? 'font-weight: bold;' : ''"></td>
-													<td th:text="${item.id}" th:style="${index.index + 1} == 1 ? 'font-weight: bold;' : ''"></td>
-													  <td th:text="${#dates.format(item.orderDate, 'yyyy-MM-dd')}" th:style="${index.index + 1} == 1 ? 'font-weight: bold;' : ''"></td>
+												<tr class="text-dark" th:each="item, index : ${invoices}">
+													<td th:text="${index.index + 1}"></td>
+													<td th:text="${item.id}"></td>
+														  <td th:text="${#dates.format(item.orderDate, 'yyyy-MM-dd')}"></td>
 													<td><span th:text="${item.status}"
-														th:classappend="${item.status eq 'delivered'} ? 'badge bg-success' : (${item.status eq 'pending'} ? 'badge bg-warning' : (${item.status eq 'cancelled'} ? 'badge bg-danger' : ''))"></span>
+														th:classappend="${item.status eq 'complete'} ? 'badge bg-success' : (${item.status eq 'pending'} ? 'badge bg-warning' : (${item.status eq 'cancelled'} ? 'badge bg-danger' : ''))"></span>
 													</td>
 
 
-													<td th:text="${item.user.name}" th:style="${index.index + 1} == 1 ? 'font-weight: bold;' : ''"></td>
+													<td th:text="${item.user.name}"></td>
 													<td><a
 														th:href="@{/shoeshop/invoices/invoice/manager/{id}(id=*{item.id})}"
 														class="btn btn-primary">Chi tiết sản phẩm</a> <a

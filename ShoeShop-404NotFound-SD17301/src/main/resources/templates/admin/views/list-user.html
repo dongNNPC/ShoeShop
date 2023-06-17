@@ -39,28 +39,29 @@
 				<div class="container-fluid p-0">
 
 					<div class="mb-3">
-							<h3 class="fw-bold"> DANH SÁCH THÔNG TIN CHO USER</h3>
+						<h3 class="fw-bold">DANH SÁCH THÔNG TIN CHO USER</h3>
 					</div>
-							<form th:action="@{/shoeshop/admin/list-user}"
-						class="form-inline" method="post" style="max-width: 400px">
-						<label for="inputName" class="form-label">Tìm kiếm theo tên</label>
+					<form th:action="@{/shoeshop/admin/list-user}" class="form-inline"
+						method="post" style="max-width: 400px">
+						<label for="inputName" class="form-label">Tìm kiếm theo
+							tên</label>
 						<div class="row mb-3 justify-content-end">
 							<div class="col-8">
 								<input class="form-control" name="keywords"
 									th:value="${keywords}">
 							</div>
 							<div class="col-4">
-								<button class="btn btn-primary" type="submit"
-									>Tìm kiếm</button>
+								<button class="btn btn-primary" type="submit">Tìm
+									kiếm</button>
 							</div>
 						</div>
 					</form>
 					<div class="row">
-						
+
 
 						<div class="col-md-12 col-xl-12">
 							<div class="card">
-								
+
 								<div class="card-body h-100">
 
 									<div class="table-responsive">
@@ -70,30 +71,41 @@
 												<tr class="tr-color text-light">
 													<th>TT</th>
 													<th><a href="#" th:id="'sortLink_iD'"
-														th:onclick="toggleSortOrder('iD')">USERNAME <i class="fas fa-sort"></i></a></th>
+														th:onclick="toggleSortOrder('iD')">USERNAME <i
+															class="fas fa-sort"></i></a></th>
 													<th><a href="#" th:id="'sortLink_name'"
-														th:onclick="toggleSortOrder('name')">NAME <i class="fas fa-sort"></i></a></th>
+														th:onclick="toggleSortOrder('name')">NAME <i
+															class="fas fa-sort"></i></a></th>
 													<th>NUMBER PHONE</th>
 													<th>EMAIL</th>
 													<th>IMAGE</th>
+													<th>STATUS</th>
 													<th>ROLE</th>
 													<th>OPTION</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:each="item, index : ${users}" class="text-dark">
-													<td th:text="*{index.index + 1}"></td>
-												<td th:text="*{item.getID()}"></td>
-													<td th:text="*{item.getName()}"></td>
-													<td th:text="*{item.getPhone()}"></td>
-													<td th:text="*{item.getEmail()}"></td>
-													<td th:text="*{item.getImage()}"></td>
-													<td th:text="*{item.admin ? 'Admin' : 'User'}"></td>
-													<td><a th:href="@{/shoeshop/admin/list-user/edit/{id}(id=*{item.getID()})}" class="btn btn-primary">Edit</a></td>
+												<tr th:each="item, index : ${users}" class="text-dark"
+													th:class="${item.getEmail() == 'admin@gmail.com' ? 'd-none' : ''}">
+													<td th:text="${index.index + 1}"></td>
+													<td th:text="${item.getID()}"></td>
+													<td th:text="${item.getName()}"></td>
+													<td th:text="${item.getPhone()}"></td>
+													<td th:text="${item.getEmail()}"></td>
+													<td ><img th:src="@{/images/avatars/__${item.getImage()}__}" alt="Image" style="max-width: 80px" />
+													</td>
+													<td><span
+														th:text="${item.status ? 'Still working' : 'Stop working'}"
+														th:class="${item.status ? 'badge bg-success' : 'badge bg-danger'}"></span>
+													</td>
+													<td th:text="${item.admin ? 'Admin' : 'User'}"></td>
+													<td><a
+														th:href="@{/shoeshop/admin/list-user/edit/{id}(id=*{item.getID()})}"
+														class="btn btn-primary">Edit</a></td>
 												</tr>
 											</tbody>
 										</table>
-							<div>
+										<div>
 											<!-- Nút First -->
 											<a th:if="${users.hasPrevious()}"
 												th:href="@{/shoeshop/admin/list-user(p=0, keywords=${session.keywords})}"
@@ -126,12 +138,12 @@
 
 
 
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-				</div>
+					</div>
 			</main>
 
 
@@ -159,7 +171,7 @@
 			window.location.href = currentUrl.href;
 		}
 	</script>
-		<script th:src="@{/admin/js/app.js}"></script>
+	<script th:src="@{/admin/js/app.js}"></script>
 
 </body>
 

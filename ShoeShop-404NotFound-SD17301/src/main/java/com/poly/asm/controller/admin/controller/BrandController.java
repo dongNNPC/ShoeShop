@@ -1,6 +1,7 @@
 package com.poly.asm.controller.admin.controller;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,16 @@ public class BrandController {
 	@Autowired
 	SessionService session;
 
+	public static String generateRandomNumber() {
+		Random random = new Random();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 10; i++) {
+			int digit = random.nextInt(10); // Sinh số ngẫu nhiên từ 0 đến 9
+			sb.append(digit);
+		}
+		return sb.toString();
+	}
+
 	@GetMapping("/edit/{id}")
 	public String edit(Model model, @PathVariable("id") String id, @ModelAttribute("user") User user) {
 
@@ -71,6 +82,14 @@ public class BrandController {
 				model.addAttribute("failed", successMessage);
 				return "/admin/views/ui-brand";
 			}
+			if (b.getName().equalsIgnoreCase(brand.getName())) {
+				String successMessage = "Tên thương hiệu đã tồn tại !";
+				model.addAttribute("failed", successMessage);
+				return "/admin/views/ui-brand";
+			}
+		}
+		if (brand.getId().equals("")) {
+			brand.setId(generateRandomNumber());
 		}
 
 		dao.save(brand);
@@ -117,8 +136,16 @@ public class BrandController {
 	}
 
 	@RequestMapping("/delete/{id}")
-	public String delete(@PathVariable("id") String id) {
-		dao.deleteById(id);
+	public String delete(@PathVariable("id") String id, @ModelAttribute("brand") Brand brand, Model model) {
+		try {
+			dao.deleteById(id);
+		} catch (Exception e) {
+			String successMessage = "Thương hiệu này đang có sản phẩm hoặc dữ liệu phiếu nhập kho!";
+			model.addAttribute("failed", successMessage);
+			System.out.println(e);
+			return "/admin/views/ui-brand";
+		}
+
 		return "redirect:/shoeshop/admin/list-brand";
 	}
 

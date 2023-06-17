@@ -62,7 +62,6 @@ public class IndexController {
 			model.addAttribute("loggedIn", true);
 			List<Category> categories = daoCategoryRepository.findAll();
 			model.addAttribute("categories", categories);
-
 			model.addAttribute("user", user);
 			model.addAttribute("image", user.getImage());
 			// Nếu là admin thì admin trên nav sẽ hiện hên
@@ -79,8 +78,7 @@ public class IndexController {
 
 	@RequestMapping("/index")
 	public String index(Model model, @RequestParam("p") Optional<Integer> p, @ModelAttribute User user,
-			@RequestParam("seachIndex") Optional<String> searchIndex
-) {
+			@RequestParam("seachIndex") Optional<String> searchIndex) {
 
 		checkUser(model);
 //		Giỏ hàng
@@ -99,31 +97,27 @@ public class IndexController {
 		model.addAttribute("cart", products3);
 		// tạo biến Tổng ti lưu tạm trong modal
 		model.addAttribute("totalAmount", totalAmount);
-		
+
 		// Đổ tất cả sản phẩm
-	    if (searchIndex.isPresent()) {
-	        String keywords = "%" + searchIndex.get() + "%";
-	        Pageable pageable = PageRequest.of(p.orElse(0), 8, Sort.by(Sort.Direction.DESC, "id"));
-	        Page<Product> page = daoPro.findAllByNameLike(keywords, pageable);
-	        List<Product> items = page.getContent();
-	        model.addAttribute("items", items);
-	        model.addAttribute("currentPage", page.getNumber());
-	        model.addAttribute("totalPages", page.getTotalPages());
-	    } else {
-	        Pageable pageable = PageRequest.of(p.orElse(0), 8, Sort.by(Sort.Direction.DESC, "id"));
-	        Page<Product> page = daoPro.findAll(pageable);
-	        List<Product> items = page.getContent();
-	        model.addAttribute("items", items);
-	        model.addAttribute("currentPage", page.getNumber());
-	        model.addAttribute("totalPages", page.getTotalPages());
-	    }
+		if (searchIndex.isPresent()) {
+			String keywords = "%" + searchIndex.get() + "%";
+			Pageable pageable = PageRequest.of(p.orElse(0), 8, Sort.by(Sort.Direction.DESC, "id"));
+			Page<Product> page = daoPro.findAllByNameLike(keywords, pageable);
+			List<Product> items = page.getContent();
+			model.addAttribute("items", items);
+			model.addAttribute("currentPage", page.getNumber());
+			model.addAttribute("totalPages", page.getTotalPages());
+		} else {
+			Pageable pageable = PageRequest.of(p.orElse(0), 8, Sort.by(Sort.Direction.DESC, "id"));
+			Page<Product> page = daoPro.findAll(pageable);
+			List<Product> items = page.getContent();
+			model.addAttribute("items", items);
+			model.addAttribute("currentPage", page.getNumber());
+			model.addAttribute("totalPages", page.getTotalPages());
+		}
 
 		Product item = new Product();
 		model.addAttribute("item", item);
-
-		
-		
-		
 
 		// đổ 10 sản phẩm mới v
 		Pageable pageableTop10 = PageRequest.of(0, 8, Sort.by(Sort.Direction.DESC, "orderDate"));

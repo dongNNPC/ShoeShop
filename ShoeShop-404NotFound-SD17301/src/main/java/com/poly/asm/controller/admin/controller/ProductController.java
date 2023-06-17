@@ -97,12 +97,10 @@ public class ProductController {
 	public static String generateRandomNumber() {
 		Random random = new Random();
 		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 10; i++) {
 			int digit = random.nextInt(10); // Sinh số ngẫu nhiên từ 0 đến 9
 			sb.append(digit);
 		}
-
 		return sb.toString();
 	}
 
@@ -126,7 +124,13 @@ public class ProductController {
 			model.addAttribute("failed", successMessage);
 			return "/admin/views/ui-product";
 		}
+		if (product.getId().equals("")) {
+			product.setId(generateRandomNumber());
+		}
 		dao.save(product);
+		detailedImage.setProduct(product);
+		detailedImage.setMainImage("Null");
+		daoDetailedImage.save(detailedImage);
 
 		StockReceipt stockReceipt = new StockReceipt();
 		stockReceipt.setBrand(product.getBrand());

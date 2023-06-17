@@ -1,6 +1,7 @@
 package com.poly.asm.controller.admin.controller;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,17 @@ public class CategoryController {
 //		List<category> categorys = dao.findAll();
 //		model.addAttribute("categorys", categorys);
 //		return "/index";
-//	}
+//	
+
+	public static String generateRandomNumber() {
+		Random random = new Random();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 10; i++) {
+			int digit = random.nextInt(10); // Sinh số ngẫu nhiên từ 0 đến 9
+			sb.append(digit);
+		}
+		return sb.toString();
+	}
 
 	@RequestMapping("/edit/{id}")
 	public String edit(Model model, @PathVariable("id") String id, @ModelAttribute("user") User user) {
@@ -70,6 +81,15 @@ public class CategoryController {
 				model.addAttribute("failed", successMessage);
 				return "/admin/views/ui-category";
 			}
+			if (b.getName().equalsIgnoreCase(category.getName())) {
+				String successMessage = "Tên danh mục đã tồn tại !";
+				model.addAttribute("failed", successMessage);
+				return "/admin/views/ui-category";
+			}
+		}
+
+		if (category.getId().equals("")) {
+			category.setId(generateRandomNumber());
 		}
 		dao.save(category);
 		String successMessage = "Create successful";
@@ -117,8 +137,14 @@ public class CategoryController {
 	}
 
 	@RequestMapping("/delete/{id}")
-	public String delete(@PathVariable("id") String id) {
-		dao.deleteById(id);
+	public String delete(@PathVariable("id") String id, @ModelAttribute("category") Category category, Model model) {
+		try {
+			dao.deleteById(id);
+		} catch (Exception e) {
+			String successMessage = "Danh mục này đang có sản phẩm!";
+			model.addAttribute("failed", successMessage);
+			return "/admin/views/ui-category";
+		}
 		return "redirect:/shoeshop/admin/list-category";
 	}
 

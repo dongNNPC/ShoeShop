@@ -131,4 +131,42 @@ public class Controller_Invoices {
 
 	}
 
+//	ĐƠn hàng đã nhận
+	@RequestMapping("/list_invoices_danhan")
+	public String invoiceListDaNhan(Model model, @ModelAttribute("user") User user,
+			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
+			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
+		user = session.get("user");
+		indexController.checkUser(model);
+		String order = request.getParameter("sortOrder");
+
+		Sort sort = Sort.by(Direction.ASC, field.orElse("id"));
+		if (order != null) {
+			if (order.equals("desc")) {
+				sort = Sort.by(Direction.DESC, field.orElse("id"));
+			}
+		}
+
+		session.remove("keywords");
+		String kwords = kw.orElse(session.get("keywords"));
+		session.set("keywords", kwords, 30);
+		model.addAttribute("keywords", session.get("keywords"));
+		Pageable pageable = PageRequest.of(p.orElse(0), 5, sort);
+		List<String> statusList = Arrays.asList("complete", "complete");
+
+		if (kw.isPresent()) {
+			Page<Invoice> page = invoiceRepository.findByUserIdAndIdContainingAndStatus(user.getID(), kwords,
+					statusList, pageable);
+
+			model.addAttribute("invoices", page);
+
+		} else {
+			Page<Invoice> items = invoiceRepository.findByUserIdAndStatus(user.getID(), "complete", "complete",
+					pageable);
+
+			model.addAttribute("invoices", items);
+
+		}
+		return "/views/list-invoices-da-nhan";
+	}
 }

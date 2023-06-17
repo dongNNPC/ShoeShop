@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Categories")
 public class Category {
-	@NotEmpty(message = "{NotEmpty.Category.id}")
+//	@NotEmpty(message = "{NotEmpty.Category.id}")
 	@Id
 	private String id;
 

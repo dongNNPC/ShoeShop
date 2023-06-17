@@ -117,12 +117,28 @@ public class IndexAdminController {
 		List<Integer> yearIntegers = invoiceRepository.getAllYears();
 		model.addAttribute("years", yearIntegers);
 		List<MonthlySalesStatistics> ListSave = new ArrayList<>();
+
 		if (selectedYear != null) {
 			ListSave = invoiceRepository.getMonthlySalesStatistics(selectedYear);
 
 		} else {
 			ListSave = invoiceRepository.getMonthlySalesStatistics(2023);
 		}
+		// Kiểm tra và thêm các tháng không có dữ liệu
+		for (int month = 1; month <= 12; month++) {
+			boolean monthExists = false;
+			for (MonthlySalesStatistics stats : ListSave) {
+				if (stats.getMonth() == month) {
+					monthExists = true;
+					break;
+				}
+			}
+			if (!monthExists) {
+				MonthlySalesStatistics emptyMonthStats = new MonthlySalesStatistics(month, 0);
+				ListSave.add(emptyMonthStats);
+			}
+		}
+
 		model.addAttribute("yearUpdate", selectedYear);
 
 		List<Integer> salesData = new ArrayList<>();
@@ -130,9 +146,8 @@ public class IndexAdminController {
 		for (MonthlySalesStatistics monthlySalesStatistics : ListSave) {
 			salesData.add((int) monthlySalesStatistics.getCount());
 			System.out.println(monthlySalesStatistics.getMonth() + "tháng");
-			System.out.println(salesData + "sssssssssssss");
+			System.out.println(salesData + "Số đã bán");
 		}
-
 		model.addAttribute("salesData", salesData);
 
 //		Biều đồ tròn
@@ -165,16 +180,31 @@ public class IndexAdminController {
 //	Thống kê tháng
 
 		List<MonthlySalesStatistics> stockIntegers = stockReceiptRepository.getMonthlyStockStatistics();
-//		List<Integer> quatityStockIntegers = new ArrayList<>();
 		List<Integer> barData = new ArrayList<>();
-
-		for (MonthlySalesStatistics monthlySalesStatistics : stockIntegers) {
+		List<MonthlySalesStatistics> updatedStockIntegers = new ArrayList<>();
+		// Kiểm tra và thêm các tháng không có dữ liệu vào danh sách mới
+		for (int month = 1; month <= 12; month++) {
+			boolean monthExists = false;
+			for (MonthlySalesStatistics stats : stockIntegers) {
+				if (stats.getMonth() == month) {
+					monthExists = true;
+					updatedStockIntegers.add(stats);
+					break;
+				}
+			}
+			if (!monthExists) {
+				MonthlySalesStatistics emptyMonthStats = new MonthlySalesStatistics(month, 0);
+				updatedStockIntegers.add(emptyMonthStats);
+			}
+		}
+		// Tạo danh sách barData từ danh sách updatedStockIntegers
+		for (MonthlySalesStatistics monthlySalesStatistics : updatedStockIntegers) {
 			barData.add((int) monthlySalesStatistics.getCount());
 		}
+
 		model.addAttribute("barData", barData);
 
 		// đổ dữ liệu cho userOderPayment
-
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("status", status);
 		model.addAttribute("endDate", endDate);
@@ -271,6 +301,41 @@ public class IndexAdminController {
 	}
 
 	@RequestMapping("/delivered")
+	public String invoicedelivered(Model model, @ModelAttribute("user") User user,
+			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
+			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
+		model.addAttribute("delivered", "active");
+		notification(model);
+		indexController.checkUser(model);
+		String order = request.getParameter("sortOrder");
+
+		Sort sort = Sort.by(Direction.ASC, field.orElse("id"));
+		if (order != null) {
+			if (order.equals("desc")) {
+				sort = Sort.by(Direction.DESC, field.orElse("id"));
+			}
+		}
+
+		session.remove("keywords");
+		String kwords = kw.orElse(session.get("keywords"));
+		session.set("keywords", kwords, 30);
+		model.addAttribute("keywords", session.get("keywords"));
+		Pageable pageable = PageRequest.of(p.orElse(0), 5, sort);
+
+		if (kw.isPresent()) {
+			Page<Invoice> page = invoiceRepository.findByStatusAndIdContaining("delivered", "%" + kwords + "%",
+					pageable);
+			model.addAttribute("invoices", page);
+		} else {
+			Page<Invoice> items = invoiceRepository.findByStatus("delivered", pageable);
+			model.addAttribute("invoices", items);
+		}
+
+		indexController.checkUser(model);
+		return "/admin/views/manager-invoice-delivered";
+	}
+
+	@RequestMapping("/delivered-update")
 	public String invoicedeliveredg(Model model, @ModelAttribute("user") User user,
 			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
 			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
@@ -300,6 +365,8 @@ public class IndexAdminController {
 			Page<Invoice> items = invoiceRepository.findByStatus("delivered", pageable);
 			model.addAttribute("invoices", items);
 		}
+		String successMessage = "Hoàn thành đơn hàng!";
+		model.addAttribute("successMessage", successMessage);
 
 		indexController.checkUser(model);
 		return "/admin/views/manager-invoice-delivered";
@@ -339,6 +406,40 @@ public class IndexAdminController {
 		return "/admin/views/manager-invoice-cancelled";
 	}
 
+	@RequestMapping("/complete")
+	public String complete(Model model, @ModelAttribute("user") User user,
+			@RequestParam("keywords") Optional<String> kw, @RequestParam("p") Optional<Integer> p,
+			@RequestParam("field") Optional<String> field, HttpServletRequest request) {
+		model.addAttribute("complete", "active");
+		notification(model);
+		indexController.checkUser(model);
+		String order = request.getParameter("sortOrder");
+
+		Sort sort = Sort.by(Direction.ASC, field.orElse("id"));
+		if (order != null) {
+			if (order.equals("desc")) {
+				sort = Sort.by(Direction.DESC, field.orElse("id"));
+			}
+		}
+
+		session.remove("keywords");
+		String kwords = kw.orElse(session.get("keywords"));
+		session.set("keywords", kwords, 30);
+		model.addAttribute("keywords", session.get("keywords"));
+		Pageable pageable = PageRequest.of(p.orElse(0), 5, sort);
+
+		if (kw.isPresent()) {
+			Page<Invoice> page = invoiceRepository.findByStatusAndIdContaining("complete", "%" + kwords + "%",
+					pageable);
+			model.addAttribute("invoices", page);
+		} else {
+			Page<Invoice> items = invoiceRepository.findByStatus("complete", pageable);
+			model.addAttribute("invoices", items);
+		}
+
+		indexController.checkUser(model);
+		return "/admin/views/manager-invoice-complete";
+	}
 //	@PostMapping("/ui-user")
 //	public String PostUIUsetAdmin(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model) {
 //
@@ -351,7 +452,9 @@ public class IndexAdminController {
 	public String listUIUsetAdmin(@ModelAttribute("user") User user, Model model) {
 		model.addAttribute("ui_user", "active");
 		notification(model);
-		indexController.checkUser(model);
+//		user = indexController.checkUser(model);
+		model.addAttribute("password", user.getPassword());
+		model.addAttribute("img", user.getImage());
 		return "/admin/views/ui-user";
 	}
 
