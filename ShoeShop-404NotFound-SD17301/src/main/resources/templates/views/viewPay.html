@@ -31,11 +31,12 @@
 .table th {
 	border-bottom: none;
 }
+
 .table td {
 	border-bottom: none;
 	font-style: italic;
-	
 }
+
 .custom-heading {
 	color: black;
 	font-weight: normal;
@@ -76,10 +77,13 @@
 						</tr>
 
 
-						<tr  th:each="item, index : ${cart}">
+						<tr th:each="item, index : ${cart}">
 							<th class=" custom-heading">Sản phẩm :</th>
-							<th class=" custom-heading" >sl :  <span th:text="${item.quantity}" ></span></th>
-							<th class="item-price text-end custom-heading" th:text="${item.product.price * item.quantity + ' VND'}" > </th>
+							<th class=" custom-heading">sl : <span
+								th:text="${item.quantity}"></span></th>
+							<th class="item-price text-end custom-heading"
+								th:text="${item.product.price * item.quantity + ' VND'}">
+							</th>
 							<th style="max-width: 100px" class=" text-end  text-truncate"
 								th:text="${item.product.name}"></th>
 						</tr>
@@ -89,13 +93,13 @@
 							<th class=" custom-heading">Tổng tiền:</th>
 							<th></th>
 							<th></th>
-							<th class="text-end"><span id="totalPrice"></span>
-								</th>
+							<th class="text-end"><span id="totalPrice"></span></th>
 						</tr>
 						<tr>
 							<td></td>
 							<td></td>
-							<td class="text-center text-secondary">Cám ơn quý khác đã mua hàng</td>
+							<td class="text-center text-secondary">Cám ơn quý khác đã
+								mua hàng</td>
 						</tr>
 
 					</thead>
@@ -108,37 +112,84 @@
 
 
 		</div>
+
 		<div style="margin-right: 150px" class="mt-1">
-			<a th:href="@{/shoeshop/invoices/cancelled/{id}(id=${iDinvoice})}"
-				class="btn btn-danger float-end m-1" type="button">HỦY ĐƠN</a> <a
-				th:href="@{/shoeshop/invoices/list_invoices}"
+			<button id="deletebrandButton" type="button"
+				class="btn btn-danger float-end m-1">
+				Hủy đơn <i class="fas fa-trash-alt"></i>
+			</button>
+			<a th:href="@{/shoeshop/invoices/list_invoices}"
 				class="btn btn-secondary float-end m-1" type="button">TRỞ LẠI</a>
 
 		</div>
 	</main>
 
-	 <script th:inline="javascript">
+	<div class="modal fade" id="deleteConfirmationModal" tabindex="-1"
+		aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteConfirmationModalLabel">Xác
+						nhận xóa danh mục</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">Bạn có chắc chắn muốn hủy đơn bàng này
+					này?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Hủy</button>
+					<a th:href="@{/shoeshop/invoices/cancelled/{id}(id=${iDinvoice})}"
+						id="deletebrandLink" class="btn btn-danger"> hủy đơn 
+						
+					</a>
+					
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:inline="javascript">
 		setTimeout(function() {
 			document.getElementById("successDialog").style.display = "none";
 		}, 1000); // 5000 milliseconds = 5 seconds
-		
+
 		// Lấy giá trị từ sessionStorage
-	    var totalPrice = sessionStorage.getItem('totalPrice');
-		
+		var totalPrice = sessionStorage.getItem('totalPrice');
+
 		//xử lý truyền số lượng qua
-	    var quantity = sessionStorage.getItem('quantity');
-	    var itemQuantityElement = document.querySelector('.item-quantity');
-	    itemQuantityElement.textContent = quantity;
+		var quantity = sessionStorage.getItem('quantity');
+		var itemQuantityElement = document.querySelector('.item-quantity');
+		itemQuantityElement.textContent = quantity;
 
+		// Kiểm tra nếu giá trị tổng giá là null hoặc undefined, gán giá trị mặc định là 0 VND
+		if (!totalPrice) {
+			totalPrice = '0 VND';
+		}
 
-	    // Kiểm tra nếu giá trị tổng giá là null hoặc undefined, gán giá trị mặc định là 0 VND
-	    if (!totalPrice) {
-	        totalPrice = '0 VND';
-	    }
-
-	    // Gán giá trị vào phần tử HTML
-	    document.getElementById('totalPrice').textContent = totalPrice.toLocaleString() + ' VND'
+		// Gán giá trị vào phần tử HTML
+		document.getElementById('totalPrice').textContent = totalPrice
+				.toLocaleString()
+				+ ' VND'
 	</script>
+
+	<script th:inline="javascript">
+		//Gắn sự kiện click cho nút xóa
+		document.getElementById("deletebrandButton").addEventListener(
+				"click",
+				function(event) {
+					event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+					var modal = new bootstrap.Modal(document
+							.getElementById("deleteConfirmationModal"));
+					modal.show();
+				});
+	</script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+		integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+		crossorigin="anonymous"></script>
+
 	<!-- Bootstrap JavaScript Libraries -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

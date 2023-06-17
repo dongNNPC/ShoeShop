@@ -29,6 +29,7 @@ import com.poly.asm.dao.StockReceiptRepository;
 import com.poly.asm.dao.UserRepository;
 import com.poly.asm.model.DetailedInvoice;
 import com.poly.asm.model.Invoice;
+import com.poly.asm.model.Product;
 import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
 
@@ -123,10 +124,23 @@ public class Controller_Invoices {
 	@GetMapping("/cancelled/{id}")
 	public String edit(Model model, @PathVariable("id") String id, @ModelAttribute("user") User user) {
 		indexController.checkUser(model);
-
+		List<Product> products = daoProduct.findAll();
+		List<DetailedInvoice> detailedInvoices = daodetailedInvoiceRepository.findAll();
 		Invoice invoice = invoiceRepository.findById(id).get();
 		invoice.setStatus("cancelled");
 		invoiceRepository.save(invoice);
+
+		for (DetailedInvoice detailedInvoice : detailedInvoices) {
+			if (detailedInvoice.getInvoice().getId().equals(invoice.getId())) {
+				for (Product product : products) {
+					if (detailedInvoice.getProduct().getId().equals(product.getId())) {
+						product.setQuantity(product.getQuantity() + detailedInvoice.getQuantity());
+						daoProduct.save(product);
+					}
+					;
+				}
+			}
+		}
 		return "redirect:/shoeshop/invoices/list_invoices";
 
 	}

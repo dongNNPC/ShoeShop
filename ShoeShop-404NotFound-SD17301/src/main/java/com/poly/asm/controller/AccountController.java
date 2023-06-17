@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.poly.asm.config.short_method.Mail;
@@ -133,6 +134,7 @@ public class AccountController {
 			if (user.getEmail().equalsIgnoreCase(user2.getEmail())) {
 				if (user.getPassword().equalsIgnoreCase(user2.getPassword())) {
 					session.set("user", user2, 30);
+
 //					if (user2.isAdmin()) {
 //						
 ////						User sUser = session.get("user");
@@ -429,6 +431,13 @@ public class AccountController {
 		u.setPassword(user.getPassword());
 		dao.save(u);
 		return "redirect:/shoeshop/login";
+
+	}
+
+	@ResponseBody
+	@RequestMapping("/band")
+	public String band() {
+		return "tài khoản bạn đã bị khóa";
 
 	}
 }

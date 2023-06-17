@@ -80,9 +80,11 @@ public class PersonalPageController {
 			System.out.println(rs.toString());
 			return "/account/personalpage";
 		}
+
 		session.remove("user");
 		session.set("user", user, 30);
 		model.addAttribute("image", user.getImage());
+		user.setStatus(true);
 		dao.save(user);
 		indexController.checkUser(model);
 		model.addAttribute("message", "cập nhật thành công");
