@@ -2,9 +2,9 @@
 <div class="container py-5" id="${#ids.seq('itemBanChayNhat')}" >
 	<div class="row justify-content-center" >
 		<div class="text-center">
-			<h1 class=""># SẢN PHẨM BÁN CHẠY NHẤT</h1>
-			<h6 class="text-secondary">Top những sản phẩm được mua nhiều
-				nhất</h6>
+			<h1 class=""># SẢN PHẨM MỚI VỀ</h1>
+			<h6 class="text-secondary"> Sẽ mang đễn những trải nghiệm vô cùng tuyệt vời
+				</h6>
 		</div>
 
 		  <div class="col-12 col-lg-3" th:each="product : ${newProductTop10}">
@@ -26,7 +26,7 @@
                         </p>
                         <p class="text-center text-dark">
                             <label style="color: black">
-                                Giá: <del class="text-secondary text-decoration-none text-decoration-line-through">1.000.00</del>₫<i
+                                Giá: <i
                                         class="text-danger fw-bold">
                                     <label th:text="${product.price}"></label>₫
                                 </i>
@@ -56,8 +56,7 @@
                         </p>
                         <p class="text-center text-dark">
                             <label style="color: black">
-                                Giá: <del class="text-secondary text-decoration-none text-decoration-line-through">1.000.00</del>₫<i
-                                        class="text-danger fw-bold">
+                                Giá: <i class="text-danger fw-bold">
                                     <label th:text="${product.price}"></label>₫
                                 </i>
                                 <a th:href="@{/cart/add/__${product.id}__}" class="IMGItem me-auto text-dark"
