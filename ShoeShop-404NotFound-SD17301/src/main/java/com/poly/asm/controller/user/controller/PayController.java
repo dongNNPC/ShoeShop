@@ -1,5 +1,7 @@
 package com.poly.asm.controller.user.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -104,6 +106,7 @@ public class PayController {
 	public String createPay(Model model, @ModelAttribute("product") Product product,
 			@RequestParam(name = "itemQuantity", defaultValue = "false") Integer quantity, HttpSession sessionn) {
 		indexController.checkUser(model);
+
 		List<Product> products = new ArrayList<>(cart.getItems());
 		List<Product> products2 = Pdao.findAll();
 		List<Product> products3 = new ArrayList<>();
@@ -111,13 +114,24 @@ public class PayController {
 		List<Product> products4 = Pdao.findAll();
 
 		double totalAmount = 0.0;
+//		Lấy time hiện tại
 
+		LocalDate localDate = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String formattedDate = localDate.format(formatter);
+
+//Lấy time hiện tại nhưng bẳng DATE
 		Date currentDate = new Date();
 		User user = session.get("user");
 		Invoice invoice = new Invoice();
-
+		String yearString = formattedDate.replace("-", "");
+		String hourString = String.valueOf(currentDate.getHours());
+		String minuteString = String.valueOf(currentDate.getMinutes());
+		String secondString = String.valueOf(currentDate.getSeconds());
+		String userID = String.valueOf(user.getID());
+		String result = yearString.concat(hourString).concat(minuteString).concat(secondString).concat(userID);
 // invoice
-		invoice.setId(generateRandomNumber());
+		invoice.setId(result);
 		invoice.setStatus("pending");
 		invoice.setOrderDate(currentDate);
 		invoice.setUser(user);
@@ -127,7 +141,6 @@ public class PayController {
 		for (Product p1 : products) {
 			for (Product p2 : products2) {
 				if (p1.getId().equalsIgnoreCase(p2.getId())) {
-//					p2.setQuantity(1);
 					products3.add(p2);
 					totalAmount += p2.getPrice();
 
