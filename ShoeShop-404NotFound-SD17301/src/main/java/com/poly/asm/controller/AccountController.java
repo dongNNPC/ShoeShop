@@ -437,6 +437,7 @@ public class AccountController {
 	@ResponseBody
 	@RequestMapping("/band")
 	public String band() {
+		session.remove("user");
 		return "tài khoản bạn đã bị khóa";
 
 	}

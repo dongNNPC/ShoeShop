@@ -83,7 +83,7 @@
 													<td th:text="${index.index + 1}"></td>
 													<td th:text="${item.id}"></td>
 												<td th:text="${#dates.format(item.orderDate, 'yyyy-MM-dd')}"></td>
-											<td><span th:text="${item.status}" class="badge bg-success"></span><i class="fas fa-check-double"></i></td>
+											<td><span th:text="${item.status}" class="badge bg-success "></span></td>
 													<td th:text="${item.user.iD}"></td>
 													<td><a
 														th:href="@{/shoeshop/admin/manager/{id}(id=*{item.id})}"

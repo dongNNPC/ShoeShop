@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,7 +34,15 @@ public class Notification {
 	@Autowired
 	private Mail mail;
 
-	@RequestMapping("/notification")
+	@GetMapping("/notification")
+	public String mailget(Model model, @RequestParam(name = "body", required = false) String info) {
+		indexController.checkUser(model);
+		indexAdminController.notification(model);
+
+		return "admin/views/notification";
+	}
+
+	@PostMapping("/notification")
 	public String mail(Model model, @RequestParam(name = "body", required = false) String info) {
 		indexController.checkUser(model);
 		indexAdminController.notification(model);
@@ -63,13 +73,14 @@ public class Notification {
 //				mailerService2.queue(mailInfo2);
 				// Delay trong 1 giây (1000 milliseconds)
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 
 		}
+		model.addAttribute("messSuccess", "Notice to all users");
 
 		return "admin/views/notification";
 	}
