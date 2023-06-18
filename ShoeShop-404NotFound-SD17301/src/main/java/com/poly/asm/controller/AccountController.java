@@ -284,7 +284,7 @@ public class AccountController {
 			@RequestParam("password") String password) {
 		User a = session.get("user");
 		if (a.getPassword().equals(user.getPassword())) {
-		
+
 			System.out.println(user.getPassword());
 			System.out.println("thành công");
 
@@ -311,8 +311,8 @@ public class AccountController {
 
 	// phương thức thay đổi mật khẩu mới
 	@PostMapping("/ChangeRePass-Change")
-	public String PassCheck(@Valid @ModelAttribute("user") User user,
-			Model model, BindingResult result, @RequestParam("confirmpassword") String confirmpassword) {
+	public String PassCheck(@ModelAttribute("user") User user, Model model, BindingResult result,
+			@RequestParam("confirmpassword") String confirmpassword) {
 
 		if (result.hasErrors()) {
 			System.out.println(result.toString());
