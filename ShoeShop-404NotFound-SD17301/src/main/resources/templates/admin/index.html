@@ -267,18 +267,23 @@
 							<div class="card flex-fill ">
 								<form action="/shoeshop/admin/index" method="GET">
 									<div class=" row">
-
-										<h5 class="card-title mb-0 mt-1 ml-2 text-end" >Bảng chi tiết thông tin người dùng đặt hàng &ensp;</h5>
+										<div class="col-6 text-start">
+										<i class=" text-danger fw-bold" th:text="${errorMessageselectedStartDate}"></i> <br>
+											<i class=" text-danger fw-bold" th:text="${errorMessageselectedEndDate}"></i>
+											
+										</div>
+										
+										<h5 class="col-6 card-title mb-0 mt-1 ml-2 text-end" >Bảng chi tiết thông tin người dùng đặt hàng &ensp;</h5>
 
 										<div class="mb-3 col-2" style="margin-left: 5px">
-											<label for="startDate" class="form-label">Purchase
-												Date :</label> <input type="date" class="form-control"
+											<label for="startDate" class="form-label">Ngày mua
+												 :</label> <input type="date" class="form-control"
 												name="startDate" id="startDate" aria-describedby="helpId"
 												placeholder=""
 												th:value="${startDate != null ? #dates.format(startDate, 'yyyy-MM-dd') : ''}">
 										</div>
 										<div class="mb-3 col-2">
-											<label for="endDate" class="form-label">Delivery Date
+											<label for="endDate" class="form-label">Ngày giao 
 												:</label> <input type="date" class="form-control" name="endDate"
 												id="endDate" aria-describedby="helpId" placeholder=""
 												th:value="${endDate != null ? #dates.format(endDate, 'yyyy-MM-dd') : ''}">
@@ -294,19 +299,19 @@
 												</a>
 										</div>
 
-										<div class="col-3"></div>
-										<div class="mb-3 col-2 mt-4 justify-content-end">
+										<div class="col-2"></div>
+										<div class="mb-3 col-3 mt-4 justify-content-end">
 
-											<select class="form-select form-select-lg" name="status"
-												id="status" >
-												<option selected >Select status</option>
-												<option value="Pending" >Pending</option>
-												<option value="Delivered">Delivered</option>
-												<option value="Cancelled">Cancelled</option>
+											<select class="form-select form-select-lg" name="invoiceStatus"
+												id="invoiceStatus" >
+												<option selected >Chọn trạng thái</option>
+												<option value="pending" >Pending</option>
+												<option value="delivered">Delivered</option>
+												<option value="cancelled">Cancelled</option>
 											</select>
 
 											<button type="submit" class="btn btn-outline-primary"
-												style="margin-left: 150px; margin-top: -60px">
+												style="margin-left: 230px; margin-top: -60px">
 												<i class="fa-solid fa-magnifying-glass"></i>
 											</button>
 
@@ -319,11 +324,11 @@
 								<table class="table table-hover my-0" style="max-height: 500px">
 									<thead>
 										<tr>
-											<th>User Name</th>
-											<th class="d-none d-xl-table-cell">Purchase Date</th>
-											<th class="d-none d-xl-table-cell">Delivery Date</th>
-											<th>Status</th>
-											<th class="d-none d-md-table-cell">Payment</th>
+											<th>Tên khách hàng</th>
+											<th class="d-none d-xl-table-cell">Ngày mua</th>
+											<th class="d-none d-xl-table-cell">Ngày giao</th>
+											<th>Trạng thái</th>
+											<th class="d-none d-md-table-cell">Phương thức thanh toán</th>
 
 										</tr>
 									</thead>

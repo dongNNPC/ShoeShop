@@ -39,7 +39,7 @@ public interface DetailedInvoiceRepository extends JpaRepository<DetailedInvoice
 	        "JOIN User u ON u.id = i.user.id " +
 	        "JOIN Cart c ON c.user.id = u.id " +
 	        "WHERE (:status IS NULL OR i.status = :status)")
-	Page<UserOderPayment> getUserOrderByStatus(@Param("status") String status, Pageable pageable);
+	Page<UserOderPayment> getUserOrderByStatus(@Param("status") String invoiceStatus, Pageable pageable);
 	
 	//tìm kiếm từ ngày đến ngày 
 	@Query("SELECT new com.poly.asm.model.UserOderPayment"

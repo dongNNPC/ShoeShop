@@ -1,5 +1,7 @@
 package com.poly.asm.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -86,7 +88,7 @@ public class IndexAdminController {
 	@RequestMapping("/index")
 	public String indexAdmin(Model model, @ModelAttribute("user") User user, @RequestParam(defaultValue = "0") int page,
 			@RequestParam(name = "year", required = false) Integer selectedYear,
-			@RequestParam(name = "status", required = false) String status,
+			@RequestParam(name = "invoiceStatus", required = false) String invoiceStatus,
 			@RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
 			@RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate
 
@@ -204,8 +206,24 @@ public class IndexAdminController {
 		model.addAttribute("barData", barData);
 
 		// đổ dữ liệu cho userOderPayment
+		//sử lý không cho chọnn ngày đặt hàng sau hôm nay 
+	    LocalDate PurchaseDate = LocalDate.now();
+		 LocalDate selectedStartDate = startDate != null ? startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate() : null;
+		    if (selectedStartDate != null && selectedStartDate.isAfter(PurchaseDate)) {
+		        model.addAttribute("errorMessageselectedStartDate", "Vui lòng chọn ngày mua trước ngày hôm nay");
+		       // hoặc trả về view tương ứng
+		    }  
+		//sử lý không cho chọn ngày giao trước hôm nay 
+		 LocalDate currentDate = LocalDate.now();
+		 LocalDate selectedEndDate = endDate != null ? endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate() : null;
+		    if (selectedEndDate != null && selectedEndDate.isBefore(currentDate)) {
+		        model.addAttribute("errorMessageselectedEndDate", "Vui lòng chọn ngày giao hàng sau hôm nay");
+		     
+		       // hoặc trả về view tương ứng
+		    }
+		 
 		model.addAttribute("startDate", startDate);
-		model.addAttribute("status", status);
+		model.addAttribute("status", invoiceStatus);
 		model.addAttribute("endDate", endDate);
 
 		int pageSize = 100;
@@ -215,8 +233,9 @@ public class IndexAdminController {
 		if (startDate != null && endDate != null) {
 			userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPayWithDateRange(startDate, endDate,
 					pageable);
-		} else if (status != null && !status.isEmpty()) {
-			userOrderPaymentPage = daodetailedInvoiceRepository.getUserOrderByStatus(status, pageable);
+			
+		} else if (invoiceStatus != null && !invoiceStatus.isEmpty()) {
+			userOrderPaymentPage = daodetailedInvoiceRepository.getUserOrderByStatus(invoiceStatus, pageable); 
 
 		} else {
 			userOrderPaymentPage = daodetailedInvoiceRepository.getUserOderPay(pageable);

@@ -60,7 +60,7 @@ public class ShoppingCartController {
 				}
 			}
 		}
-
+		
 		model.addAttribute("cart", products3);
 		// Check nếu cart rỗng sẽ ẩn đi button clear cart
 		boolean hasProducts = !cart.getItems().isEmpty();
