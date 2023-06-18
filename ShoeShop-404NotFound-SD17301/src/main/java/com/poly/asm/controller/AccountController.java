@@ -284,23 +284,18 @@ public class AccountController {
 			@RequestParam("password") String password) {
 		User a = session.get("user");
 		if (a.getPassword().equals(user.getPassword())) {
+		
 			System.out.println(user.getPassword());
 			System.out.println("thành công");
 
 			return "redirect:/shoeshop/ChangeRePass-Change";
 		} else {
 //			System.out.println("mật khẩu sai");
-			model.addAttribute("message", "mat khau sai");
+			String successMessage = "Mật khẩu không trùng nhau!";
+			model.addAttribute("failed", successMessage);
 
 		}
-//		List<User> users = dao.findAll();
-//		for (User user2 : users) {
-//			if (dao.findAll().equals(user.getID())) {
-//				if (dao.findAll().get(0).getPassword().equals(user.getPassword())) {
-//					return "redirect:/shoeshop/ChangeRePass-Change";
-//				}
-//			}
-//		}
+
 		return "/account/ChangePass";
 	}
 
@@ -316,8 +311,8 @@ public class AccountController {
 
 	// phương thức thay đổi mật khẩu mới
 	@PostMapping("/ChangeRePass-Change")
-	public String PassCheck(@ModelAttribute("user") User user, @RequestParam("confirmpassword") String confirmpassword,
-			Model model, BindingResult result) {
+	public String PassCheck(@Valid @ModelAttribute("user") User user,
+			Model model, BindingResult result, @RequestParam("confirmpassword") String confirmpassword) {
 
 		if (result.hasErrors()) {
 			System.out.println(result.toString());
