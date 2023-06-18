@@ -92,7 +92,18 @@ public class AccountController {
 
 		return success;
 	}
-
+	
+	
+	@GetMapping("/oauth2/authorization/google")
+    public String googleLogin() {
+        return "redirect:/oauth2/authorize/google"; // Redirect to Google Sign-In
+    }
+    
+    @GetMapping("/oauth2/authorization/google/callback")
+    public String googleCallback() {
+        return "redirect:/shoeshop/index"; // Redirect to the login success URL
+    }
+	
 	@PostMapping("/login")
 	public String loginCheck(@Valid @ModelAttribute("user") User user, BindingResult rs, Model model,
 			@RequestParam(name = "remember", defaultValue = "false") boolean remember,
