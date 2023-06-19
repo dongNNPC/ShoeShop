@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poly.asm.config.short_method.History;
 import com.poly.asm.config.short_method.Mail;
 import com.poly.asm.controller.IndexController;
 import com.poly.asm.dao.DetailedInvoiceRepository;
 import com.poly.asm.dao.InvoiceRepository;
 import com.poly.asm.dao.ProductRepository;
+import com.poly.asm.dao.UserHistoryRepository;
 import com.poly.asm.dao.UserRepository;
 import com.poly.asm.model.DetailedInvoice;
 import com.poly.asm.model.Invoice;
@@ -47,6 +49,9 @@ public class PayController {
 	ProductRepository Pdao; // sản phẩm
 
 	@Autowired
+	private UserHistoryRepository historyRepository;
+
+	@Autowired
 	private IndexController indexController;
 
 	@Autowired
@@ -64,6 +69,9 @@ public class PayController {
 
 	@Autowired
 	private Mail mail;
+
+	@Autowired
+	private History historyShort;
 
 	@GetMapping("/thanhtoan")
 	public String thanhtoan(@ModelAttribute("user") User user, Model model,
@@ -105,14 +113,12 @@ public class PayController {
 	}
 
 	@PostMapping("/thanhtoan")
-	public String createPay(@Valid @ModelAttribute("product") Product product,BindingResult rs,Model model,
+	public String createPay(@Valid @ModelAttribute("product") Product product, BindingResult rs, Model model,
 			@RequestParam(name = "itemQuantity", defaultValue = "false") Integer quantity, HttpSession sessionn) {
 		indexController.checkUser(model);
 
-		//bắt lỗi
-		
-			
-		
+		// bắt lỗi
+
 		List<Product> products = new ArrayList<>(cart.getItems());
 		List<Product> products2 = Pdao.findAll();
 		List<Product> products3 = new ArrayList<>();
@@ -178,6 +184,10 @@ public class PayController {
 			}
 		}
 
+//Lưu lịch sử
+		String noteString = "Thanh toán hóa đơn " + invoice.getId();
+		historyShort.setHistory(noteString, user);
+
 //		Gửi mail
 
 		MailInfo2 mailInfo2 = new MailInfo2();
@@ -214,15 +224,19 @@ public class PayController {
 //		Optional<Invoice> invoice = invoiceRepository.findById(iDInvoice);
 		List<DetailedInvoice> detailedInvoices = DetailedInvoiceRepository.findAll();
 		List<DetailedInvoice> detailedInvoices2 = new ArrayList<>();
+		List<Product> products = productRepository.findByInvoiceId(iDInvoice);
 		for (DetailedInvoice detailedInvoice : detailedInvoices) {
 			if (detailedInvoice.getInvoice().getId().equals(iDInvoice)) {
 				detailedInvoices2.add(detailedInvoice);
 			}
 		}
+		for (DetailedInvoice detailedInvoice : detailedInvoices2) {
+			for (Product p1 : products) {
+				if (detailedInvoice.getProduct().getId().equalsIgnoreCase(p1.getId())) {
+					totalAmount += detailedInvoice.getQuantity() * p1.getPrice();
+				}
+			}
 
-		List<Product> products = productRepository.findByInvoiceId(iDInvoice);
-		for (Product p1 : products) {
-			totalAmount += p1.getPrice();
 		}
 
 		model.addAttribute("iDinvoice", iDInvoice);

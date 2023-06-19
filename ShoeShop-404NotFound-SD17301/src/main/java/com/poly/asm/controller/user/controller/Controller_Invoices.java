@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.poly.asm.config.short_method.History;
 import com.poly.asm.controller.IndexController;
 import com.poly.asm.dao.BrandRepository;
 import com.poly.asm.dao.CategoryRepository;
@@ -26,6 +27,7 @@ import com.poly.asm.dao.DetailedInvoiceRepository;
 import com.poly.asm.dao.InvoiceRepository;
 import com.poly.asm.dao.ProductRepository;
 import com.poly.asm.dao.StockReceiptRepository;
+import com.poly.asm.dao.UserHistoryRepository;
 import com.poly.asm.dao.UserRepository;
 import com.poly.asm.model.DetailedInvoice;
 import com.poly.asm.model.Invoice;
@@ -69,6 +71,12 @@ public class Controller_Invoices {
 
 	@Autowired
 	private IndexController indexController;
+
+	@Autowired
+	private History historyShort;
+
+	@Autowired
+	private UserHistoryRepository historyRepository;
 
 	@RequestMapping("/list_invoices")
 	public String invoiceList(Model model, @ModelAttribute("user") User user,
@@ -141,6 +149,11 @@ public class Controller_Invoices {
 				}
 			}
 		}
+//		Lưu lịch sử
+		user = session.get("user");
+		String noteString = "Đã Hủy đơn: " + invoice.getId();
+		historyShort.setHistory(noteString, user);
+
 		return "redirect:/shoeshop/invoices/list_invoices";
 
 	}

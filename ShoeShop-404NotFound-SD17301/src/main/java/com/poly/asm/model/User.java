@@ -52,5 +52,8 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	List<Invoice> invoices;
 
+	@OneToMany(mappedBy = "user")
+	List<UserHistory> userHistories;
+
 	// Các trường khác và getter/setter
 }

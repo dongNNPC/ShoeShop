@@ -71,6 +71,10 @@
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							th:href="@{/shoeshop/invoices/list_invoices_danhan}"
 							style="color: #686868" href=""> Đơn Hàng Đã Nhận </a></li>
+							
+							<li th:if="${loggedIn}"><a class="dropdown-item"
+							th:href="@{/shoeshop/invoices/history}"
+							style="color: #686868" href=""> Lịch sử hoạt động </a></li>
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							th:href="@{/shoeshop/log-out}" style="color: #686868" href="">
 								Đăng xuất </a></li>

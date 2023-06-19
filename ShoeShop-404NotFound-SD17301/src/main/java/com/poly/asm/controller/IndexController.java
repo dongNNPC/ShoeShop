@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,11 +22,13 @@ import com.poly.asm.dao.CartRepository;
 import com.poly.asm.dao.CategoryRepository;
 import com.poly.asm.dao.InvoiceRepository;
 import com.poly.asm.dao.ProductRepository;
+import com.poly.asm.dao.UserHistoryRepository;
 import com.poly.asm.model.Cart;
 import com.poly.asm.model.Category;
 import com.poly.asm.model.NewProductTop10;
 import com.poly.asm.model.Product;
 import com.poly.asm.model.User;
+import com.poly.asm.model.UserHistory;
 import com.poly.asm.service.SessionService;
 import com.poly.asm.service.ShoppingCartService;
 
@@ -51,6 +54,8 @@ public class IndexController {
 
 	@Autowired
 	SessionService session;
+	@Autowired
+	UserHistoryRepository historyRepository;
 
 	public User checkUser(Model model) {
 		User user = new User();
@@ -181,6 +186,17 @@ public class IndexController {
 	public String profile() {
 
 		return "/views/profile";
+	}
+
+	@GetMapping("/invoices/history")
+	public String history(Model model, @RequestParam("p") Optional<Integer> p) {
+		checkUser(model);
+		User user = session.get("user");
+		Pageable pageable = PageRequest.of(p.orElse(0), 5);
+		Page<UserHistory> histories = historyRepository.findAllByUserOrderByHistoryIdDesc(user, pageable);
+		model.addAttribute("histories", histories);
+
+		return "/views/history";
 	}
 
 //	   @RequestMapping("/login")

@@ -1,6 +1,7 @@
 package com.poly.asm.controller.user.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.poly.asm.config.short_method.History;
 import com.poly.asm.config.short_method.Mail;
 import com.poly.asm.controller.IndexController;
 import com.poly.asm.dao.CategoryRepository;
 import com.poly.asm.dao.ProductRepository;
+import com.poly.asm.dao.UserHistoryRepository;
 import com.poly.asm.dao.UserRepository;
 import com.poly.asm.model.Category;
 import com.poly.asm.model.MailInfo2;
@@ -49,6 +52,12 @@ public class PersonalPageController {
 	private IndexController indexController;
 	@Autowired
 	private Mail mail;
+
+	@Autowired
+	private UserHistoryRepository historyRepository;
+
+	@Autowired
+	private History historyShort;
 
 //
 	@GetMapping("/personal-page")
@@ -121,6 +130,7 @@ public class PersonalPageController {
 			if (user2.getEmail().equals(email)) {
 				String successMessage = "Email đã tồn tại!";
 				model.addAttribute("failed", successMessage);
+				return "/account/personalpage";
 			}
 		}
 
@@ -141,12 +151,24 @@ public class PersonalPageController {
 				+ "</div>" + "</div>" + "</body>" + "</html>";
 
 		mail.setMail(user, body);
-
+		User checkAdUser = session.get("user");
 		model.addAttribute("image", user.getImage());
 		user.setPassword(user.getPassword());
 		user.setImage(user.getImage());
 		user.setStatus(true);
+
+		if (checkAdUser.isAdmin()) {
+			user.setAdmin(true);
+		} else {
+			user.setAdmin(false);
+		}
+
 		dao.save(user);
+//		lưu lịch sử
+		Date currentDate = new Date();
+		String noteString = "Đã cập nhật thông tin của bản thân ";
+		historyShort.setHistory(noteString, user);
+
 		indexController.checkUser(model);
 		model.addAttribute("message", "cập nhật thành công");
 		return "/account/personalpage";

@@ -1,5 +1,6 @@
 package com.poly.asm.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.poly.asm.config.short_method.History;
 import com.poly.asm.config.short_method.Mail;
+import com.poly.asm.dao.UserHistoryRepository;
 import com.poly.asm.dao.UserRepository;
 import com.poly.asm.model.MailInfo2;
 import com.poly.asm.model.User;
@@ -63,6 +66,12 @@ public class AccountController {
 
 	@Autowired
 	private Mail mail;
+
+	@Autowired
+	private UserHistoryRepository historyRepository;
+
+	@Autowired
+	private History historyShort;
 
 	@GetMapping("/login")
 	public String login(@ModelAttribute("user") User user, Model model) {
@@ -150,7 +159,6 @@ public class AccountController {
 					String successMessage = "Tài khoản hoặc mật khẩu không chính xác?";
 					model.addAttribute("failed", successMessage);
 				}
-
 			}
 		}
 
@@ -304,8 +312,6 @@ public class AccountController {
 	public String ChangeRePass(@ModelAttribute("user") User user, Model model) {
 		User a = session.get("user");
 		model.addAttribute("user", a);
-		System.out.println("get" + "Sssssssssssssssssssssssssss");
-		System.out.println(a.getEmail() + "email");
 		return "/account/ChangeRePass";
 	}
 
@@ -337,7 +343,10 @@ public class AccountController {
 		System.out.println(a.getPassword());
 		System.out.println(a.getPhone());
 		dao.save(a);
-		System.out.println("post" + "saveeeeeeeeeee");
+		Date currentDate = new Date();
+
+		String noteString = "Đã đổi mật khẩu ";
+		historyShort.setHistory(noteString, user);
 
 		return "redirect:/shoeshop/index";
 	}

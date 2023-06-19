@@ -95,6 +95,15 @@
 	  detailed_three NVARCHAR(200),
 	);
 	go
+	--Tạo bảng user histories
+	create table UserHistories(
+	id_history int Identity(1,1) not null,
+	note Nvarchar(200),
+	history_date date not null,
+	user_id varchar(20) not null,
+	);
+
+
 	--II. Tạo Khóa chính
 	-- Thêm khóa chính cho bảng StockReceipts
 		ALTER TABLE stock_receipts
@@ -104,6 +113,10 @@
 	ADD CONSTRAINT PK_User PRIMARY KEY (id);
 
 	go
+
+	--Thêm khóa chính cho bảng history
+	alter table  UserHistories add constraint PK_history primary key (id_history);
+
 	-- Thêm khóa chính cho bảng Categories
 	ALTER TABLE Categories
 	ADD CONSTRAINT PK_Categories PRIMARY KEY (id);
@@ -183,6 +196,9 @@
 	ADD CONSTRAINT FK_DetailedImages_Products FOREIGN KEY (product_id) REFERENCES Products(id);
 
 	go
+
+	-- thêm liên kết khóa ngoại cho bảng history
+	alter table  UserHistories add constraint FK_UserHistories_Users FOREIGN KEY (user_id) REFERENCES users(id)
 
 	--III. Thêm dữ liệu
 

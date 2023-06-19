@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.poly.asm.config.short_method.History;
+import com.poly.asm.dao.UserHistoryRepository;
 import com.poly.asm.model.User;
 import com.poly.asm.service.SessionService;
 
@@ -16,6 +18,12 @@ public class InterceptorDecentralization implements HandlerInterceptor {
 	@Autowired
 	SessionService session;
 
+	@Autowired
+	private History historyShort;
+
+	@Autowired
+	private UserHistoryRepository historyRepository;
+
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
@@ -26,6 +34,8 @@ public class InterceptorDecentralization implements HandlerInterceptor {
 			if (user.isStatus() == false) {
 				modelAndView.setViewName("redirect:/shoeshop/band");
 			} else {
+				String noteString = "Đăng nhập";
+				historyShort.setHistory(noteString, user);
 				if (user.isAdmin()) {
 					modelAndView.setViewName("redirect:/shoeshop/admin/index");
 				} else {

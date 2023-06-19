@@ -83,10 +83,11 @@
 													<td th:text="${item.user.name}"></td>
 													<td><a
 														th:href="@{/shoeshop/invoices/invoice/manager/{id}(id=*{item.id})}"
-														class="btn btn-primary">Chi tiết sản phẩm</a> <a
-														th:href="@{/shoeshop/viewpay/{id}(id=*{item.id})}"
-														class="btn btn-secondary text-light">Chi tiết hóa đơn</a></td>
+														class="btn btn-primary">Chi tiết sản phẩm</a></td>
 												</tr>
+											<!-- 	 <a
+														th:href="@{/shoeshop/viewpay/{id}(id=*{item.id})}"
+														class="btn btn-secondary text-light">Chi tiết hóa đơn</a> -->
 											</tbody>
 										</table>
 										<div>
