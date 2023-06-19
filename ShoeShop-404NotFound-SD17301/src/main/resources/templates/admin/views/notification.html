@@ -43,15 +43,16 @@
 
 			<main class="content">
 				<div class="container">
-					<h1>Compose Email</h1>
+					<h1>Compose Email </h1><label th:text="messSuccesss"></label>
 					<form action="/shoeshop/admin/notification" method="post">
 						<div class="form-group">
-							<label for="message">Message:</label>
+							<label for="message" >Message:</label>
 							<textarea class="form-control" id="message" name="body" rows="5"
 								placeholder="Enter your message"></textarea>
 						</div>
 						<button type="submit" class="btn btn-primary mt-3">Submit</button>
 					</form>
+					
 				</div>
 			</main>
 			<div th:replace="~{./admin/layout/footer ::  #footer-admin}"></div>

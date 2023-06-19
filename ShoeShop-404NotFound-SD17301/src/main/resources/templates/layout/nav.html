@@ -14,10 +14,9 @@
 		<div class="collapse navbar-collapse" id="collapsibleNavId">
 			<ul class="navbar-nav me-auto m-2 mb-lg-0">
 				<li class="nav-item  "><a class="nav-link text-dark"
-					th:href="@{/shoeshop/index}" aria-current="page">Trang chủ</a></li>
+					th:href="@{/shoeshop/index}"  aria-current="page" th:text="#{home}" >Trang chủ</a></li>
 				<li class="nav-item dropdown ative"><a
-					class="nav-link text-dark" data-bs-toggle="dropdown" href="#">Danh
-						mục <i class="fa-solid fa-angle-down fa-xs"></i>
+					class="nav-link text-dark" data-bs-toggle="dropdown" th:text="#{category}"> <i class="fa-solid fa-angle-down fa-xs"></i>
 				</a>
 					<ul class="dropdown-menu fade-up bg-light">
 						<li th:each="category : ${categories}"><a
@@ -28,6 +27,22 @@
 				<li class="nav-item" th:if="${hasAdminPermission}"><a
 					class="nav-link text-dark" th:href="@{/shoeshop/admin/index}">Admin</a>
 				</li>
+				
+				<li class="nav-item dropdown ative"><a
+					class="nav-link text-dark" data-bs-toggle="dropdown" href="#" > <span th:text="#{language}"></span> <i class="fa-solid fa-angle-down fa-xs"></i>
+				</a>
+					<ul class="dropdown-menu fade-up bg-light">
+					<li>
+						    <a class="dropdown-item" th:href="@{/shoeshop/index(lang='vi')}" style="color: #686868" > <img th:src="@{/icons/icons8_vietnam.ico}"> <span th:text="#{Vietnamese}"></span> </a>
+						</li>
+						<li>
+						    <a class="dropdown-item" th:href="@{/shoeshop/index(lang='en')}" style="color: #686868" > <img th:src="@{/icons/icons8_usa_32.png}"> <span th:text="#{English}"></span> </a> 
+						</li>
+						</ul>
+
+					
+					
+					</li>
 
 			</ul>
 
@@ -52,36 +67,36 @@
 </th:block>
 
 <th:block th:unless="${session.user != null}">
-    <span class="text-dark">Not logged in</span>
+ 
 </th:block>
 
 				</a>
 					<ul class="dropdown-menu fade-up bg-light"
 						style="list-style: none;">
 						<li th:if="${loggedIn}"><a class="dropdown-item"
-							style="color: #686868" th:href="@{/shoeshop/ChangePass}"> Đổi
+							style="color: #686868" th:href="@{/shoeshop/ChangePass}" th:text="#{change_Password}"> Đổi
 								mật khẩu </a></li>
 
 						<li th:if="${loggedIn}"><a class="dropdown-item"
-							style="color: #686868" th:href="@{/shoeshop/personal-page}">
+							style="color: #686868" th:href="@{/shoeshop/personal-page}" th:text="#{profile}" >
 								tài khoản </a></li>
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							th:href="@{/shoeshop/invoices/list_invoices}"
-							style="color: #686868" href=""> Xem Đơn Hàng </a></li>
+							style="color: #686868" href="" th:text="#{View_Orders}"> Xem Đơn Hàng </a></li>
 						<li th:if="${loggedIn}"><a class="dropdown-item"
 							th:href="@{/shoeshop/invoices/list_invoices_danhan}"
-							style="color: #686868" href=""> Đơn Hàng Đã Nhận </a></li>
+							style="color: #686868" href="" th:text="#{Order_Received}"> Đơn Hàng Đã Nhận </a></li>
 						<li th:if="${loggedIn}"><a class="dropdown-item"
-							th:href="@{/shoeshop/log-out}" style="color: #686868" href="">
+							th:href="@{/shoeshop/log-out}" style="color: #686868" href="" th:text="#{logout}">
 								Đăng xuất </a></li>
 						<li th:unless="${loggedIn}"><a class="dropdown-item"
-							style="color: #686868" th:href="@{/shoeshop/login}"> Đăng
+							style="color: #686868" th:href="@{/shoeshop/login}" th:text="#{login}"> Đăng
 								nhập</a></li>
 						<li th:unless="${loggedIn}"><a class="dropdown-item"
-							style="color: #686868" th:href="@{/shoeshop/signUp}"> Đăng kí
+							style="color: #686868" th:href="@{/shoeshop/signUp}" th:text="#{signup}"> Đăng kí
 						</a></li>
 						<li th:unless="${loggedIn}"><a class="dropdown-item"
-							style="color: #686868" th:href="@{/shoeshop/Forget}"> quên
+							style="color: #686868" th:href="@{/shoeshop/Forget}" th:text="#{Forgot_password}"> quên
 								mật khẩu </a></li>
 					</ul></li>
 				<!-- giỏ hàng -->

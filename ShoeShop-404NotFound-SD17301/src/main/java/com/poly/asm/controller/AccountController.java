@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.poly.asm.config.short_method.Mail;
@@ -144,6 +145,7 @@ public class AccountController {
 			if (user.getEmail().equalsIgnoreCase(user2.getEmail())) {
 				if (user.getPassword().equalsIgnoreCase(user2.getPassword())) {
 					session.set("user", user2, 30);
+
 //					if (user2.isAdmin()) {
 //						
 ////						User sUser = session.get("user");
@@ -293,23 +295,18 @@ public class AccountController {
 			@RequestParam("password") String password) {
 		User a = session.get("user");
 		if (a.getPassword().equals(user.getPassword())) {
+
 			System.out.println(user.getPassword());
 			System.out.println("thành công");
 
 			return "redirect:/shoeshop/ChangeRePass-Change";
 		} else {
 //			System.out.println("mật khẩu sai");
-			model.addAttribute("message", "mat khau sai");
+			String successMessage = "Mật khẩu không trùng nhau!";
+			model.addAttribute("failed", successMessage);
 
 		}
-//		List<User> users = dao.findAll();
-//		for (User user2 : users) {
-//			if (dao.findAll().equals(user.getID())) {
-//				if (dao.findAll().get(0).getPassword().equals(user.getPassword())) {
-//					return "redirect:/shoeshop/ChangeRePass-Change";
-//				}
-//			}
-//		}
+
 		return "/account/ChangePass";
 	}
 
@@ -325,8 +322,8 @@ public class AccountController {
 
 	// phương thức thay đổi mật khẩu mới
 	@PostMapping("/ChangeRePass-Change")
-	public String PassCheck(@ModelAttribute("user") User user, @RequestParam("confirmpassword") String confirmpassword,
-			Model model, BindingResult result) {
+	public String PassCheck(@ModelAttribute("user") User user, Model model, BindingResult result,
+			@RequestParam("confirmpassword") String confirmpassword) {
 
 		if (result.hasErrors()) {
 			System.out.println(result.toString());
@@ -440,6 +437,14 @@ public class AccountController {
 		u.setPassword(user.getPassword());
 		dao.save(u);
 		return "redirect:/shoeshop/login";
+
+	}
+
+	@ResponseBody
+	@RequestMapping("/band")
+	public String band() {
+		session.remove("user");
+		return "tài khoản bạn đã bị khóa";
 
 	}
 }

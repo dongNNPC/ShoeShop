@@ -23,11 +23,16 @@ public class InterceptorDecentralization implements HandlerInterceptor {
 		User user = session.get("user");
 
 		if (user != null && modelAndView != null) {
-			if (user.isAdmin()) {
-				modelAndView.setViewName("redirect:/shoeshop/admin/index");
+			if (user.isStatus() == false) {
+				modelAndView.setViewName("redirect:/shoeshop/band");
 			} else {
-				modelAndView.setViewName("redirect:/shoeshop/index");
+				if (user.isAdmin()) {
+					modelAndView.setViewName("redirect:/shoeshop/admin/index");
+				} else {
+					modelAndView.setViewName("redirect:/shoeshop/index");
+				}
 			}
+
 		}
 	}
 

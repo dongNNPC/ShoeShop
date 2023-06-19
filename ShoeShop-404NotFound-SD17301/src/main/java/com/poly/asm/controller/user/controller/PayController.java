@@ -10,6 +10,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import com.poly.asm.service.SessionService;
 import com.poly.asm.service.ShoppingCartService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/shoeshop")
@@ -103,10 +105,14 @@ public class PayController {
 	}
 
 	@PostMapping("/thanhtoan")
-	public String createPay(Model model, @ModelAttribute("product") Product product,
+	public String createPay(@Valid @ModelAttribute("product") Product product,BindingResult rs,Model model,
 			@RequestParam(name = "itemQuantity", defaultValue = "false") Integer quantity, HttpSession sessionn) {
 		indexController.checkUser(model);
 
+		//bắt lỗi
+		
+			
+		
 		List<Product> products = new ArrayList<>(cart.getItems());
 		List<Product> products2 = Pdao.findAll();
 		List<Product> products3 = new ArrayList<>();
